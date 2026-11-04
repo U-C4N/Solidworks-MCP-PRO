@@ -71,6 +71,7 @@ class Application:
     def __init__(self):
         self.ActiveDoc = None
         self.Visible = False
+        self.CommandInProgress = False
         self.documents, self.events, self.templates = [], [], {}
         self.preferences = {'swSTLQuality': 1, 'swSTLDeviation': .001, 'swSTLAngleTolerance': .5}
         self.preference_writes = []
@@ -85,6 +86,7 @@ class Application:
         return self.templates.get(key, '')
 
     def NewDocument(self, template, paper, width, height):
+        assert self.CommandInProgress is True, 'Native document creation must run inside its command scope.'
         kind = {'.prtdot': 1, '.asmdot': 2, '.drwdot': 3}[Path(template).suffix]
         model = Document(self, f'Created{len(self.documents)+1}', kind)
         self.documents.append(model)
@@ -337,6 +339,44 @@ def test_new_document_uses_configured_native_template_and_grants_ownership(cad, 
     assert result['type'] == kind and result['saved'] is False
     assert session._model is app.ActiveDoc and session._model is not original
     assert session.rights(app.ActiveDoc)['opened'] and session.rights(app.ActiveDoc)['editable']
+
+
+@pytest.mark.parametrize('before', [False, True])
+@pytest.mark.parametrize('kind,function', [(1, d.new_part), (2, d.new_assembly)])
+def test_new_document_batches_factory_and_ownership_then_restores_command_state(cad, tmp_path, before, kind, function):
+    session, app, original = cad
+    app.CommandInProgress = before
+    install_template(app, tmp_path, kind)
+    remember = session.remember
+    def verify_ownership(*args, **kwargs):
+        assert app.CommandInProgress is True
+        remember(*args, **kwargs)
+    session.remember = verify_ownership
+    result = function(session)
+    assert result['created'] and app.CommandInProgress is before
+
+
+@pytest.mark.parametrize('before', [False, True])
+@pytest.mark.parametrize('failure', ['native_error', 'missing_document', 'wrong_active_document'])
+def test_new_document_restores_command_state_when_creation_or_verification_fails(cad, tmp_path, before, failure):
+    session, app, original = cad
+    app.CommandInProgress = before
+    install_template(app, tmp_path, 1)
+    create = app.NewDocument
+    def fail(*args):
+        assert app.CommandInProgress is True
+        if failure == 'native_error':
+            raise RuntimeError('native factory failed')
+        if failure == 'missing_document':
+            return None
+        created = create(*args)
+        app.ActiveDoc = original
+        return created
+    app.NewDocument = fail
+    with pytest.raises(RuntimeError):
+        d.new_part(session)
+    assert app.CommandInProgress is before
+    assert session._model is original
 
 
 def test_activation_requires_unique_exact_title_and_explicit_edit_adoption(cad):

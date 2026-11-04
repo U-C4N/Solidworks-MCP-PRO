@@ -81,17 +81,22 @@ def _new(session, kind):
     if not template or not Path(template).is_file():
         raise CadError("DEFAULT_TEMPLATE_MISSING", f"Configure the native default {preference} template first.")
     paper = binding.constant("swDwgPaperA4size") if kind == 3 else 0
-    model = binding.wrap(app.NewDocument(template, paper, 0.297 if kind == 3 else 0.0,
-                                        0.21 if kind == 3 else 0.0), "IModelDoc2")
-    if model is None or int(model.GetType()) != kind:
-        raise CadError("DOCUMENT_CREATE_FAILED", "The native default template did not produce the requested document type.")
-    if not same_object(binding.wrap(app.ActiveDoc, "IModelDoc2"), model):
-        raise CadError("DOCUMENT_CREATE_UNVERIFIED", "The newly created document is not active.", outcome_may_be_indeterminate=True)
-    session._model = model
-    session.remember(model, editable=True, opened=True)
-    session._topology_cache = {}
-    return {"ok": True, "title": str(model.GetTitle()), "type": kind, "created": True, "saved": False,
-            "template": template, "units": {"length": "mm", "angle": "degrees", "mass": "kg"}}
+    previous_command = session._command_in_progress(True)
+    try:
+        model = binding.wrap(app.NewDocument(template, paper, 0.297 if kind == 3 else 0.0,
+                                            0.21 if kind == 3 else 0.0), "IModelDoc2")
+        if model is None or int(model.GetType()) != kind:
+            raise CadError("DOCUMENT_CREATE_FAILED", "The native default template did not produce the requested document type.")
+        if not same_object(binding.wrap(app.ActiveDoc, "IModelDoc2"), model):
+            raise CadError("DOCUMENT_CREATE_UNVERIFIED", "The newly created document is not active.", outcome_may_be_indeterminate=True)
+        session._model = model
+        session.remember(model, editable=True, opened=True)
+        session._topology_cache = {}
+        return {"ok": True, "title": str(model.GetTitle()), "type": kind, "created": True, "saved": False,
+                "template": template, "units": {"length": "mm", "angle": "degrees", "mass": "kg"}}
+    finally:
+        if previous_command is not None:
+            session._command_in_progress(previous_command)
 
 
 def new_part(session):
