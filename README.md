@@ -2,59 +2,58 @@
 
 # SolidWorks MCP PRO
 
-### Tasarla. Ölçerek doğrula. Alternatifleri karşılaştır. Gerçek render ile sun.
+**From design requirements to verified CAD and native product renders.**
 
-[![Version](https://img.shields.io/badge/version-0.6.0-0ea5e9)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/release-v0.6.0-14b8a6)](https://github.com/U-C4N/Solidworks-MCP-PRO/releases/tag/v0.6.0)
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](pyproject.toml)
-[![Platform](https://img.shields.io/badge/platform-Windows-0078D4)](#gereksinimler)
-[![License](https://img.shields.io/badge/license-MIT-22c55e)](LICENSE)
+[![Platform](https://img.shields.io/badge/native_CAD-Windows-0078D4)](#requirements)
+[![Tests](https://img.shields.io/badge/Windows_tests-1%2C326_passing-22c55e)](docs/validation-v0.6.0.md)
+[![License](https://img.shields.io/badge/license-MIT-slategray)](LICENSE)
 
-**SOLIDWORKS için ölçülebilir mühendislik iş akışları ve yerel Visualize çıktıları sunan MCP sunucusu.**
-
-[Hızlı başlangıç](#hızlı-başlangıç) · [Yeni iş akışları](#060-ile-gelenler) · [Canlı doğrulama](docs/validation-v0.6.0.md) · [İstemci kurulumu](docs/clients.md)
+[Quick start](#quick-start) &nbsp;·&nbsp; [What you can do](#what-you-can-do) &nbsp;·&nbsp; [Examples](#workflow-examples) &nbsp;·&nbsp; [Verification](#verification) &nbsp;·&nbsp; [Download](https://github.com/U-C4N/Solidworks-MCP-PRO/releases/tag/v0.6.0)
 
 </div>
 
-![Aynı test parçasının gerçek SOLIDWORKS Visualize çekimleri](docs/assets/product-shot-pack.png)
+![Design with intent. Deliver with evidence.](docs/assets/banner.svg)
 
-<p align="center"><sub>Bu proje için oluşturulan test parçası · gerçek yerel render · kare, yatay ve dikey çıktı</sub></p>
+A local **Model Context Protocol (MCP) server** that connects an AI assistant to your running SOLIDWORKS session. Build and inspect native models, test explicit requirements, compare isolated part variants, and produce real SOLIDWORKS Visualize images—with measurements and artifacts you can inspect.
 
----
+| Full profile | Compact profile | Parameter studies | Product shot packs |
+|:---:|:---:|:---:|:---:|
+| **123 tools** | **14 workflow tools** | **Up to 16 variants** | **Up to 12 shots** |
+| 88 inherited CAD + 35 PRO | On-demand schemas | 1–2 driving dimensions | Square, landscape, portrait |
 
-## 0.6.0 ile gelenler
+## What you can do
 
-| İş akışı | Ne yapar? | Araç |
-|---|---|---|
-| **Tasarım şartları** | Ölçü, kütle, hacim, sınır kutusu ve desteklenen açıklık ölçümlerini açık şartlar ve toleranslarla karşılaştırır. | `pro_validate_design` |
-| **Parametrik varyantlar** | Kaydedilmiş bağımsız parçanın kopyalarında 1–2 ölçüyü tarar; en fazla 16 alternatifi doğrular, karşılaştırır ve CSV/JSON raporlar. | `pro_variant_study` |
-| **Ürün görsel paketi** | Birden fazla açı ve en-boy oranında gerçek önizleme/final PNG'ler, karşılaştırma görseli ve manifest üretir. | `pro_shot_pack` |
-| **Bağlantı doktoru** | Çalışan Python, paket/kaynak sürümü, araç profili ve seçilen istemci ayarları arasındaki uyumsuzlukları raporlar. | `pro_connection_doctor` |
-| **Gerçek render kontrolü** | Yeni bir test parçasıyla add-in/makro yolunu veya ayrı bir SVPJ kopyasıyla proje renderer'ını sınar; gerçek PNG'yi ve temizliği doğrular. | `scripts/validate_render_live.py` |
+| Your task | What PRO delivers |
+|---|---|
+| **Build a part from dimensions** | Native sketches and features through the CAD tools, followed by measurements and a viewport image. |
+| **Check a design against requirements** | Actual values, tolerances, and separate **pass / fail / unknown** results for dimensions, mass, volume, bounds, and supported component clearances. |
+| **Compare thicknesses or sizes** | Independent part copies, rebuild and dimension checks, a mass-based ranking of valid candidates, and CSV/JSON reports. |
+| **Create product images** | Aspect-matched previews, final native PNGs, a contact sheet, and a manifest with image hashes. |
+| **Inspect an assembly** | Components, references, mates, configuration state, and optional native geometry/interference checks. |
+| **Prepare a rendering scene** | Installed appearances, RGB overrides, HDRI/background controls, supported lighting settings, and cameras. |
+| **Diagnose your connection** | Running Python/package identity, source-version mismatches, published tool profiles, and optional redacted client-configuration inspection. |
 
-CAD çekirdeği, sabitlenmiş **`hjbaard/solidworks-mcp==0.19.0`** bağımlılığıdır. Çekirdeğin 88 aracı üzerine PRO iş akışları eklenir; bu araçların tamamının bu projede sıfırdan yazıldığı iddia edilmez. [Üçüncü taraf bildirimi](THIRD_PARTY_NOTICES.md)
+**Try asking your connected assistant:**
 
-```mermaid
-flowchart LR
-    A[Model ve açık şartlar] --> B[Ölçerek doğrula]
-    B --> C[İzole varyantlar]
-    C --> D[Karşılaştır ve seç]
-    D --> E[Çok açılı ürün çekimi]
-    E --> F[PNG + CSV + JSON kanıtları]
-```
+> Create a 100 × 70 × 10 mm plate with four Ø8 mm mounting holes and a Ø24 mm center hole. Check its volume against the analytic value, then show the native model.
 
-## Birkaç cümleyle kullanım
+> Compare 6, 8, and 10 mm thicknesses on separate copies. Keep the source unchanged, check the requirements, and rank valid candidates by mass.
 
-> **Doğrula:** Aktif parçanın kalınlığı 10 mm, hacmi verdiğim beklenen değere uygun ve kütlesi 1 kg altında mı? Toleransları kullan; sonucu ölçümlerle raporla.
+> Produce a square hero shot, a landscape front view, and a portrait product shot. Use the project rendering route and show the contact sheet.
 
-> **Karşılaştır:** `D1@BlockExtrude` kalınlığını 6, 8 ve 10 mm olarak ayrı kopyalarda dene. Kaynağı koru, şartları geçen alternatifleri kütlelerine göre sırala.
+### Real output, from a real acceptance run
 
-> **Sun:** Bu parçanın izometrik kare, önden yatay ve özel açıdan dikey ürün görsellerini al. Her çekim için aynı oranda önizleme üret; karşılaştırma görselini göster.
+![Native SOLIDWORKS Visualize product shots in three aspect ratios](docs/assets/product-shot-pack.png)
 
-> **Bağlantıyı kontrol et:** Çalışan PRO sürümünü ve yayımlanan araç profilini doğrula. Yerel kaynakla kurulu paket farklıysa açıkça belirt.
+<p align="center"><sub>A newly generated test plate, rendered locally through the explicit project-camera route. These are native render outputs, not AI-generated product images.</sub></p>
 
-## Hızlı başlangıç
+The acceptance fixture also verified a **40 mm component clearance**, three independently generated thickness variants, and restoration of the original camera and active document. [Read the evidence and scope](docs/validation-v0.6.0.md).
 
-64-bit Python **3.11+** gerekir; yerel COM uyumluluğu için **3.12 önerilir**.
+## Quick start
+
+Use **64-bit Python 3.11+**; Python **3.12** is recommended for this local COM setup. Native CAD requires Windows and licensed SOLIDWORKS. Rendering additionally requires an installed, licensed Visualize setup.
 
 ```powershell
 git clone https://github.com/U-C4N/Solidworks-MCP-PRO.git
@@ -64,7 +63,12 @@ cd Solidworks-MCP-PRO
 .\.venv\Scripts\python.exe -m solidworks_mcp_pro --doctor
 ```
 
-Kurulum, `artifacts/configs/` altına Codex ve Claude için ayar örnekleri yazar. Mevcut istemci ayarlarını kendiliğinden değiştirmez. Örnekleri mevcut ayarlarınıza birleştirin ve MCP bağlantısını yeniden başlatın. [Ayrıntılı kurulum](docs/clients.md)
+Setup generates client snippets in `artifacts/configs/`. Merge the appropriate snippet into your existing client configuration, then reconnect the MCP server. Existing client settings are preserved. [Complete client setup](docs/clients.md).
+
+<details>
+<summary><strong>Example: local stdio configuration</strong></summary>
+
+Replace the checkout path with your actual location. The generated snippet already contains your absolute paths.
 
 ```toml
 [mcp_servers.solidworks-pro]
@@ -75,23 +79,27 @@ startup_timeout_sec = 30
 tool_timeout_sec = 180
 ```
 
-**`compact`** profili temel iş akışlarını yayımlar; `pro_tool_help` ile tek bir aracın tam sözleşmesi alınır. Yerel CAD araçları `pro_run_plan` içinde kullanılabilir. **`full`** bütün CAD ve PRO araçlarını yayımlar; sunucunun varsayılanıdır.
+</details>
 
-CAD iş akışlarından önce `get_status` ile çalışan SOLIDWORKS oturumuna bağlanın. Bağlantı doktoru CAD'i başlatmaz veya CAD bağlantısı kurmaz. Render öncesinde `pro_visualize_status(load_if_missing=true)` ile kurulu eklenti açıkça yüklenebilir.
+Once connected:
 
-### Bağlantı kontrolü
+1. Call `pro_connection_doctor` to check the identity and catalogue of the running PRO server.
+2. Call the native `get_status` to attach to an already running SOLIDWORKS session.
+3. For rendering, explicitly load the installed add-in with `pro_visualize_status(load_if_missing=true)` if needed.
+4. Use the workflows below. Poll long-running work instead of submitting it again.
 
-İstemci içinden `pro_connection_doctor` çağırmak o çalışan PRO sunucusunun gerçek kataloğunu kontrol eder. Yerel rapor için:
+`compact` publishes 14 workflow tools and retrieves individual contracts through `pro_tool_help`. Native CAD steps remain available through `pro_run_plan`. `full` publishes all 123 tools and is the server default; generated client snippets select `compact`.
 
-```powershell
-.\.venv\Scripts\python.exe -m solidworks_mcp_pro.connection_doctor --include-default-clients --tool-profile compact
-```
+## Workflow examples
 
-Çevrimdışı rapor, başka bir sohbetin gerçekten bu sunucuya bağlı olduğunu kanıtlamaz. Canlı katalog gözlemi verilmediğinde bunu `incomplete` olarak belirtir. Kontrol hiçbir yapılandırılmış komutu çalıştırmaz ve gizli ortam değerlerini rapora kopyalamaz.
+### 1. Verify design requirements
 
-## İş akışı örnekleri
+**Tool:** `pro_validate_design`
 
-### Tasarım şartlarını doğrula
+Check explicit dimensions, mass, volume, axis-aligned bounds, or supported exact component-pair distances. Every assertion includes a unit and tolerance.
+
+<details>
+<summary><strong>Request: 10 mm thickness and mass below 1 kg</strong></summary>
 
 ```json
 {
@@ -103,9 +111,20 @@ CAD iş akışlarından önce `get_status` ile çalışan SOLIDWORKS oturumuna b
 }
 ```
 
-`ok:true` taramanın tamamlandığını, `passed:true` şartların geçtiğini belirtir. Şart tutmadığında `passed:false`; ölçülemeyen kontroller `unknown` olarak raporlanır. Sağlam CAD geometrisi ile istenen tasarım şartlarının sağlanması ayrı değerlendirilir.
+Use the exact dimension name from your model. `D1@BlockExtrude` is an example, not a universal feature name.
 
-### Varyantları önce planla
+</details>
+
+**Result:** Per-requirement actual values, effective tolerances, counts, and evidence. `ok:true` means the checks completed; `passed:true` additionally means every requirement held. Unavailable or uncertain measurements are **unknown**, never a pass. The scan does not rebuild, save, or activate another document.
+
+### 2. Compare isolated parameter variants
+
+**Tool:** `pro_variant_study`
+
+Evaluate explicit combinations of one or two driving dimensions on fresh copies of a saved, self-contained part. The Cartesian product is limited to 16 candidates.
+
+<details>
+<summary><strong>Request: plan 6 / 8 / 10 mm thickness variants</strong></summary>
 
 ```json
 {
@@ -118,9 +137,20 @@ CAD iş akışlarından önce `get_status` ile çalışan SOLIDWORKS oturumuna b
 }
 ```
 
-`pro_variant_study` varsayılan olarak plan üretir. Aynı tanımı `dry_run:false` ile çalıştırın. Her alternatif ayrı parça dosyasına yazılır; kaynak parça değiştirilmez. İlk kapsam, kaydedilmiş ve harici referans içermeyen bağımsız parçalardır. Sonuç bir dayanım veya FEA analizi değildir.
+Review the plan, then execute the same definition with `dry_run:false`. Optional `assertions` use the design-validation contract.
 
-### Görsel paketi üret
+</details>
+
+**Result:** Separate `.sldprt` files, rebuild and signed-dimension readbacks, mass/volume/bounds, valid-candidate rankings, and CSV/JSON reports. Source bytes and the open source's observed state are checked; only owned copies are closed. This compares supplied alternatives—it is not a strength analysis or an automatic optimizer.
+
+### 3. Generate a product shot pack
+
+**Tool:** `pro_shot_pack`
+
+Render up to 12 explicit views with matching preview/final aspect ratios, then collect the images into a labelled contact sheet and manifest.
+
+<details>
+<summary><strong>Request: square hero, landscape front, portrait custom view</strong></summary>
 
 ```json
 {
@@ -137,35 +167,39 @@ CAD iş akışlarından önce `get_status` ile çalışan SOLIDWORKS oturumuna b
 }
 ```
 
-Önizleme her çekimin en-boy oranını korur. Örnekteki **`project` rotası**, modeli bir kez SVPJ'ye aktarır ve gerçek sınır kutusundan hesaplanan kamerayla dikey çekimde de parçayı kadraja sığdırır. Bu rota uyumlu Visualize Offline Renderer ve 2026 gruplamalı dışa aktarma ister. Varsayılan **`addin` rotası** mevcut model görünümünü kullanır; özellikle dikey çıktıda yerel kamera aktarımı kırpılmaya yol açabilir.
+Presets are 1024×1024, 1920×1080, and 1080×1920. Supply both `width` and `height` to override a preset, up to 4096 pixels per edge.
 
-Kamera, başarı ve hata yollarında geri yüklenip kontrol edilir. Paket mevcut malzemeleri kullanır; proje kopyasında zemin gölgeleri açık, yansımalar kapalıdır. Otomatik bir estetik kalite kararı vermez. İlk çoklu çekim akışı normal görünüşler içindir; açık patlatma dönüşümleri `pro_render_job` aracında ayrıca kullanılabilir. Project rotasının desteklenen yönleri ve sınırları [iş akışı belgesinde](docs/engineering-workflows.md) açıklanır.
+</details>
 
-Uzun işler `operation_id` döndürür. `pro_operation(wait_seconds=20)` ile izleyin; tamamlanan görseli `pro_result(kind="image")` ile alın. Yeni iş akışlarının varsayılan sonuçları özetlidir; ayrıntılar `details_uri` veya `pro_result(kind="details")` içinde korunur. [Tam sözleşmeler ve sınırlar](docs/engineering-workflows.md)
+| Render route | Camera behavior | Requirements |
+|---|---|---|
+| **`project`** — used above | Fits an explicit perspective camera to verified native bounds and the output aspect ratio. Exports once, then renders owned SVPJ copies. | Compatible installed Offline Renderer and 2026 grouped export. |
+| **`addin`** — default | Transfers the current native model-view framing. Portrait composition may crop differently from the viewport. | Installed/licensed Visualize and 2025+ add-in API. |
 
-## Diğer yetenekler
+The project route supports isometric/front/back/left/right and world-Y-up custom directions, with zoom-out factors of 0.25–1. Unsupported directions are rejected before CAD work. Routes do not silently fall back. Project-copy ground shadows are on and reflections off. [Full framing contract](docs/engineering-workflows.md#product-shot-packs).
 
-- **Modelleme:** Eskizler, parametrik ölçüler, katı modelleme, montajlar, ölçüm ve dışa aktarma için çekirdek CAD araçları.
-- **Sağlık kontrolü:** Hatalı unsurlar, denklemler, referanslar ve mate'ler; isteğe bağlı yerel geometri/çakışma taraması.
-- **Kontrollü onarım:** Önce salt okunur plan, ayrı talimatla uygulama; eskimiş plan ve tekrar çağrı kontrolleri.
-- **Görünüm:** Toplu RGB, yerel `.p2m` atama, HDRI/sahne/ışık, model görünümü ve adlandırılmış kameralar.
-- **Visualize:** Yerel PNG/JPEG render, `.svpj` dışa aktarma ve sahip olunan proje kopyasında Offline Renderer.
-- **Montaj hazırlığı:** Referanslarıyla klonlama, konfigürasyon seçimi, açık pozlama ve görünürlük.
-- **İnternetsiz önizleme:** STL inceleme, HTML döndürme/yakınlaştırma ve SVG çıktıları.
+**Result:** Native PNGs, exact dimensions and SHA-256 hashes, previews, a contact sheet, and a JSON manifest. The original model-view camera is restored and verified. Image integrity does not certify artistic quality or material fidelity.
 
-Animasyon için kare hazırlama araçları mevcuttur; genel, tek çağrılık video üretimi bu sürümün kapsamı değildir. [Animasyon altyapısı](docs/animation.md)
+### Follow long-running work
 
-## Gereksinimler
+A render or variant execution returns an `operation_id`. Poll `pro_operation` with `wait_seconds:20`. Retrieve a final image with `pro_result(kind="image")`; the default shot-pack image is the contact sheet. Select `artifact_id` for a particular shot.
 
-| Kullanım | Gerekenler |
-|---|---|
-| Çevrimdışı STL / birim testleri | Python 3.11+; SOLIDWORKS gerekmez |
-| CAD ve mühendislik iş akışları | Windows, kurulu ve lisanslı SOLIDWORKS |
-| Add-in üzerinden render | Lisanslı SOLIDWORKS Visualize, 2025+ add-in API |
-| Gruplamalı SVPJ / yerel proje açma | 2026+ API |
-| Proje renderer'ı | Uyumlu kurulu Visualize Offline Renderer; add-in testinden ayrı doğrulanır |
+Concise responses retain counts, failures, cleanup and report links. Full evidence is available through `details_uri` or `pro_result(kind="details")`.
 
-## Doğrulama ve geliştirme
+## More of the toolkit
+
+- **Native modeling:** Sketches, dimensions, solid features, assemblies, inspection, and export through the inherited CAD engine.
+- **Health and repair:** Feature/equation/reference/mate diagnosis, optional deep checks, repair planning and separately authorized application.
+- **Presentation:** RGB batches, installed `.p2m` appearances, HDRI/background controls, supported light settings, model-view and named cameras.
+- **Assembly preparation:** Reference-preserving cloning, configuration selection, explicit poses and visibility control.
+- **Offline inspection:** STL topology/bounds/volume inspection, standalone HTML viewers, and SVG previews.
+- **Animation groundwork:** Native frame-preparation tools and geometric sheet bending. A general one-call video tool is outside v0.6.0. [Animation scope](docs/animation.md).
+
+## Verification
+
+**1,326 local Windows tests passed**, alongside Ruff and the stdio smoke check. The GitHub matrix covers Windows/Linux with Python 3.11/3.12; Windows COM contracts are skipped on Linux. Automated tests and native acceptance are reported separately.
+
+Real acceptance on **SOLIDWORKS 2026 SP4.1** checked analytic plate volume, an intentionally failing requirement, three isolated variants, assembly bounds/clearance/mass, add-in renders, project-camera shot packs, and verified cleanup. This is evidence for the documented fixture and installation, not universal CAD or renderer compatibility.
 
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q
@@ -173,29 +207,59 @@ Animasyon için kare hazırlama araçları mevcuttur; genel, tek çağrılık vi
 .\.venv\Scripts\python.exe scripts\smoke_stdio.py
 ```
 
-Gerçek add-in render kontrolü, boş bir SOLIDWORKS oturumunda kendi parçasını oluşturup kapatır:
+Native opt-in acceptance uses newly generated scratch documents and requires an initially empty running SOLIDWORKS session:
 
 ```powershell
 .\.venv\Scripts\python.exe scripts\validate_render_live.py --live --load-addin --output artifacts\render-check-new
+.\.venv\Scripts\python.exe scripts\validate_engineering_live.py --live --render --render-route project --output artifacts\engineering-check-new
 ```
 
-Gerçek CAD/render kanıtları ile sahte backend kullanan otomatik testler ayrı raporlanır. Dosya biçimi, piksel boyutu ve hash kontrolü görsel kompozisyonun veya malzeme doğruluğunun kanıtı değildir. [v0.6.0 kabul kaydı](docs/validation-v0.6.0.md)
+[Verification report](docs/validation-v0.6.0.md) · [Portable native evidence](docs/evidence/v0.6.0-native.json) · [GitHub Actions](https://github.com/U-C4N/Solidworks-MCP-PRO/actions)
 
-## Bilinen sınırlar
+## Requirements
 
-- Bütün yerel COM işlemleri tek STA iş parçacığında sırayla çalışır. PRO kilidi, bağımsız başka otomasyon istemcilerini koordine etmez.
-- İş ve `request_id` hafızası süreç ömrüyle sınırlıdır. Yeniden başlatma sonrası belirsiz işlemleri körlemesine tekrarlamayın.
-- Planlar atomik değildir; hata öncesindeki başarılı değişiklikler kalabilir. Geri yükleme başarısı yalnız doğrulandıysa raporlanır.
-- Visualize çıktısında RGB ile `.p2m` görünümü farklı davranabilir. Gerçek küçük render üzerinden kontrol edin.
-- RealView ve zemin/sahne özellikleri donanıma ve yerel kuruluma bağlıdır. Desteklenmeyen ayarlar açık hata olarak korunur.
-- Yeni iş akışları tam dosya yolu ve açık hedefler ister. Ölçü, malzeme, tolerans, hareket veya üretim niyeti tahmin edilmez.
+| Capability | Required environment |
+|---|---|
+| Offline mesh tools and portable tests | Python 3.11+; no SOLIDWORKS session required. |
+| Native CAD workflows | Windows, installed/licensed SOLIDWORKS. |
+| Add-in rendering | Installed/licensed Visualize with 2025+ add-in API. |
+| Part-grouped SVPJ export / native project opening | 2026+ API. |
+| Project shot-pack route | Compatible installed Visualize Offline Renderer plus grouped export. |
 
-Varsayılan çıktılar `Documents/Solidworks-MCP-PRO` altındadır; `SW_MCP_PRO_WORKSPACE` ile değiştirilebilir. Üretilen istemci örnekleri proje içindeki `artifacts/` klasörünü kullanır.
+### Operating boundaries
 
-## Mimari ve belgeler
+- All native COM work is serialized on one STA worker. Independent automation clients do not share PRO's lease.
+- Plans are sequential and non-atomic. Earlier successful steps may remain after a later failure.
+- Operation and request-ID memory lasts for one server process. After a restart or uncertain timeout, inspect native state before resubmitting.
+- Model identity, dimension names, tolerances, material choices, and movement targets must be explicit. Measurements do not establish manufacturing correctness.
+- Native scene/RealView behavior depends on the local installation. RGB readback does not prove Visualize `.p2m` fidelity.
+- The connection doctor checks identity and catalogue evidence; it does not start CAD. An offline doctor report cannot establish another chat's live connection.
 
-`MCP stdio → şema / plan doğrulama → iş kaydı + CAD kilidi → tek COM STA → SOLIDWORKS / Visualize`
+Outputs default to `Documents/Solidworks-MCP-PRO`. Override with `SW_MCP_PRO_WORKSPACE`; generated client snippets use the checkout's `artifacts/` directory.
 
-[İş akışları](docs/engineering-workflows.md) · [Render ayrıntıları](docs/visualize.md) · [Önceki hızlı akışlar](docs/fast-workflows.md) · [Geçmiş performans ölçümleri](docs/performance-benchmark.md) · [Değişiklik günlüğü](CHANGELOG.md)
+## Architecture
 
-**MIT lisansı.** SOLIDWORKS ve Visualize adları ilgili sahiplerinin markalarıdır. Bu proje bağımsız bir entegrasyondur.
+```mermaid
+flowchart LR
+    A[MCP client] --> B[Schema and workflow validation]
+    B --> C[Operation registry and CAD lease]
+    C --> D[Single COM STA worker]
+    D --> E[SOLIDWORKS]
+    D --> F[Visualize]
+    E --> G[Measurements and native files]
+    F --> H[PNG images and manifests]
+```
+
+## Documentation
+
+| Get connected | Workflows and evidence | Rendering and internals |
+|---|---|---|
+| [Client setup](docs/clients.md) | [Engineering workflows](docs/engineering-workflows.md) | [Visualize integration](docs/visualize.md) |
+| [Configuration examples](configs/) | [v0.6.0 verification](docs/validation-v0.6.0.md) | [Animation groundwork](docs/animation.md) |
+| [Releases and packages](https://github.com/U-C4N/Solidworks-MCP-PRO/releases) | [Earlier workflow contracts](docs/fast-workflows.md) | [Historical performance evidence](docs/performance-benchmark.md) |
+
+## Credits and license
+
+PRO extends the pinned **[`hjbaard/SolidWorks-MCP` 0.19.0](https://github.com/hjbaard/SolidWorks-MCP/releases/tag/v0.19.0)** engine. Its 88 inherited CAD tools remain upstream work; this project adds the PRO workflows and integration layer. [Third-party notices](THIRD_PARTY_NOTICES.md).
+
+Released under the **[MIT license](LICENSE)**. SOLIDWORKS and Visualize are trademarks of their respective owners. This is an independent integration.
