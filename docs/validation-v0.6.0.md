@@ -12,6 +12,13 @@ test initialized `solidworks-mcp-pro` 0.6.0, discovered **123 full-profile tools
 read the guides/prompts, and correctly rejected an invalid plan. Compact has
 **14 workflows**; native tools remain available through validated native plans.
 
+The count above is the complete local Windows run. GitHub's matrix also runs
+Python 3.11 and 3.12 on Windows and Linux. Windows-only COM marshalling contracts
+use platform-aware skips on Linux; those skips do not remove them from Windows
+coverage. An initial Linux run exposed three older unguarded `pythoncom` imports;
+they were corrected, and matrix fail-fast was disabled so every environment can
+finish and report its own result.
+
 Coverage includes explicit native units, pass/fail/unknown requirements,
 read-only metadata checks, exact-part copy isolation, signed dimension readback,
 dependent-dimension changes, rejected rebuilds, source hashes/open state,
