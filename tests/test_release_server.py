@@ -1,4 +1,4 @@
-"""v0.6 MCP boundaries: failure meaning, replay, reports and image ownership."""
+"""Engineering MCP boundaries: failure meaning, replay, reports and image ownership."""
 from copy import deepcopy
 import json
 from pathlib import Path

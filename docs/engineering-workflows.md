@@ -1,7 +1,7 @@
-# Engineering and product-shot workflows — v0.6.0
+# Engineering and product-shot workflows — v0.7.0
 
 These tools are published in both `full` and `compact`. The current catalogues
-contain 123 tools (88 inherited CAD + 35 PRO) and 14 workflows respectively.
+contain 123 tools (88 independent CAD + 35 PRO) and 14 workflows respectively.
 Use `pro_tool_help` for the exact machine-readable schema.
 
 Call the native `get_status` first to attach to an already running SOLIDWORKS

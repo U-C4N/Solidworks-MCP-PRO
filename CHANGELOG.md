@@ -17,34 +17,6 @@
   retesting. Publish 1,684 automated tests plus independent engineering, add-in
   rendering and project-shot-pack evidence with source hashes and exact scope.
 
-## 0.6.0 — 2026-11-04
-
-- Check explicit design requirements with verified native units, absolute/relative
-  tolerances, pass/fail/unknown evidence, tight solid bounds and selection-free
-  exact component-pair measurements. Do not rebuild, activate or save during checks.
-- Evaluate up to sixteen explicit one/two-dimension combinations on independent
-  saved part copies. Verify signed dimension readback, rebuilds, source hashes,
-  open-source state, copy cleanup and active-document restoration. Export CSV/JSON
-  evidence and rank only valid candidates by native mass.
-- Generate 1–12 native product shots with exact-aspect previews, final PNGs,
-  custom/standard views, contact sheets and manifests. Retain partial verified
-  output and verify original-camera restoration on success/failure/cancellation.
-  Opt-in project rendering uses an explicit bounding-sphere-fit camera to avoid
-  model-view auto-fit/cropping during portrait conversion; routes never silently
-  fall back to one another.
-- Identify runtime/package/source and published-tool profile mismatches through
-  a read-only connection doctor, with optional redacted client-file inspection.
-  Preserve the legacy dependency-only `--doctor` behavior.
-- Add explicit add-in and project-renderer acceptance probes with independent
-  image verification, scratch ownership, route-specific results and cleanup.
-  Native add-in preview/final rendering succeeded in a new 2026 SP4.1 session;
-  this does not establish the cause of the earlier session's macro failure.
-- Publish 35 PRO tools (123 total) in full and 14 workflows in compact, retaining
-  native plan access and on-demand schemas. Include the existing assembly,
-  named-camera and geometric-bending bridges in the current documentation.
-- Refresh the README, usage examples, native acceptance script and versioned
-  validation evidence. Automated and real CAD/render results remain distinct.
-
 ## 0.5.0 — 2026-11-03
 
 - Diagnose exact active saved models, with optional native geometry/interference checks. Plan repairs without changes; apply separately with stale-state and replay checks.

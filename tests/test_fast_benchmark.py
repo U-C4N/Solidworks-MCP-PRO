@@ -27,7 +27,7 @@ async def test_catalog_profiles_use_actual_supplied_descriptors_without_cad_call
     assert backend.list_calls == 1 and backend.native_calls == 0
     assert report["native_cad_tools_invoked"] == 0
     full, compact = report["profiles"]["full"], report["profiles"]["compact"]
-    assert full["tool_count"] == len(native) + 35  # v0.6.0 adds four public workflows.
+    assert full["tool_count"] == len(native) + 35  # Full profile includes all 35 PRO workflows.
     assert compact["tool_count"] == len(COMPACT_TOOLS)
     assert set(compact["tool_names"]) == COMPACT_TOOLS
     assert compact["catalog_bytes"] < full["catalog_bytes"]
