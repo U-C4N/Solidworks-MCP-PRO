@@ -32,7 +32,7 @@ class SceneError(RuntimeError):
 def _typed(obj: Any, interface: str) -> Any:
     if obj is None or not hasattr(obj, "_oleobj_"):
         return obj
-    from solidworks_mcp import binding
+    from .native import binding
 
     return binding.wrap(obj, getattr(binding.module(), interface))
 

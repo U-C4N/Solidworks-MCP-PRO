@@ -67,7 +67,7 @@ async def test_engineering_tools_are_discoverable_in_compact(release_app):
     assert {"pro_connection_doctor", "pro_validate_design", "pro_variant_study", "pro_shot_pack"} <= names
     doctor = await app.call("pro_connection_doctor", {})
     assert doctor.structuredContent["tools"]["comparison"] == "match"
-    assert doctor.structuredContent["runtime"]["package_version"] == "0.6.0"
+    assert doctor.structuredContent["runtime"]["package_version"] == "0.7.0"
     assert not backend.calls and not backend.visualize_calls
 
 

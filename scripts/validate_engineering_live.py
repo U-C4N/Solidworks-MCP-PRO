@@ -1,4 +1,4 @@
-"""Opt-in v0.6 acceptance on a newly created, independently measured part.
+"""Opt-in engineering acceptance on a newly created, independently measured part.
 
 Requires an empty running CAD session. Never edits or closes existing documents.
 Evidence stays in a new output directory, including failures and exact cleanup.
@@ -15,6 +15,8 @@ import sys
 from uuid import uuid4
 
 from solidworks_mcp_pro.backend import NativeBackend
+from solidworks_mcp_pro import __version__
+from solidworks_mcp_pro.native.session import same_object
 from solidworks_mcp_pro.server import ProApplication
 
 
@@ -24,7 +26,7 @@ async def run(output: Path, *, render: bool = False, render_route: str = "addin"
     backend = NativeBackend()
     app = ProApplication(backend, output)
     records = []
-    evidence = {"kind": "v0.6-native-engineering-acceptance", "ok": False,
+    evidence = {"kind": "native-engineering-acceptance", "version": __version__, "ok": False,
                 "render_requested": render, "render_route": render_route, "records": records, "cleanup": {},
                 "limitations": ["One isolated plate, not arbitrary-model acceptance.",
                                 "Variant ranking does not establish strength or manufacturability.",
@@ -57,7 +59,7 @@ async def run(output: Path, *, render: bool = False, render_route: str = "addin"
         if inventory.get("count") != 0 or inventory.get("documents") != []:
             raise RuntimeError("An empty running SOLIDWORKS session is required; existing files were preserved.")
         await call("new_part")
-        owned = await backend._workflow_native(lambda: backend.upstream._session._model)
+        owned = await backend._workflow_native(lambda: backend.runtime._session._model)
         owned_documents.append(owned)
         box = await call("add_box", {"width_mm": 100, "height_mm": 70, "depth_mm": 10})
         for x, y in ((15, 15), (85, 15), (15, 55), (85, 55)):
@@ -120,7 +122,7 @@ async def run(output: Path, *, render: bool = False, render_route: str = "addin"
         # A second independent check exercises assembly transforms and exact
         # component-pair distance, without relying on viewport measurements.
         await call("new_assembly")
-        assembly_doc = await backend._workflow_native(lambda: backend.upstream._session._model)
+        assembly_doc = await backend._workflow_native(lambda: backend.runtime._session._model)
         owned_documents.append(assembly_doc)
         component_names = []
         for x in (0, 140):
@@ -150,18 +152,17 @@ async def run(output: Path, *, render: bool = False, render_route: str = "addin"
         await app.registry.drain()
         if owned_documents:
             def close_owned():
-                session = backend.upstream._session
+                session = backend.runtime._session
                 closed, errors = [], []
                 for document in reversed(owned_documents):
                     current = [doc for doc in session._open_documents()
-                               if getattr(doc, "_oleobj_", doc) == getattr(document, "_oleobj_", document)]
+                               if same_object(doc, document)]
                     if len(current) != 1:
                         errors.append("Fixture ownership could not be re-established.")
                         continue
                     title = current[0].GetTitle()
-                    session._sw.CloseDoc(title)
-                    if any(getattr(doc, "_oleobj_", doc) == getattr(document, "_oleobj_", document)
-                           for doc in session._open_documents()):
+                    session.close_document(current[0])
+                    if any(same_object(doc, document) for doc in session._open_documents()):
                         errors.append("Owned fixture did not close: " + title)
                     else:
                         closed.append(title)

@@ -1,5 +1,7 @@
 # Competitor benchmark preparation and source review
 
+> Historical report for the releases named below. Version 0.7.0 replaces the former external CAD engine with the [independent native engine](native-engine.md); these findings and timings do not measure that rewrite.
+
 Checked 2026-11-03. Initial preparation covered three independent implementations; the completed comparison also includes the hjbaard upstream used by PRO and a frozen PRO 0.1.0 baseline. No CAD tool was invoked during preparation. The separate serialized live harness subsequently tested all four rivals: see [live results](benchmark-results.md) and [final six-server protocol results](../benchmarks/results/protocol-all.md). Andrew discovery used its upstream mock adapter; its recorded live CAD run used the native adapter. Discovery success is not evidence of CAD correctness.
 
 ## Revisions and reproducibility

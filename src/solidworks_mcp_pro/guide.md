@@ -1,6 +1,6 @@
 # SolidWorks MCP PRO agent guide
 
-This server extends the pinned solidworks-mcp 0.19.0 CAD engine. Read solidworks://guide for native geometry conventions. Millimetres/degrees/kg. Create new documents for new designs; preserve the user's existing documents. In v0.6.0 the full profile publishes 123 tools (88 inherited CAD plus 35 PRO); compact publishes 14 workflows and retrieves exact native schemas through pro_tool_help. Native steps still run in pro_run_plan.
+This server owns an independent native CAD automation engine. Read solidworks://guide for native geometry conventions. Millimetres/degrees/kg. Create new documents for new designs; preserve the user's existing documents. In v0.7.0 the full profile publishes 123 tools (88 independent CAD plus 35 PRO); compact publishes 14 workflows and retrieves exact native schemas through pro_tool_help. Native steps still run in pro_run_plan. Existing documents require explicit allow_edit=true on open_part/open_assembly/activate_document before mutation.
 
 Start with pro_connection_doctor to establish this running server's identity and actual tool profile. The offline --connection-doctor and connection_doctor module never establish another client's live connection. --doctor remains a dependency-only check. Source/package version mismatches must be corrected through installation, not hidden. No doctor call launches configured commands or starts CAD.
 
@@ -38,7 +38,7 @@ pro_capture_view and successful render polls return inline image content. Show t
 
 STL has no unit metadata; coordinates assumed mm. Mesh volume is reported only for watertight consistently oriented nondegenerate triangles. Self-intersections and disconnected-shell winding need independent inspection; topology checks alone do not prove manufacturability.
 
-PRO instances share a cross-process CAD lease but unrelated SolidWorks automation does not. Avoid controlling the same CAD session from multiple independent servers. Native operations preserve upstream checks; there is no raw arbitrary VBA/Python/shell execution tool.
+PRO instances share a cross-process CAD lease but unrelated SolidWorks automation does not. Avoid controlling the same CAD session from multiple independent servers. Native operations verify active-target identity, feature errors and restoration receipts; there is no raw arbitrary VBA/Python/shell execution tool. Undo verification covers the reported feature/configuration/error/volume signature and does not prove every internal CAD state was restored. Unavailable rollback stays explicitly unverified.
 
 Output files use unique names. Only registered server-produced files are readable as solidworks-pro://artifact resources. Large files remain local paths. The audit contains plan outcomes and timings without full arguments.
 

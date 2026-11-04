@@ -38,7 +38,8 @@ def _same_document(left, right) -> bool:
     """Compare COM identities on the worker, never titles alone."""
     if left is None or right is None:
         return False
-    return getattr(left, "_oleobj_", left) == getattr(right, "_oleobj_", right)
+    from .native.session import same_object
+    return same_object(left, right)
 
 
 def _sha(path: Path) -> str:
@@ -119,7 +120,7 @@ class _ScratchFixture:
                 title = owned[0].GetTitle()
                 if sum(d.GetTitle() == title for d in documents) != 1:
                     raise RenderValidationError("FIXTURE_OWNERSHIP_UNKNOWN", "Document title is ambiguous; nothing closed.")
-                session._sw.CloseDoc(title)
+                session.close_document(owned[0])
                 closed.append(title)
             remaining = session._open_documents()
             still_open = any(_same_document(d, self.document)

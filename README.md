@@ -2,15 +2,15 @@
 
 # SolidWorks MCP PRO
 
-**From design requirements to verified CAD and native product renders.**
+**An independent CAD automation engine. Verified geometry. Native product renders.**
 
-[![Version](https://img.shields.io/badge/release-v0.6.0-14b8a6)](https://github.com/U-C4N/Solidworks-MCP-PRO/releases/tag/v0.6.0)
+[![Version](https://img.shields.io/badge/version-v0.7.0-14b8a6)](CHANGELOG.md)
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](pyproject.toml)
 [![Platform](https://img.shields.io/badge/native_CAD-Windows-0078D4)](#requirements)
-[![Tests](https://img.shields.io/badge/Windows_tests-1%2C326_passing-22c55e)](docs/validation-v0.6.0.md)
+[![Engine](https://img.shields.io/badge/CAD_tools-88_independent-22c55e)](docs/native-engine.md)
 [![License](https://img.shields.io/badge/license-MIT-slategray)](LICENSE)
 
-[Quick start](#quick-start) &nbsp;·&nbsp; [What you can do](#what-you-can-do) &nbsp;·&nbsp; [Examples](#workflow-examples) &nbsp;·&nbsp; [Verification](#verification) &nbsp;·&nbsp; [Download](https://github.com/U-C4N/Solidworks-MCP-PRO/releases/tag/v0.6.0)
+[Quick start](#quick-start) &nbsp;·&nbsp; [What you can do](#what-you-can-do) &nbsp;·&nbsp; [Examples](#workflow-examples) &nbsp;·&nbsp; [Native engine](docs/native-engine.md) &nbsp;·&nbsp; [Verification](#verification)
 
 </div>
 
@@ -18,10 +18,12 @@
 
 A local **Model Context Protocol (MCP) server** that connects an AI assistant to your running SOLIDWORKS session. Build and inspect native models, test explicit requirements, compare isolated part variants, and produce real SOLIDWORKS Visualize images—with measurements and artifacts you can inspect.
 
+**v0.7.0 replaces the external CAD MCP dependency with 88 independently implemented tools.** The native binding, STA worker, document policy, geometry operations and transaction guard live in this repository. SOLIDWORKS supplies the licensed CAD application and geometry kernel. [Engine architecture and tool catalogue](docs/native-engine.md).
+
 | Full profile | Compact profile | Parameter studies | Product shot packs |
 |:---:|:---:|:---:|:---:|
 | **123 tools** | **14 workflow tools** | **Up to 16 variants** | **Up to 12 shots** |
-| 88 inherited CAD + 35 PRO | On-demand schemas | 1–2 driving dimensions | Square, landscape, portrait |
+| 88 independent CAD + 35 PRO | On-demand schemas | 1–2 driving dimensions | Square, landscape, portrait |
 
 ## What you can do
 
@@ -188,16 +190,16 @@ Concise responses retain counts, failures, cleanup and report links. Full eviden
 
 ## More of the toolkit
 
-- **Native modeling:** Sketches, dimensions, solid features, assemblies, inspection, and export through the inherited CAD engine.
+- **Native modeling:** Independent sketches, extrusions, revolutions, sweeps, lofts, holes, ribs, patterns, shelling, body operations, dimensions, equations, materials, drawings and export.
 - **Health and repair:** Feature/equation/reference/mate diagnosis, optional deep checks, repair planning and separately authorized application.
 - **Presentation:** RGB batches, installed `.p2m` appearances, HDRI/background controls, supported light settings, model-view and named cameras.
 - **Assembly preparation:** Reference-preserving cloning, configuration selection, explicit poses and visibility control.
 - **Offline inspection:** STL topology/bounds/volume inspection, standalone HTML viewers, and SVG previews.
-- **Animation groundwork:** Native frame-preparation tools and geometric sheet bending. A general one-call video tool is outside v0.6.0. [Animation scope](docs/animation.md).
+- **Animation groundwork:** Native frame-preparation tools and geometric sheet bending. [Animation scope](docs/animation.md).
 
 ## Verification
 
-**1,326 local Windows tests passed**, alongside Ruff and the stdio smoke check. The GitHub matrix covers Windows/Linux with Python 3.11/3.12; Windows COM contracts are skipped on Linux. Automated tests and native acceptance are reported separately.
+Portable automated tests, Windows COM contracts and real CAD acceptance are reported separately. The independent engine is tested with the external CAD MCP package uninstalled. The GitHub matrix covers Windows/Linux with Python 3.11/3.12; Windows COM contracts are skipped on Linux.
 
 Real acceptance on **SOLIDWORKS 2026 SP4.1** checked analytic plate volume, an intentionally failing requirement, three isolated variants, assembly bounds/clearance/mass, add-in renders, project-camera shot packs, and verified cleanup. This is evidence for the documented fixture and installation, not universal CAD or renderer compatibility.
 
@@ -211,6 +213,7 @@ Native opt-in acceptance uses newly generated scratch documents and requires an 
 
 ```powershell
 .\.venv\Scripts\python.exe scripts\validate_render_live.py --live --load-addin --output artifacts\render-check-new
+.\.venv\Scripts\python.exe scripts\validate_native_core_live.py --live --group all --output artifacts\native-core-check-new
 .\.venv\Scripts\python.exe scripts\validate_engineering_live.py --live --render --render-route project --output artifacts\engineering-check-new
 ```
 
@@ -258,8 +261,8 @@ flowchart LR
 | [Configuration examples](configs/) | [v0.6.0 verification](docs/validation-v0.6.0.md) | [Animation groundwork](docs/animation.md) |
 | [Releases and packages](https://github.com/U-C4N/Solidworks-MCP-PRO/releases) | [Earlier workflow contracts](docs/fast-workflows.md) | [Historical performance evidence](docs/performance-benchmark.md) |
 
-## Credits and license
+## License
 
-PRO extends the pinned **[`hjbaard/SolidWorks-MCP` 0.19.0](https://github.com/hjbaard/SolidWorks-MCP/releases/tag/v0.19.0)** engine. Its 88 inherited CAD tools remain upstream work; this project adds the PRO workflows and integration layer. [Third-party notices](THIRD_PARTY_NOTICES.md).
+The current CAD automation engine is implemented in this repository and requires no external CAD MCP engine. The project uses the Python MCP SDK and the libraries listed in [third-party notices](THIRD_PARTY_NOTICES.md). Versioned reports describe the implementation used by that release; historical benchmark timings do not measure the new engine.
 
 Released under the **[MIT license](LICENSE)**. SOLIDWORKS and Visualize are trademarks of their respective owners. This is an independent integration.

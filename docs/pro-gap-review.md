@@ -1,5 +1,7 @@
 # PRO gap review and regression evidence — 3 November 2026
 
+> Historical report for the releases named below. Version 0.7.0 replaces the former external CAD engine with the [independent native engine](native-engine.md); these findings and timings do not measure that rewrite.
+
 This review checked the implemented PRO server against reproducible safety and
 verification requirements. It is not a tool-count comparison or a claim that
 every competitor was run successfully. All tests described here use synthetic

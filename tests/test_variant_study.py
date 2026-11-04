@@ -87,6 +87,7 @@ class Model:
         self.path, self.kind = str(path), kind
         self.config, self.stamp, self.dirty = "Default", 1, False
         self.read_only, self.view_only, self.sketch = False, False, None
+        self.Visible = True
         self.writes, self.saves, self.rebuilds = [], [], []
         self.rebuild_ok, self.save_ignored, self.failed_feature = True, False, False
         self.density = 7850.
@@ -160,6 +161,7 @@ class App:
     def __init__(self, source):
         self.source = source
         self.ActiveDoc = source
+        self.Visible = True
         self.documents = [source]
         self.opened, self.closed, self.activations, self.candidates = [], [], [], []
         self.dependencies = None
@@ -189,7 +191,10 @@ class App:
         self.closed.append(title)
         if self.refuse_close:
             return
-        self.documents = [model for model in self.documents if model.GetTitle() != title]
+        # Native CloseDoc also retires other non-active hidden documents.
+        self.documents = [model for model in self.documents if model.GetTitle() != title
+                          and (model.Visible or model is self.ActiveDoc)]
+        self.Visible = True
         if self.ActiveDoc is not None and self.ActiveDoc.GetTitle() == title:
             self.ActiveDoc = self.documents[0] if self.documents else None
 
@@ -299,6 +304,47 @@ def test_two_parameter_study_enumerates_explicit_product(fixture):
         {DIMENSION: 4., SECOND_DIMENSION: 20.}, {DIMENSION: 4., SECOND_DIMENSION: 30.},
         {DIMENSION: 8., SECOND_DIMENSION: 20.}, {DIMENSION: 8., SECOND_DIMENSION: 30.},
     ]
+    assert_source_untouched(fixture)
+
+
+def test_candidate_cleanup_preserves_hidden_source_and_dirty_foreign_document(fixture):
+    source, app, _ = fixture
+    foreign_path = source.parent / "unrelated.sldprt"
+    foreign_path.write_bytes(b"foreign bytes must survive")
+    foreign = Model(foreign_path)
+    foreign.dirty, foreign.Visible = True, False
+    app.documents.append(foreign)
+    app.source.Visible, app.Visible = False, False
+    foreign_state = study._model_state(foreign)
+    result = run(fixture, dry_run=False)
+    assert result["ok"] and result["counts"]["evaluated"] == 3, result
+    assert app.documents == [app.source, foreign]
+    assert not app.source.Visible and not foreign.Visible and not app.Visible
+    assert app.ActiveDoc is app.source and study._model_state(foreign) == foreign_state
+    assert not foreign.writes and not foreign.saves and not foreign.rebuilds
+    assert foreign_path.read_bytes() == b"foreign bytes must survive"
+    assert len(app.closed) == 3 and len(result["cleanup"]["closed_owned_copies"]) == 3
+    assert_source_untouched(fixture)
+
+
+def test_candidate_cleanup_reports_foreign_document_loss_and_stops_study(fixture):
+    source, app, _ = fixture
+    foreign = Model(source.parent / "foreign.sldprt")
+    foreign.Visible = False
+    app.documents.append(foreign)
+    original_close = app.CloseDoc
+
+    def faulty_native_close(title):
+        original_close(title)
+        app.documents.remove(foreign)
+
+    app.CloseDoc = faulty_native_close
+    result = run(fixture, dry_run=False)
+    assert not result["ok"] and result["status"] == "indeterminate"
+    assert len(result["variants"]) == 1 and len(app.opened) == 1
+    assert result["cleanup"]["errors"][0]["code"] == "COPY_CLOSE_UNVERIFIED"
+    assert "FOREIGN_DOCUMENT_CLOSED" in result["cleanup"]["errors"][0]["message"]
+    assert not result["ranked_variants"] and result.get("best_variant") is None
     assert_source_untouched(fixture)
 
 

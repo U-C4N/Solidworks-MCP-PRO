@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.7.0 — 2026-11-04
+
+- Replace the external CAD MCP runtime and adapted guard with an independent
+  88-tool engine: native SDK binding, bounded STA worker, document/session policy,
+  geometry, features, assemblies, topology and offline mesh operations.
+- Preserve public tool names and units while requiring explicit edit authorization
+  for existing documents. Reject silently changed active targets and stale entity IDs.
+- Check native features, errors and measurements. Record undo availability, verify
+  the observed rollback signature, and report uncertain outcomes explicitly.
+- Retain the 35 PRO tools, compact workflow profile, rendering and engineering
+  workflows on the independent runtime. Remove the external CAD engine dependency.
+- Add separate native acceptance recipes for all 88 tools, with analytic geometry
+  expectations, prerequisite failures and owned-document cleanup evidence.
+
 ## 0.6.0 — 2026-11-04
 
 - Check explicit design requirements with verified native units, absolute/relative

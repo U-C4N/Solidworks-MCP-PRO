@@ -283,7 +283,7 @@ def test_explicit_double_math_point_for_native_dispatch(monkeypatch):
 
 def test_camera_to_feature_uses_real_query_interface(monkeypatch):
     pythoncom = pytest.importorskip("pythoncom", reason="Windows COM interface contract")
-    from solidworks_mcp import binding
+    from solidworks_mcp_pro.native import binding
     calls = []
     feature_cls = SimpleNamespace(CLSID="feature-iid")
     monkeypatch.setattr(binding, "module", lambda: SimpleNamespace(IFeature=feature_cls))

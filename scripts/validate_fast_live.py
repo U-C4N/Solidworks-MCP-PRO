@@ -143,7 +143,7 @@ async def run(output: Path, *, render: bool = False, repeats: int = 3, allow_ren
         def close_owned():
             if backend.upstream._session._sw is None:
                 return []
-            from solidworks_mcp import binding
+            from solidworks_mcp_pro.native import binding
             session = backend.upstream._session
             closed = []
             for raw in session._sw.GetDocuments() or ():

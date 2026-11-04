@@ -12,13 +12,12 @@ from contextlib import contextmanager
 def connection():
     import pythoncom
     import win32com.client
-    from solidworks_mcp import binding
+    from solidworks_mcp_pro.native import binding
 
     pythoncom.CoInitialize()
     try:
         raw = win32com.client.GetActiveObject("SldWorks.Application")
-        revision = win32com.client.dynamic.DumbDispatch(raw._oleobj_).RevisionNumber
-        module = binding._load_module(revision)
+        module = binding.module()
         app = binding.wrap(raw, module.ISldWorks)
         yield app, module, binding
     finally:

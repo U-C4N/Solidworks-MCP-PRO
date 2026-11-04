@@ -1,9 +1,8 @@
-"""Pinned upstream adapter. All CAD work stays on upstream's COM STA worker."""
+"""Independent native engine adapter; every CAD access stays on its own STA."""
 from __future__ import annotations
 
 import json
 import asyncio
-from types import MethodType
 from typing import Any
 
 from mcp import types
@@ -13,30 +12,33 @@ from .validation import guard_native_write, normalize_args, validate_result
 
 class NativeBackend:
     def __init__(self) -> None:
-        # Import lazily: offline previews and --doctor do not need a COM session.
-        import solidworks_mcp.server as upstream
-        self.upstream = upstream
+        from .native.runtime import IndependentRuntime
+        self.runtime = IndependentRuntime()
         from .diagnostics import RepairPlans
         self.repair_plans = RepairPlans()
-        if getattr(upstream, "_worker", None) is not None:
-            from .native_guard import run_guarded
-            # The engine is pinned to 0.19.0. Adapt only this session instance;
-            # upstream source and independently launched rivals stay unchanged.
-            upstream._session.run_guarded = MethodType(run_guarded, upstream._session)
+
+    @property
+    def upstream(self):
+        """Compatibility alias for older PRO integrations; this is our own runtime."""
+        return self.runtime
+
+    @upstream.setter
+    def upstream(self, runtime):
+        self.runtime = runtime
 
     @property
     def instructions(self) -> str:
-        return self.upstream.INSTRUCTIONS
+        return self.runtime.INSTRUCTIONS
 
     async def list_tools(self) -> list[types.Tool]:
-        return await self.upstream.mcp.list_tools()
+        return await self.runtime.mcp.list_tools()
 
     async def call(self, name: str, arguments: dict[str, Any]) -> dict:
         arguments = guard_native_write(name, normalize_args(name, arguments))
-        worker = getattr(self.upstream, "_worker", None)
+        worker = getattr(self.runtime, "_worker", None)
         if worker is not None and name in {"get_status", "get_mass_properties"}:
             def read():
-                session = self.upstream._session
+                session = self.runtime._session
                 try:
                     session._reattach_if_gone()
                     method = getattr(session, name)
@@ -46,14 +48,14 @@ class NativeBackend:
                         return session.run_guarded(method, **arguments)
                     return method(**arguments)
                 except Exception as exc:
-                    return self.upstream._failure(exc)
+                    return self.runtime._failure(exc)
             return validate_result(await asyncio.shield(asyncio.wrap_future(worker.submit(read))))
         try:
-            result = await self.upstream.mcp.call_tool(name, arguments)
+            result = await self.runtime.mcp.call_tool(name, arguments)
         finally:
-            # Upstream's 120s await timeout cannot stop COM. Drain the queue before
-            # releasing the outer lease, even if upstream reported a timeout.
-            worker = getattr(self.upstream, "_worker", None)
+            # A cancelled await cannot stop COM. Drain the worker before
+            # releasing the outer operation lease.
+            worker = getattr(self.runtime, "_worker", None)
             if worker is not None:
                 await asyncio.shield(asyncio.wrap_future(worker.submit(lambda: None)))
         if isinstance(result, dict):
@@ -70,16 +72,16 @@ class NativeBackend:
                     continue
                 if isinstance(value, dict):
                     return validate_result(value)
-        raise RuntimeError("Unexpected upstream response; refusing to report success")
+        raise RuntimeError("Unexpected native runtime response; refusing to report success")
 
     async def visualize(self, operation: str, **kwargs) -> dict:
         from . import visualize_bridge
-        worker = getattr(self.upstream, "_worker", None)
+        worker = getattr(self.runtime, "_worker", None)
         if worker is None:
             return {"ok": False, "error": "Visualize requires Windows and SOLIDWORKS 2025 or newer"}
 
         def run():
-            session = self.upstream._session
+            session = self.runtime._session
             app = session._ensure()
             values = dict(kwargs)
             exact_active = values.pop("_exact_active", False)
@@ -110,7 +112,7 @@ class NativeBackend:
         return await asyncio.shield(asyncio.wrap_future(worker.submit(run)))
 
     def guide(self) -> str:
-        return self.upstream.guide()
+        return self.runtime.guide()
 
     async def _workflow_native(self, function) -> dict:
         """Submit once and retain native ownership through cancellation.
@@ -118,7 +120,7 @@ class NativeBackend:
         The enclosing operation owns the CAD lease. A cancelled await must not
         allow its cleanup to race a still-running STA mutation.
         """
-        worker = getattr(self.upstream, "_worker", None)
+        worker = getattr(self.runtime, "_worker", None)
         if worker is None:
             return {"ok": False, "code": "NATIVE_UNAVAILABLE", "error": "Windows and SOLIDWORKS required"}
         future = asyncio.wrap_future(worker.submit(function))
@@ -142,7 +144,7 @@ class NativeBackend:
     async def health(self, operation: str, **kwargs) -> dict:
         def run():
             from .diagnostics import diagnose
-            session = self.upstream._session
+            session = self.runtime._session
             previous = None
             try:
                 # The application flag batches COM reads without touching the
@@ -167,7 +169,7 @@ class NativeBackend:
     async def colorize(self, **kwargs) -> dict:
         def run():
             from .color_bridge import colorize
-            session = self.upstream._session
+            session = self.runtime._session
             app = session._ensure()
             previous = session._command_in_progress(True)
             try:
@@ -180,20 +182,20 @@ class NativeBackend:
         """Read exact active geometry without activating, rebuilding or saving."""
         def run():
             from .design_validation import validate_design
-            return validate_design(self.upstream._session._sw, **kwargs)
+            return validate_design(self.runtime._session._sw, **kwargs)
         return await self._workflow_native(run)
 
     async def variant_study(self, **kwargs) -> dict:
         """Run isolated part copies on the single native STA worker."""
         def run():
             from .variant_study import run_variant_study
-            return run_variant_study(self.upstream._session._sw, **kwargs)
+            return run_variant_study(self.runtime._session._sw, **kwargs)
         return await self._workflow_native(run)
 
     async def camera_state(self, action: str, **kwargs) -> dict:
         def run():
             from .render_state_bridge import camera_state
-            return camera_state(self.upstream._session._ensure(), action, **kwargs)
+            return camera_state(self.runtime._session._ensure(), action, **kwargs)
         return await self._workflow_native(run)
 
     async def pose_state(self, action: str, **kwargs) -> dict:
@@ -201,7 +203,7 @@ class NativeBackend:
             raise ValueError("Unsupported pose state operation")
         def run():
             from .render_state_bridge import restore_poses
-            session = self.upstream._session
+            session = self.runtime._session
             previous = session._command_in_progress(True)
             try:
                 return restore_poses(session._ensure(), **kwargs)
@@ -210,13 +212,13 @@ class NativeBackend:
         return await self._workflow_native(run)
 
     async def animation(self, operation: str, **kwargs) -> dict:
-        worker = getattr(self.upstream, "_worker", None)
+        worker = getattr(self.runtime, "_worker", None)
         if worker is None:
             return {"ok": False, "error": "Assembly animation requires Windows and SOLIDWORKS"}
 
         def run():
             from . import animation_bridge
-            session = self.upstream._session
+            session = self.runtime._session
             app = session._ensure()
             values = dict(kwargs)
             exact_active = values.pop("_exact_active", False)
@@ -241,6 +243,6 @@ class NativeBackend:
         return await asyncio.shield(asyncio.wrap_future(worker.submit(run)))
 
     def close(self) -> None:
-        worker = getattr(self.upstream, "_worker", None)
+        worker = getattr(self.runtime, "_worker", None)
         if worker is not None:
             worker.shutdown()

@@ -1,5 +1,7 @@
 # SolidWorks MCP research and Visualize API evidence
 
+> Historical report for the releases named below. Version 0.7.0 replaces the former external CAD engine with the [independent native engine](native-engine.md); these findings and timings do not measure that rewrite.
+
 Checked on **3 November 2026**. Repository/release times below are UTC; add three
 hours for Istanbul. This is a dated, non-exhaustive comparison, not a claim that
 one project is universally newest or best. Exact hashes, API URLs and the PyPI

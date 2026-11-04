@@ -1,6 +1,6 @@
 # Connect Codex or Claude
 
-Generated snippets select `--tool-profile compact` (14 workflow tools in v0.6.0).
+Generated snippets select `--tool-profile compact` (14 workflow tools in v0.7.0).
 Existing client settings are not changed. The server itself still defaults to
 `full`; generate that variant with `python scripts/configure_clients.py
 --tool-profile full`. Compact retains native modelling through `pro_run_plan`

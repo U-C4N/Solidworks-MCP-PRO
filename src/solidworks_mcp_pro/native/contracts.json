@@ -1,0 +1,2291 @@
+{
+  "get_status": {
+    "properties": {},
+    "type": "object"
+  },
+  "new_part": {
+    "properties": {},
+    "type": "object"
+  },
+  "add_box": {
+    "properties": {
+      "width_mm": {
+        "type": "number"
+      },
+      "height_mm": {
+        "type": "number"
+      },
+      "depth_mm": {
+        "type": "number"
+      },
+      "name": {
+        "default": "BlockExtrude",
+        "type": "string"
+      }
+    },
+    "required": [
+      "width_mm",
+      "height_mm",
+      "depth_mm"
+    ],
+    "type": "object"
+  },
+  "add_extruded_profile": {
+    "properties": {
+      "points_mm": {
+        "items": {},
+        "type": "array"
+      },
+      "depth_mm": {
+        "type": "number"
+      },
+      "name": {
+        "default": "Extrude",
+        "type": "string"
+      },
+      "corner_radii_mm": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "items": {},
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "rotate_deg": {
+        "default": 0.0,
+        "type": "number"
+      },
+      "about_mm": {
+        "anyOf": [
+          {
+            "items": {},
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "draft_deg": {
+        "default": 0.0,
+        "type": "number"
+      },
+      "merge": {
+        "default": true,
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "points_mm",
+      "depth_mm"
+    ],
+    "type": "object"
+  },
+  "add_extruded_spline": {
+    "properties": {
+      "points_mm": {
+        "items": {},
+        "type": "array"
+      },
+      "depth_mm": {
+        "type": "number"
+      },
+      "name": {
+        "default": "Spline",
+        "type": "string"
+      }
+    },
+    "required": [
+      "points_mm",
+      "depth_mm"
+    ],
+    "type": "object"
+  },
+  "add_disc": {
+    "properties": {
+      "diameter_mm": {
+        "type": "number"
+      },
+      "thickness_mm": {
+        "type": "number"
+      },
+      "name": {
+        "default": "Disc",
+        "type": "string"
+      },
+      "x_mm": {
+        "default": 0.0,
+        "type": "number"
+      },
+      "y_mm": {
+        "default": 0.0,
+        "type": "number"
+      }
+    },
+    "required": [
+      "diameter_mm",
+      "thickness_mm"
+    ],
+    "type": "object"
+  },
+  "add_cylinder": {
+    "properties": {
+      "diameter_mm": {
+        "type": "number"
+      },
+      "height_mm": {
+        "type": "number"
+      },
+      "name": {
+        "default": "Revolve",
+        "type": "string"
+      }
+    },
+    "required": [
+      "diameter_mm",
+      "height_mm"
+    ],
+    "type": "object"
+  },
+  "add_cone": {
+    "properties": {
+      "bottom_diameter_mm": {
+        "type": "number"
+      },
+      "top_diameter_mm": {
+        "type": "number"
+      },
+      "height_mm": {
+        "type": "number"
+      },
+      "name": {
+        "default": "Revolve",
+        "type": "string"
+      }
+    },
+    "required": [
+      "bottom_diameter_mm",
+      "top_diameter_mm",
+      "height_mm"
+    ],
+    "type": "object"
+  },
+  "add_revolved_profile": {
+    "properties": {
+      "profile_mm": {
+        "items": {},
+        "type": "array"
+      },
+      "angle_deg": {
+        "default": 360.0,
+        "type": "number"
+      },
+      "name": {
+        "default": "Revolve",
+        "type": "string"
+      },
+      "corner_radii_mm": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "items": {},
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "axis_mm": {
+        "anyOf": [
+          {
+            "items": {},
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      }
+    },
+    "required": [
+      "profile_mm"
+    ],
+    "type": "object"
+  },
+  "add_swept_pipe": {
+    "properties": {
+      "path_mm": {
+        "items": {},
+        "type": "array"
+      },
+      "diameter_mm": {
+        "type": "number"
+      },
+      "bend_radius_mm": {
+        "default": 0.0,
+        "type": "number"
+      },
+      "name": {
+        "default": "Pipe",
+        "type": "string"
+      },
+      "smooth": {
+        "default": false,
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "path_mm",
+      "diameter_mm"
+    ],
+    "type": "object"
+  },
+  "add_swept_profile": {
+    "properties": {
+      "profile_mm": {
+        "items": {},
+        "type": "array"
+      },
+      "path_mm": {
+        "items": {},
+        "type": "array"
+      },
+      "bend_radius_mm": {
+        "default": 0.0,
+        "type": "number"
+      },
+      "name": {
+        "default": "Sweep",
+        "type": "string"
+      },
+      "corner_radii_mm": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "items": {},
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      }
+    },
+    "required": [
+      "profile_mm",
+      "path_mm"
+    ],
+    "type": "object"
+  },
+  "add_lofted_solid": {
+    "properties": {
+      "profiles_mm": {
+        "items": {},
+        "type": "array"
+      },
+      "heights_mm": {
+        "items": {},
+        "type": "array"
+      },
+      "name": {
+        "default": "Loft",
+        "type": "string"
+      }
+    },
+    "required": [
+      "profiles_mm",
+      "heights_mm"
+    ],
+    "type": "object"
+  },
+  "loft_sketches": {
+    "properties": {
+      "sketches": {
+        "items": {},
+        "type": "array"
+      },
+      "name": {
+        "default": "Loft",
+        "type": "string"
+      }
+    },
+    "required": [
+      "sketches"
+    ],
+    "type": "object"
+  },
+  "cut_profile_through_plane": {
+    "properties": {
+      "points_mm": {
+        "items": {},
+        "type": "array"
+      },
+      "plane": {
+        "type": "string"
+      },
+      "depth_mm": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "name": {
+        "default": "Cut",
+        "type": "string"
+      },
+      "corner_radii_mm": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "items": {},
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "keep_inside": {
+        "default": false,
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "points_mm",
+      "plane"
+    ],
+    "type": "object"
+  },
+  "add_plane": {
+    "properties": {
+      "base": {
+        "default": "front",
+        "type": "string"
+      },
+      "offset_mm": {
+        "default": 0.0,
+        "type": "number"
+      },
+      "angle_deg": {
+        "default": 0.0,
+        "type": "number"
+      },
+      "about": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "name": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      }
+    },
+    "type": "object"
+  },
+  "add_extruded_profile_on_plane": {
+    "properties": {
+      "points_mm": {
+        "items": {},
+        "type": "array"
+      },
+      "plane": {
+        "type": "string"
+      },
+      "depth_mm": {
+        "type": "number"
+      },
+      "reverse": {
+        "default": false,
+        "type": "boolean"
+      },
+      "name": {
+        "default": "Extrude",
+        "type": "string"
+      },
+      "corner_radii_mm": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "items": {},
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "draft_deg": {
+        "default": 0.0,
+        "type": "number"
+      },
+      "merge": {
+        "default": true,
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "points_mm",
+      "plane",
+      "depth_mm"
+    ],
+    "type": "object"
+  },
+  "list_bodies": {
+    "properties": {},
+    "type": "object"
+  },
+  "combine_bodies": {
+    "properties": {
+      "operation": {
+        "type": "string"
+      },
+      "main": {
+        "type": "string"
+      },
+      "tools": {
+        "anyOf": [
+          {
+            "items": {},
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "name": {
+        "default": "Combine",
+        "type": "string"
+      }
+    },
+    "required": [
+      "operation",
+      "main"
+    ],
+    "type": "object"
+  },
+  "split_body": {
+    "properties": {
+      "plane": {
+        "type": "string"
+      },
+      "name": {
+        "default": "Split",
+        "type": "string"
+      }
+    },
+    "required": [
+      "plane"
+    ],
+    "type": "object"
+  },
+  "add_thread": {
+    "properties": {
+      "size": {
+        "type": "string"
+      },
+      "x_mm": {
+        "type": "number"
+      },
+      "y_mm": {
+        "type": "number"
+      },
+      "z_mm": {
+        "type": "number"
+      },
+      "length_mm": {
+        "type": "number"
+      },
+      "internal": {
+        "default": false,
+        "type": "boolean"
+      },
+      "name": {
+        "default": "Thread",
+        "type": "string"
+      }
+    },
+    "required": [
+      "size",
+      "x_mm",
+      "y_mm",
+      "z_mm",
+      "length_mm"
+    ],
+    "type": "object"
+  },
+  "add_rib": {
+    "properties": {
+      "start_mm": {
+        "items": {},
+        "type": "array"
+      },
+      "end_mm": {
+        "items": {},
+        "type": "array"
+      },
+      "toward_mm": {
+        "items": {},
+        "type": "array"
+      },
+      "thickness_mm": {
+        "type": "number"
+      },
+      "z_mm": {
+        "type": "number"
+      },
+      "name": {
+        "default": "Rib",
+        "type": "string"
+      }
+    },
+    "required": [
+      "start_mm",
+      "end_mm",
+      "toward_mm",
+      "thickness_mm",
+      "z_mm"
+    ],
+    "type": "object"
+  },
+  "add_hole": {
+    "properties": {
+      "diameter_mm": {
+        "type": "number"
+      },
+      "x_mm": {
+        "type": "number"
+      },
+      "y_mm": {
+        "type": "number"
+      },
+      "name": {
+        "default": "Hole",
+        "type": "string"
+      }
+    },
+    "required": [
+      "diameter_mm",
+      "x_mm",
+      "y_mm"
+    ],
+    "type": "object"
+  },
+  "add_counterbore_hole": {
+    "properties": {
+      "clearance_diameter_mm": {
+        "type": "number"
+      },
+      "cbore_diameter_mm": {
+        "type": "number"
+      },
+      "cbore_depth_mm": {
+        "type": "number"
+      },
+      "x_mm": {
+        "type": "number"
+      },
+      "y_mm": {
+        "type": "number"
+      },
+      "name": {
+        "default": "Counterbore",
+        "type": "string"
+      }
+    },
+    "required": [
+      "clearance_diameter_mm",
+      "cbore_diameter_mm",
+      "cbore_depth_mm",
+      "x_mm",
+      "y_mm"
+    ],
+    "type": "object"
+  },
+  "add_hole_on_face": {
+    "properties": {
+      "diameter_mm": {
+        "type": "number"
+      },
+      "face": {
+        "type": "string"
+      },
+      "x_mm": {
+        "type": "number"
+      },
+      "y_mm": {
+        "type": "number"
+      },
+      "z_mm": {
+        "type": "number"
+      },
+      "depth_mm": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "name": {
+        "default": "Hole",
+        "type": "string"
+      },
+      "from_edges": {
+        "default": false,
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "diameter_mm",
+      "face",
+      "x_mm",
+      "y_mm",
+      "z_mm"
+    ],
+    "type": "object"
+  },
+  "add_hole_wizard": {
+    "properties": {
+      "kind": {
+        "type": "string"
+      },
+      "size": {
+        "type": "string"
+      },
+      "face": {
+        "type": "string"
+      },
+      "x_mm": {
+        "type": "number"
+      },
+      "y_mm": {
+        "type": "number"
+      },
+      "z_mm": {
+        "type": "number"
+      },
+      "depth_mm": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "fit": {
+        "default": "normal",
+        "type": "string"
+      },
+      "thread": {
+        "default": "cosmetic",
+        "type": "string"
+      },
+      "name": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      }
+    },
+    "required": [
+      "kind",
+      "size",
+      "face",
+      "x_mm",
+      "y_mm",
+      "z_mm"
+    ],
+    "type": "object"
+  },
+  "add_boss_on_face": {
+    "properties": {
+      "diameter_mm": {
+        "type": "number"
+      },
+      "face": {
+        "type": "string"
+      },
+      "x_mm": {
+        "type": "number"
+      },
+      "y_mm": {
+        "type": "number"
+      },
+      "z_mm": {
+        "type": "number"
+      },
+      "height_mm": {
+        "type": "number"
+      },
+      "name": {
+        "default": "Boss",
+        "type": "string"
+      },
+      "from_edges": {
+        "default": false,
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "diameter_mm",
+      "face",
+      "x_mm",
+      "y_mm",
+      "z_mm",
+      "height_mm"
+    ],
+    "type": "object"
+  },
+  "add_extruded_profile_on_face": {
+    "properties": {
+      "points_mm": {
+        "items": {},
+        "type": "array"
+      },
+      "face": {
+        "type": "string"
+      },
+      "depth_mm": {
+        "type": "number"
+      },
+      "name": {
+        "default": "Boss",
+        "type": "string"
+      },
+      "corner_radii_mm": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "items": {},
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      }
+    },
+    "required": [
+      "points_mm",
+      "face",
+      "depth_mm"
+    ],
+    "type": "object"
+  },
+  "add_text_on_face": {
+    "properties": {
+      "text": {
+        "type": "string"
+      },
+      "face": {
+        "type": "string"
+      },
+      "x_mm": {
+        "type": "number"
+      },
+      "y_mm": {
+        "type": "number"
+      },
+      "z_mm": {
+        "type": "number"
+      },
+      "height_mm": {
+        "type": "number"
+      },
+      "depth_mm": {
+        "type": "number"
+      },
+      "emboss": {
+        "default": false,
+        "type": "boolean"
+      },
+      "font": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "name": {
+        "default": "Text",
+        "type": "string"
+      }
+    },
+    "required": [
+      "text",
+      "face",
+      "x_mm",
+      "y_mm",
+      "z_mm",
+      "height_mm",
+      "depth_mm"
+    ],
+    "type": "object"
+  },
+  "cut_profile": {
+    "properties": {
+      "points_mm": {
+        "items": {},
+        "type": "array"
+      },
+      "depth_mm": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "name": {
+        "default": "Cut",
+        "type": "string"
+      },
+      "corner_radii_mm": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "items": {},
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "rotate_deg": {
+        "default": 0.0,
+        "type": "number"
+      },
+      "about_mm": {
+        "anyOf": [
+          {
+            "items": {},
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      }
+    },
+    "required": [
+      "points_mm"
+    ],
+    "type": "object"
+  },
+  "cut_profile_on_face": {
+    "properties": {
+      "points_mm": {
+        "items": {},
+        "type": "array"
+      },
+      "face": {
+        "type": "string"
+      },
+      "depth_mm": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "name": {
+        "default": "Cut",
+        "type": "string"
+      },
+      "corner_radii_mm": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "items": {},
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      }
+    },
+    "required": [
+      "points_mm",
+      "face"
+    ],
+    "type": "object"
+  },
+  "cut_offset_pocket": {
+    "properties": {
+      "face": {
+        "type": "string"
+      },
+      "x_mm": {
+        "type": "number"
+      },
+      "y_mm": {
+        "type": "number"
+      },
+      "z_mm": {
+        "type": "number"
+      },
+      "rim_mm": {
+        "type": "number"
+      },
+      "depth_mm": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "name": {
+        "default": "Pocket",
+        "type": "string"
+      }
+    },
+    "required": [
+      "face",
+      "x_mm",
+      "y_mm",
+      "z_mm",
+      "rim_mm"
+    ],
+    "type": "object"
+  },
+  "cut_slot": {
+    "properties": {
+      "length_mm": {
+        "type": "number"
+      },
+      "width_mm": {
+        "type": "number"
+      },
+      "x_mm": {
+        "type": "number"
+      },
+      "y_mm": {
+        "type": "number"
+      },
+      "angle_deg": {
+        "default": 0.0,
+        "type": "number"
+      },
+      "depth_mm": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "name": {
+        "default": "Slot",
+        "type": "string"
+      }
+    },
+    "required": [
+      "length_mm",
+      "width_mm",
+      "x_mm",
+      "y_mm"
+    ],
+    "type": "object"
+  },
+  "add_extruded_slot": {
+    "properties": {
+      "start_mm": {
+        "items": {},
+        "type": "array"
+      },
+      "end_mm": {
+        "items": {},
+        "type": "array"
+      },
+      "width_mm": {
+        "type": "number"
+      },
+      "depth_mm": {
+        "type": "number"
+      },
+      "name": {
+        "default": "Slot",
+        "type": "string"
+      }
+    },
+    "required": [
+      "start_mm",
+      "end_mm",
+      "width_mm",
+      "depth_mm"
+    ],
+    "type": "object"
+  },
+  "extrude_sketch": {
+    "properties": {
+      "sketch": {
+        "type": "string"
+      },
+      "depth_mm": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "reverse": {
+        "default": false,
+        "type": "boolean"
+      },
+      "name": {
+        "default": "Extrude",
+        "type": "string"
+      },
+      "up_to": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      }
+    },
+    "required": [
+      "sketch"
+    ],
+    "type": "object"
+  },
+  "add_sketch": {
+    "properties": {
+      "plane": {
+        "type": "string"
+      },
+      "start_mm": {
+        "items": {},
+        "type": "array"
+      },
+      "segments": {
+        "items": {},
+        "type": "array"
+      },
+      "name": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      }
+    },
+    "required": [
+      "plane",
+      "start_mm",
+      "segments"
+    ],
+    "type": "object"
+  },
+  "cut_sketch": {
+    "properties": {
+      "sketch": {
+        "type": "string"
+      },
+      "depth_mm": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "reverse": {
+        "default": false,
+        "type": "boolean"
+      },
+      "name": {
+        "default": "Cut",
+        "type": "string"
+      }
+    },
+    "required": [
+      "sketch"
+    ],
+    "type": "object"
+  },
+  "add_fillet": {
+    "properties": {
+      "radius_mm": {
+        "type": "number"
+      },
+      "edges": {
+        "default": "all",
+        "type": "string"
+      },
+      "name": {
+        "default": "Fillet",
+        "type": "string"
+      },
+      "radii_at_mm": {
+        "anyOf": [
+          {
+            "items": {},
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "skip_shorter_mm": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "tangent_propagation": {
+        "default": false,
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "radius_mm"
+    ],
+    "type": "object"
+  },
+  "add_full_round": {
+    "properties": {
+      "face": {
+        "type": "string"
+      },
+      "x_mm": {
+        "type": "number"
+      },
+      "y_mm": {
+        "type": "number"
+      },
+      "z_mm": {
+        "type": "number"
+      },
+      "name": {
+        "default": "FullRound",
+        "type": "string"
+      }
+    },
+    "required": [
+      "face",
+      "x_mm",
+      "y_mm",
+      "z_mm"
+    ],
+    "type": "object"
+  },
+  "add_chamfer": {
+    "properties": {
+      "distance_mm": {
+        "type": "number"
+      },
+      "edges": {
+        "default": "all",
+        "type": "string"
+      },
+      "name": {
+        "default": "Chamfer",
+        "type": "string"
+      },
+      "angle_deg": {
+        "default": 45.0,
+        "type": "number"
+      },
+      "from_face": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      }
+    },
+    "required": [
+      "distance_mm"
+    ],
+    "type": "object"
+  },
+  "add_linear_pattern": {
+    "properties": {
+      "count": {
+        "type": "integer"
+      },
+      "spacing_mm": {
+        "type": "number"
+      },
+      "direction": {
+        "default": "+x",
+        "type": "string"
+      },
+      "feature_name": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      }
+    },
+    "required": [
+      "count",
+      "spacing_mm"
+    ],
+    "type": "object"
+  },
+  "add_circular_pattern": {
+    "properties": {
+      "count": {
+        "type": "integer"
+      },
+      "center_x_mm": {
+        "type": "number"
+      },
+      "center_y_mm": {
+        "type": "number"
+      },
+      "feature_name": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      }
+    },
+    "required": [
+      "count",
+      "center_x_mm",
+      "center_y_mm"
+    ],
+    "type": "object"
+  },
+  "add_mirror": {
+    "properties": {
+      "plane": {
+        "type": "string"
+      },
+      "offset_mm": {
+        "default": 0.0,
+        "type": "number"
+      },
+      "features": {
+        "anyOf": [
+          {
+            "items": {},
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "name": {
+        "default": "Mirror",
+        "type": "string"
+      }
+    },
+    "required": [
+      "plane"
+    ],
+    "type": "object"
+  },
+  "add_shell": {
+    "properties": {
+      "thickness_mm": {
+        "type": "number"
+      },
+      "open_face": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "items": {},
+            "type": "array"
+          }
+        ],
+        "default": "+z"
+      }
+    },
+    "required": [
+      "thickness_mm"
+    ],
+    "type": "object"
+  },
+  "set_dimension": {
+    "properties": {
+      "dimension_name": {
+        "type": "string"
+      },
+      "value_mm": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "dimension_name",
+      "value_mm"
+    ],
+    "type": "object"
+  },
+  "slice_mesh": {
+    "properties": {
+      "path": {
+        "type": "string"
+      },
+      "axis": {
+        "type": "string"
+      },
+      "heights_mm": {
+        "items": {},
+        "type": "array"
+      },
+      "frame": {
+        "default": "object",
+        "type": "string"
+      }
+    },
+    "required": [
+      "path",
+      "axis",
+      "heights_mm"
+    ],
+    "type": "object"
+  },
+  "compare_with_mesh": {
+    "properties": {
+      "path": {
+        "type": "string"
+      },
+      "axis": {
+        "type": "string"
+      },
+      "heights_mm": {
+        "items": {},
+        "type": "array"
+      },
+      "frame": {
+        "default": "object",
+        "type": "string"
+      },
+      "offset_mm": {
+        "anyOf": [
+          {
+            "items": {},
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      }
+    },
+    "required": [
+      "path",
+      "axis",
+      "heights_mm"
+    ],
+    "type": "object"
+  },
+  "list_dimensions": {
+    "properties": {
+      "contains": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      }
+    },
+    "type": "object"
+  },
+  "read_sketch": {
+    "properties": {
+      "name": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "name"
+    ],
+    "type": "object"
+  },
+  "list_features": {
+    "properties": {},
+    "type": "object"
+  },
+  "delete_feature": {
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "with_children": {
+        "default": false,
+        "type": "boolean"
+      },
+      "with_equations": {
+        "default": false,
+        "type": "boolean"
+      },
+      "dry_run": {
+        "default": false,
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "name"
+    ],
+    "type": "object"
+  },
+  "suppress_feature": {
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "suppress": {
+        "default": true,
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "name"
+    ],
+    "type": "object"
+  },
+  "reorder_feature": {
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "before": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "name",
+      "before"
+    ],
+    "type": "object"
+  },
+  "set_appearance": {
+    "properties": {
+      "rgb": {
+        "anyOf": [
+          {
+            "items": {},
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "transparency": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "component": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      }
+    },
+    "type": "object"
+  },
+  "set_material": {
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "database": {
+        "default": "",
+        "type": "string"
+      },
+      "density_kg_m3": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      }
+    },
+    "required": [
+      "name"
+    ],
+    "type": "object"
+  },
+  "set_equation": {
+    "properties": {
+      "equation": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "equation"
+    ],
+    "type": "object"
+  },
+  "set_equations": {
+    "properties": {
+      "equations": {
+        "items": {},
+        "type": "array"
+      }
+    },
+    "required": [
+      "equations"
+    ],
+    "type": "object"
+  },
+  "list_equations": {
+    "properties": {},
+    "type": "object"
+  },
+  "delete_equation": {
+    "properties": {
+      "equation": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "equation"
+    ],
+    "type": "object"
+  },
+  "list_documents": {
+    "properties": {},
+    "type": "object"
+  },
+  "activate_document": {
+    "properties": {
+      "title": {
+        "type": "string"
+      },
+      "allow_edit": {
+        "type": "boolean",
+        "default": false
+      }
+    },
+    "required": [
+      "title"
+    ],
+    "type": "object"
+  },
+  "delete_mate": {
+    "properties": {
+      "name": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "name"
+    ],
+    "type": "object"
+  },
+  "suppress_mate": {
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "suppress": {
+        "default": true,
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "name"
+    ],
+    "type": "object"
+  },
+  "delete_component": {
+    "properties": {
+      "component": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "component"
+    ],
+    "type": "object"
+  },
+  "rebuild": {
+    "properties": {
+      "top_only": {
+        "default": false,
+        "type": "boolean"
+      }
+    },
+    "type": "object"
+  },
+  "get_mass_properties": {
+    "properties": {},
+    "type": "object"
+  },
+  "get_bounding_box": {
+    "properties": {},
+    "type": "object"
+  },
+  "list_faces": {
+    "properties": {
+      "component": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      }
+    },
+    "type": "object"
+  },
+  "list_edges": {
+    "properties": {
+      "face": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "feature": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "within_mm": {
+        "anyOf": [
+          {
+            "items": {},
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "min_length_mm": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      }
+    },
+    "type": "object"
+  },
+  "check_printability": {
+    "properties": {
+      "up": {
+        "default": "+z",
+        "type": "string"
+      },
+      "overhang_deg": {
+        "default": 45.0,
+        "type": "number"
+      },
+      "min_wall_mm": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      }
+    },
+    "type": "object"
+  },
+  "export": {
+    "properties": {
+      "path": {
+        "type": "string"
+      },
+      "file_format": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "quality": {
+        "default": "fine",
+        "type": "string"
+      },
+      "deviation_mm": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "angle_deg": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "per_component": {
+        "default": false,
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "path"
+    ],
+    "type": "object"
+  },
+  "screenshot": {
+    "properties": {
+      "path": {
+        "type": "string"
+      },
+      "view": {
+        "default": "iso",
+        "type": "string"
+      },
+      "zoom_mm": {
+        "anyOf": [
+          {
+            "items": {},
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "show_planes": {
+        "default": false,
+        "type": "boolean"
+      },
+      "from_dir": {
+        "anyOf": [
+          {
+            "items": {},
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      }
+    },
+    "required": [
+      "path"
+    ],
+    "type": "object"
+  },
+  "make_drawing": {
+    "properties": {
+      "path": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "path"
+    ],
+    "type": "object"
+  },
+  "close_part": {
+    "properties": {
+      "save": {
+        "default": false,
+        "type": "boolean"
+      }
+    },
+    "type": "object"
+  },
+  "save_part": {
+    "properties": {
+      "path": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "path"
+    ],
+    "type": "object"
+  },
+  "open_part": {
+    "properties": {
+      "path": {
+        "type": "string"
+      },
+      "allow_large": {
+        "default": false,
+        "type": "boolean"
+      },
+      "allow_edit": {
+        "type": "boolean",
+        "default": false
+      }
+    },
+    "required": [
+      "path"
+    ],
+    "type": "object"
+  },
+  "new_assembly": {
+    "properties": {},
+    "type": "object"
+  },
+  "open_assembly": {
+    "properties": {
+      "path": {
+        "type": "string"
+      },
+      "allow_large": {
+        "default": false,
+        "type": "boolean"
+      },
+      "allow_edit": {
+        "type": "boolean",
+        "default": false
+      }
+    },
+    "required": [
+      "path"
+    ],
+    "type": "object"
+  },
+  "save_assembly": {
+    "properties": {
+      "path": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "path"
+    ],
+    "type": "object"
+  },
+  "insert_component": {
+    "properties": {
+      "path": {
+        "type": "string"
+      },
+      "x_mm": {
+        "default": 0.0,
+        "type": "number"
+      },
+      "y_mm": {
+        "default": 0.0,
+        "type": "number"
+      },
+      "z_mm": {
+        "default": 0.0,
+        "type": "number"
+      },
+      "fixed": {
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      }
+    },
+    "required": [
+      "path"
+    ],
+    "type": "object"
+  },
+  "list_components": {
+    "properties": {},
+    "type": "object"
+  },
+  "replace_component": {
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "path": {
+        "type": "string"
+      },
+      "reattach_mates": {
+        "default": true,
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "name",
+      "path"
+    ],
+    "type": "object"
+  },
+  "set_component_transform": {
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "x_mm": {
+        "type": "number"
+      },
+      "y_mm": {
+        "type": "number"
+      },
+      "z_mm": {
+        "type": "number"
+      },
+      "rx_deg": {
+        "default": 0.0,
+        "type": "number"
+      },
+      "ry_deg": {
+        "default": 0.0,
+        "type": "number"
+      },
+      "rz_deg": {
+        "default": 0.0,
+        "type": "number"
+      }
+    },
+    "required": [
+      "name",
+      "x_mm",
+      "y_mm",
+      "z_mm"
+    ],
+    "type": "object"
+  },
+  "add_mate": {
+    "properties": {
+      "comp_a": {
+        "type": "string"
+      },
+      "face_a": {
+        "type": "string"
+      },
+      "comp_b": {
+        "type": "string"
+      },
+      "face_b": {
+        "type": "string"
+      },
+      "mate_type": {
+        "default": "coincident",
+        "type": "string"
+      },
+      "distance_mm": {
+        "default": 0.0,
+        "type": "number"
+      },
+      "angle_deg": {
+        "default": 0.0,
+        "type": "number"
+      },
+      "flip": {
+        "default": false,
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "comp_a",
+      "face_a",
+      "comp_b",
+      "face_b"
+    ],
+    "type": "object"
+  },
+  "check_interference": {
+    "properties": {},
+    "type": "object"
+  },
+  "measure_distance": {
+    "properties": {
+      "component_a": {
+        "type": "string"
+      },
+      "component_b": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "point_mm": {
+        "anyOf": [
+          {
+            "items": {},
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "axis_mm": {
+        "anyOf": [
+          {
+            "items": {},
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      }
+    },
+    "required": [
+      "component_a"
+    ],
+    "type": "object"
+  },
+  "check_motion": {
+    "properties": {
+      "dimension_name": {
+        "type": "string"
+      },
+      "values": {
+        "items": {},
+        "type": "array"
+      },
+      "distances": {
+        "anyOf": [
+          {
+            "items": {},
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      }
+    },
+    "required": [
+      "dimension_name",
+      "values"
+    ],
+    "type": "object"
+  },
+  "swept_region": {
+    "properties": {
+      "component": {
+        "type": "string"
+      },
+      "dimension": {
+        "type": "string"
+      },
+      "values": {
+        "items": {},
+        "type": "array"
+      },
+      "heights_mm": {
+        "items": {},
+        "type": "array"
+      },
+      "axis": {
+        "default": "z",
+        "type": "string"
+      },
+      "margin_mm": {
+        "default": 0.0,
+        "type": "number"
+      },
+      "tolerance_mm": {
+        "default": 0.2,
+        "type": "number"
+      },
+      "frame": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      }
+    },
+    "required": [
+      "component",
+      "dimension",
+      "values",
+      "heights_mm"
+    ],
+    "type": "object"
+  },
+  "get_assembly_bounding_box": {
+    "properties": {},
+    "type": "object"
+  }
+}

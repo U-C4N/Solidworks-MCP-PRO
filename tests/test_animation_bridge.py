@@ -391,7 +391,8 @@ def vtable_setup(setup, monkeypatch):
     client = SimpleNamespace(GetModule=get_module, GetActiveObject=get_active)
     monkeypatch.setitem(sys.modules, "comtypes", SimpleNamespace(client=client))
     monkeypatch.setitem(sys.modules, "comtypes.client", client)
-    monkeypatch.setitem(sys.modules, "solidworks_mcp", SimpleNamespace(binding=SimpleNamespace(module=lambda: installed)))
+    from solidworks_mcp_pro.native import binding
+    monkeypatch.setattr(binding, "module", lambda: installed)
     return app, path, output, native_app, model, calls
 
 

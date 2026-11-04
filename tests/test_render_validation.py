@@ -78,6 +78,9 @@ class Session:
         if self.close_works:
             self.documents = [d for d in self.documents if d.GetTitle() != title]
 
+    def close_document(self, document):
+        self.close_doc(document.GetTitle())
+
 
 def write_png(directory, width, height):
     directory.mkdir()

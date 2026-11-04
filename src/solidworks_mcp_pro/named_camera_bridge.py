@@ -25,7 +25,7 @@ class NamedCameraError(CameraError):
 
 def _module():
     import comtypes.client
-    from solidworks_mcp import binding
+    from .native import binding
 
     installed = binding.module()
     return comtypes.client.GetModule((str(installed.CLSID), installed.MajorVersion, installed.MinorVersion))
@@ -88,7 +88,7 @@ def _feature(camera):
     if not hasattr(camera, "_oleobj_"):
         return camera
     import pythoncom
-    from solidworks_mcp import binding
+    from .native import binding
 
     cls = binding.module().IFeature
     dispatch = camera._oleobj_.QueryInterface(cls.CLSID, pythoncom.IID_IDispatch)

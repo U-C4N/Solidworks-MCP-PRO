@@ -1,5 +1,7 @@
 # CAD latency investigation
 
+> Historical report for the releases named below. Version 0.7.0 replaces the former external CAD engine with the [independent native engine](native-engine.md); these findings and timings do not measure that rewrite.
+
 Analysis date: 2026-11-03. This report distinguishes the original recorded benchmark, local Python-only microprofiling, and separately instrumented native diagnostic evidence. The analysis author made no live SOLIDWORKS calls. Native diagnostic data was supplied by the root agent running the sole serialized CAD session. No original result or timing was rewritten.
 
 ## What the original 7.9% observation establishes

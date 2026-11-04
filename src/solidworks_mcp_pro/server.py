@@ -247,7 +247,7 @@ class ProApplication:
         self.operation_stages: dict[str, dict] = {}
         self.all_tools: dict[str, types.Tool] = {}
         self.server = Server("solidworks-mcp-pro", version=__version__, instructions=(
-            "SolidWorks MCP PRO extends hjbaard/solidworks-mcp 0.19.0. "
+            "SolidWorks MCP PRO uses its own independent native SOLIDWORKS engine. "
             "Read solidworks-pro://guide. All native geometry uses mm/degrees. "
             "Use pro_render_job for a diagnosed preview-and-final workflow. "
             "Use pro_connection_doctor to identify this server; pro_validate_design for explicit acceptance checks, "
@@ -442,7 +442,8 @@ class ProApplication:
                 compact_tools=COMPACT_TOOLS,
                 client_configs=default_client_config_paths() if args.get("include_client_configs", False) else ())
         if name == "pro_capabilities":
-            return {"ok": True, "version": __version__, "upstream": "solidworks-mcp==0.19.0",
+            return {"ok": True, "version": __version__, "native_engine": "solidworks-mcp-pro-native",
+                "external_cad_engine_required": False,
                 "native_tool_count": self._native_tool_count, "pro_tool_count": self._pro_tool_count,
                 "tool_profile": self.tool_profile, "published_tool_count": len(self.tools),
                 "units": {"length": "mm", "angle": "degrees", "mass": "kg"}, "transport": "stdio",

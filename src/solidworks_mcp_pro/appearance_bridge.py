@@ -24,9 +24,9 @@ class AppearanceError(RuntimeError):
 def _typed(obj: Any, interface: str) -> Any:
     if obj is None or not hasattr(obj, "_oleobj_"):
         return obj
-    # Reuse the connected upstream session's matching early-bound wrappers.
+    # Use the independent session's matching early-bound SDK wrappers.
     # Do not attach to another instance or ask default dispatch for type info.
-    from solidworks_mcp import binding
+    from .native import binding
 
     return binding.wrap(obj, getattr(binding.module(), interface))
 

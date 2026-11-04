@@ -230,6 +230,8 @@ def _save_copy(model, path: Path) -> str:
 
 
 def _close_owned(sw_app, path: Path, original_paths: set[str]) -> bool:
+    from .native.session import NativeSession
+
     models = _matching(_documents(sw_app), path)
     if not models:
         return True
@@ -238,7 +240,7 @@ def _close_owned(sw_app, path: Path, original_paths: set[str]) -> bool:
     title = str(models[0].GetTitle())
     if sum(str(model.GetTitle()) == title for model in _documents(sw_app)) != 1:
         return False
-    sw_app.CloseDoc(title)
+    NativeSession(sw_app).close_document(models[0])
     return not _matching(_documents(sw_app), path)
 
 

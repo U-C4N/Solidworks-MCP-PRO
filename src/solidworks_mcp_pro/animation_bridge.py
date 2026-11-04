@@ -24,7 +24,7 @@ class AnimationError(RuntimeError):
 def _typed(obj: Any, interface: str) -> Any:
     if obj is None or not hasattr(obj, "_oleobj_"):
         return obj
-    from solidworks_mcp import binding
+    from .native import binding
 
     return binding.wrap(obj, getattr(binding.module(), interface))
 
@@ -274,7 +274,7 @@ def _pack_objects(sw_app: Any, model: Any, source_path: Path) -> tuple[Any, Any,
         extension = model.Extension
         return extension, _pack_call("GetPackAndGo", extension.GetPackAndGo), False
     import comtypes.client
-    from solidworks_mcp import binding
+    from .native import binding
 
     installed = binding.module()
     module = _pack_call("load registered SOLIDWORKS typelib", comtypes.client.GetModule,
