@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>__SWPRO_TITLE__</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#101820;color:#eef4f8}*{box-sizing:border-box}body{margin:0}header{padding:20px 28px;border-bottom:1px solid #31414c;display:flex;justify-content:space-between;gap:20px;align-items:center}h1{font-size:20px;margin:0}header p{font-size:12px;color:#a5b9c6;margin:6px 0 0}.brand{font-size:11px;letter-spacing:.14em;color:#5bd5c6}main{display:grid;grid-template-columns:1fr 280px;min-height:calc(100vh - 100px)}.stage{position:relative;min-height:480px}canvas{width:100%;height:100%;position:absolute;inset:0;touch-action:none;cursor:grab}canvas:active{cursor:grabbing}.hint{position:absolute;bottom:16px;left:20px;font-size:12px;color:#b1c3ce;pointer-events:none}aside{padding:24px;background:#15212c;border-left:1px solid #31414c}h2{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:#a5b9c6;margin:0 0 16px}dl{margin:0 0 24px}dt{font-size:12px;color:#a5b9c6;margin-top:16px}dd{margin:4px 0 0;font-size:18px;font-variant-numeric:tabular-nums}button{background:#223745;color:#eef4f8;border:1px solid #4a6575;border-radius:6px;padding:10px 14px;cursor:pointer}button:hover{background:#2d485b}button:focus-visible,canvas:focus-visible{outline:2px solid #5bd5c6;outline-offset:3px}.buttons{display:flex;gap:8px;flex-wrap:wrap}label{display:flex;gap:10px;margin:20px 0;font-size:14px}small{display:block;color:#a5b9c6;line-height:1.6}#status{color:#5bd5c6;font-size:13px;line-height:1.6;margin:16px 0}#warning{color:#ffd28b;font-size:13px;line-height:1.5}@media(max-width:700px){main{grid-template-columns:1fr}.stage{height:60vh;min-height:320px}aside{border-left:0;border-top:1px solid #31414c}header{padding:16px}dl{display:grid;grid-template-columns:1fr 1fr;gap:8px}dt{margin:0}dd{font-size:16px}}
+</style>
+</head>
+<body>
+<header><div><div class="brand">SOLIDWORKS MCP PRO / LOCAL VIEWER</div><h1 id="title">Model preview</h1><p>Offline mesh inspection · coordinates interpreted as millimetres</p></div><button id="reset" type="button">Reset view</button></header>
+<main><div class="stage"><canvas id="view" tabindex="0" aria-label="Interactive model preview. Drag or arrow keys to rotate; mouse wheel or plus and minus keys to zoom."></canvas><div class="hint">Drag to orbit · scroll to zoom · arrow keys rotate · R resets</div></div><aside><h2>Geometry</h2><dl id="stats"></dl><p id="status"></p><p id="warning" role="status"></p><label><input type="checkbox" id="wire"> Wireframe</label><div class="buttons"><button type="button" id="iso">Isometric</button><button type="button" id="front">Front</button><button type="button" id="top">Top</button></div><small>Topology uses exact-coordinate edge matching. No repairs are applied. Self-intersections are not checked. This preview is a mesh, not an editable CAD feature tree.</small></aside></main>
+<script id="mesh-data" type="application/json">__SWPRO_DATA__</script>
+<script>
+(()=>{'use strict';
+const data=JSON.parse(document.getElementById('mesh-data').textContent), summary=data.summary, canvas=document.getElementById('view'), context=canvas.getContext('2d');
+document.title=data.title;document.getElementById('title').textContent=data.title;
+const format=v=>Number(v).toLocaleString(undefined,{maximumFractionDigits:3}), stats=document.getElementById('stats');
+for(const [label,value] of [['Triangles',summary.triangle_count.toLocaleString()],['X × Y × Z',summary.bounds.size.map(format).join(' × ')+' mm'],['Surface area',format(summary.surface_area_mm2)+' mm²'],['Mesh volume',summary.volume_mm3===undefined?'Unavailable (open / inconsistent mesh)':format(summary.volume_mm3)+' mm³']]){const dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=label;dd.textContent=value;stats.append(dt,dd);}
+const topology=summary.topology;
+document.getElementById('status').textContent=topology.consistently_oriented?'Closed and consistently oriented mesh':`${topology.boundary_edges} boundary edges · ${topology.nonmanifold_edges} nonmanifold edges · ${topology.inconsistent_orientation_edges} orientation conflicts`;
+document.getElementById('warning').textContent=data.sampled?`Preview sampled to ${data.displayed_triangles.toLocaleString()} triangles. Measurements use the full mesh.`:'';
+const center=summary.bounds.min.map((v,i)=>(v+summary.bounds.max[i])/2), radius=Math.max(...summary.bounds.size)/2||1, triangles=data.triangles.map(t=>t.map(v=>v.map((x,i)=>(x-center[i])/radius)));
+let yaw=-Math.PI/4,pitch=Math.PI/6,zoom=1,width=1,height=1,pending=false,drag=null;
+function rotate(v){const cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch),x=cy*v[0]+sy*v[2],z=-sy*v[0]+cy*v[2];return [x,cp*v[1]-sp*z,sp*v[1]+cp*z];}
+function project(v){const scale=Math.min(width,height)*.31*zoom;return [width/2+v[0]*scale,height/2-v[1]*scale];}
+function draw(){pending=false;const ratio=Math.min(window.devicePixelRatio||1,2);width=canvas.clientWidth;height=canvas.clientHeight;canvas.width=Math.max(1,Math.round(width*ratio));canvas.height=Math.max(1,Math.round(height*ratio));context.setTransform(ratio,0,0,ratio,0,0);context.fillStyle='#101820';context.fillRect(0,0,width,height);const wire=document.getElementById('wire').checked;const faces=triangles.map(t=>{const vertices=t.map(rotate);return {vertices,depth:vertices.reduce((s,v)=>s+v[2],0)};}).sort((a,b)=>a.depth-b.depth);for(const face of faces){const [a,b,c]=face.vertices;const ux=b[0]-a[0],uy=b[1]-a[1],uz=b[2]-a[2],vx=c[0]-a[0],vy=c[1]-a[1],vz=c[2]-a[2],nx=uy*vz-uz*vy,ny=uz*vx-ux*vz,nz=ux*vy-uy*vx,len=Math.hypot(nx,ny,nz)||1,light=.35+.65*Math.abs((.2*nx+.45*ny+.87*nz)/len);context.beginPath();face.vertices.forEach((v,i)=>{const p=project(v);i?context.lineTo(...p):context.moveTo(...p);});context.closePath();if(!wire){context.fillStyle=`rgb(${Math.round(79+61*light)},${Math.round(131+74*light)},${Math.round(155+70*light)})`;context.fill();}if(wire||faces.length<5000){context.strokeStyle=wire?'#87bdd3':'#284b5e';context.lineWidth=wire?.6:.35;context.stroke();}}
+const base=[45,height-55];for(const [v,label,color] of [[[1,0,0],'X','#fa9d91'],[[0,1,0],'Y','#86d5a9'],[[0,0,1],'Z','#8dbbfb']]){const p=rotate(v);context.strokeStyle=color;context.fillStyle=color;context.lineWidth=2;context.beginPath();context.moveTo(...base);context.lineTo(base[0]+p[0]*29,base[1]-p[1]*29);context.stroke();context.font='12px system-ui';context.fillText(label,base[0]+p[0]*38-3,base[1]-p[1]*38+4);}}
+function schedule(){if(!pending){pending=true;requestAnimationFrame(draw);}}
+function reset(){yaw=-Math.PI/4;pitch=Math.PI/6;zoom=1;schedule();}
+canvas.addEventListener('pointerdown',event=>{drag=[event.clientX,event.clientY];canvas.setPointerCapture(event.pointerId);});
+canvas.addEventListener('pointermove',event=>{if(!drag)return;yaw+=(event.clientX-drag[0])*.009;pitch=Math.max(-Math.PI/2,Math.min(Math.PI/2,pitch+(event.clientY-drag[1])*.009));drag=[event.clientX,event.clientY];schedule();});
+for(const name of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(name,()=>{drag=null;});
+canvas.addEventListener('wheel',event=>{event.preventDefault();zoom=Math.max(.1,Math.min(20,zoom*Math.exp(-event.deltaY*.001)));schedule();},{passive:false});
+canvas.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','+','=','-','r','R'].includes(event.key))return;event.preventDefault();if(event.key==='ArrowLeft')yaw-=.1;if(event.key==='ArrowRight')yaw+=.1;if(event.key==='ArrowUp')pitch=Math.min(Math.PI/2,pitch+.1);if(event.key==='ArrowDown')pitch=Math.max(-Math.PI/2,pitch-.1);if(event.key==='+'||event.key==='=')zoom=Math.min(20,zoom*1.1);if(event.key==='-')zoom=Math.max(.1,zoom/1.1);if(event.key.toLowerCase()==='r')reset();schedule();});
+document.getElementById('reset').onclick=reset;document.getElementById('iso').onclick=reset;document.getElementById('front').onclick=()=>{yaw=0;pitch=0;schedule();};document.getElementById('top').onclick=()=>{yaw=0;pitch=Math.PI/2;schedule();};document.getElementById('wire').onchange=schedule;new ResizeObserver(schedule).observe(canvas);schedule();
+})();
+</script>
+</body>
+</html>

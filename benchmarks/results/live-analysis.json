@@ -1,0 +1,1918 @@
+{
+  "schema_version": 1,
+  "analysis": "live-cad-evidence",
+  "runs": [
+    {
+      "label": "before",
+      "benchmark": "serial-live-cad",
+      "generated_at": "2026-11-03T10:11:31.553892+00:00",
+      "run_id": "d04da1a18712",
+      "repeats": 3,
+      "servers": [
+        {
+          "id": "hjbaard",
+          "repetitions_expected": 3,
+          "repetitions_recorded": 3,
+          "missing_repetitions": [],
+          "sources": [
+            {
+              "repository": "https://github.com/hjbaard/SolidWorks-MCP",
+              "revision": "ddcefc0cfa056002ff8eb8bdb186818ad52dc2f1"
+            }
+          ],
+          "cad_cases": {
+            "pass": 18,
+            "fail": 0,
+            "unsupported": 0,
+            "not_run": 0,
+            "total": 18
+          },
+          "case_results": {
+            "new_part": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "block": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "through_hole": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "parametric_edit": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "mass_query": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "step_export": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            }
+          },
+          "policies": {
+            "unknown_argument_rejected": {
+              "pass": 0,
+              "fail": 3,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "default_no_clobber": {
+              "pass": 0,
+              "fail": 3,
+              "unsupported": 0,
+              "not_run": 0
+            }
+          },
+          "close_own_document": {
+            "pass": 3,
+            "fail": 0,
+            "unsupported": 0,
+            "not_run": 0
+          },
+          "stage_timing_ms": {
+            "new_part": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                2671.243,
+                1874.632,
+                1847.421
+              ],
+              "median": 1874.632,
+              "min": 1847.421,
+              "max": 2671.243
+            },
+            "block": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                1732.335,
+                1767.828,
+                1755.856
+              ],
+              "median": 1755.856,
+              "min": 1732.335,
+              "max": 1767.828
+            },
+            "through_hole": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                1429.682,
+                1502.91,
+                1622.698
+              ],
+              "median": 1502.91,
+              "min": 1429.682,
+              "max": 1622.698
+            },
+            "parametric_edit": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                909.831,
+                972.575,
+                1027.739
+              ],
+              "median": 972.575,
+              "min": 909.831,
+              "max": 1027.739
+            },
+            "mass_query": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                395.257,
+                527.666,
+                555.327
+              ],
+              "median": 527.666,
+              "min": 395.257,
+              "max": 555.327
+            },
+            "step_export": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                482.919,
+                633.605,
+                601.671
+              ],
+              "median": 601.671,
+              "min": 482.919,
+              "max": 633.605
+            },
+            "close_own_document": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                953.377,
+                898.032,
+                963.355
+              ],
+              "median": 953.377,
+              "min": 898.032,
+              "max": 963.355
+            }
+          },
+          "complete_run_timing_ms": {
+            "status": "measured",
+            "sample_count": 3,
+            "samples": [
+              8574.644,
+              8177.248,
+              8374.067
+            ],
+            "median": 8374.067,
+            "min": 8177.248,
+            "max": 8574.644
+          },
+          "complete_run_tool_calls": {
+            "status": "measured",
+            "sample_count": 3,
+            "samples": [
+              7,
+              7,
+              7
+            ],
+            "median": 7,
+            "min": 7,
+            "max": 7
+          },
+          "observations": []
+        },
+        {
+          "id": "harrier",
+          "repetitions_expected": 3,
+          "repetitions_recorded": 3,
+          "missing_repetitions": [],
+          "sources": [
+            {
+              "repository": "https://github.com/HarrierPigeon/Solidworks-MCP-Server",
+              "revision": "60c11fe45b6cfc60c4e2da8ad41fc725a48bf8ea",
+              "license": "MIT",
+              "release_tag": "v0.4.0",
+              "source_modified": false
+            }
+          ],
+          "cad_cases": {
+            "pass": 18,
+            "fail": 0,
+            "unsupported": 0,
+            "not_run": 0,
+            "total": 18
+          },
+          "case_results": {
+            "new_part": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "block": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "through_hole": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "parametric_edit": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "mass_query": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "step_export": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            }
+          },
+          "policies": {
+            "unknown_argument_rejected": {
+              "pass": 0,
+              "fail": 3,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "default_no_clobber": {
+              "pass": 0,
+              "fail": 3,
+              "unsupported": 0,
+              "not_run": 0
+            }
+          },
+          "close_own_document": {
+            "pass": 3,
+            "fail": 0,
+            "unsupported": 0,
+            "not_run": 0
+          },
+          "stage_timing_ms": {
+            "new_part": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                1393.418,
+                1593.439,
+                1846.334
+              ],
+              "median": 1593.439,
+              "min": 1393.418,
+              "max": 1846.334
+            },
+            "block": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                1933.124,
+                2098.174,
+                2385.668
+              ],
+              "median": 2098.174,
+              "min": 1933.124,
+              "max": 2385.668
+            },
+            "through_hole": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                1805.879,
+                2320.936,
+                2239.35
+              ],
+              "median": 2239.35,
+              "min": 1805.879,
+              "max": 2320.936
+            },
+            "parametric_edit": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                615.106,
+                619.23,
+                612.211
+              ],
+              "median": 615.106,
+              "min": 612.211,
+              "max": 619.23
+            },
+            "mass_query": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                92.482,
+                97.36,
+                89.722
+              ],
+              "median": 92.482,
+              "min": 89.722,
+              "max": 97.36
+            },
+            "step_export": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                167.783,
+                173.044,
+                176.347
+              ],
+              "median": 173.044,
+              "min": 167.783,
+              "max": 176.347
+            },
+            "close_own_document": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                388.218,
+                463.241,
+                519.173
+              ],
+              "median": 463.241,
+              "min": 388.218,
+              "max": 519.173
+            }
+          },
+          "complete_run_timing_ms": {
+            "status": "measured",
+            "sample_count": 3,
+            "samples": [
+              6396.01,
+              7365.424,
+              7868.805
+            ],
+            "median": 7365.424,
+            "min": 6396.01,
+            "max": 7868.805
+          },
+          "complete_run_tool_calls": {
+            "status": "measured",
+            "sample_count": 3,
+            "samples": [
+              11,
+              11,
+              11
+            ],
+            "median": 11,
+            "min": 11,
+            "max": 11
+          },
+          "observations": []
+        },
+        {
+          "id": "soheil",
+          "repetitions_expected": 3,
+          "repetitions_recorded": 3,
+          "missing_repetitions": [],
+          "sources": [
+            {
+              "repository": "https://github.com/soheil-mp/solidworks-mcp",
+              "revision": "79fb529b67ca4a0587e5570024a772fad0b2c14d",
+              "license": "MIT",
+              "package_version": "0.1.0",
+              "source_modified": false
+            }
+          ],
+          "cad_cases": {
+            "pass": 18,
+            "fail": 0,
+            "unsupported": 0,
+            "not_run": 0,
+            "total": 18
+          },
+          "case_results": {
+            "new_part": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "block": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "through_hole": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "parametric_edit": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "mass_query": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "step_export": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            }
+          },
+          "policies": {
+            "unknown_argument_rejected": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "default_no_clobber": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            }
+          },
+          "close_own_document": {
+            "pass": 3,
+            "fail": 0,
+            "unsupported": 0,
+            "not_run": 0
+          },
+          "stage_timing_ms": {
+            "new_part": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                1886.034,
+                1653.495,
+                1962.987
+              ],
+              "median": 1886.034,
+              "min": 1653.495,
+              "max": 1962.987
+            },
+            "block": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                2868.168,
+                3317.034,
+                3422.965
+              ],
+              "median": 3317.034,
+              "min": 2868.168,
+              "max": 3422.965
+            },
+            "through_hole": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                787.607,
+                1101.267,
+                1087.042
+              ],
+              "median": 1087.042,
+              "min": 787.607,
+              "max": 1101.267
+            },
+            "parametric_edit": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                951.517,
+                1101.574,
+                977.304
+              ],
+              "median": 977.304,
+              "min": 951.517,
+              "max": 1101.574
+            },
+            "mass_query": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                116.48,
+                121.762,
+                106.62
+              ],
+              "median": 116.48,
+              "min": 106.62,
+              "max": 121.762
+            },
+            "step_export": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                336.452,
+                437.01,
+                384.377
+              ],
+              "median": 384.377,
+              "min": 336.452,
+              "max": 437.01
+            },
+            "close_own_document": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                386.183,
+                553.446,
+                543.533
+              ],
+              "median": 543.533,
+              "min": 386.183,
+              "max": 553.446
+            }
+          },
+          "complete_run_timing_ms": {
+            "status": "measured",
+            "sample_count": 3,
+            "samples": [
+              7332.441,
+              8285.588,
+              8484.828
+            ],
+            "median": 8285.588,
+            "min": 7332.441,
+            "max": 8484.828
+          },
+          "complete_run_tool_calls": {
+            "status": "measured",
+            "sample_count": 3,
+            "samples": [
+              10,
+              10,
+              10
+            ],
+            "median": 10,
+            "min": 10,
+            "max": 10
+          },
+          "observations": []
+        },
+        {
+          "id": "pro_before",
+          "repetitions_expected": 3,
+          "repetitions_recorded": 3,
+          "missing_repetitions": [],
+          "sources": [
+            {
+              "revision": "frozen-0.1.0",
+              "wheel_sha256": "37791b5f24ba5c4aa5b9c83f313cd33b59640e950e722eaaeedcde1e2d7768fc"
+            }
+          ],
+          "cad_cases": {
+            "pass": 18,
+            "fail": 0,
+            "unsupported": 0,
+            "not_run": 0,
+            "total": 18
+          },
+          "case_results": {
+            "new_part": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "block": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "through_hole": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "parametric_edit": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "mass_query": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "step_export": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            }
+          },
+          "policies": {
+            "unknown_argument_rejected": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "default_no_clobber": {
+              "pass": 0,
+              "fail": 3,
+              "unsupported": 0,
+              "not_run": 0
+            }
+          },
+          "close_own_document": {
+            "pass": 3,
+            "fail": 0,
+            "unsupported": 0,
+            "not_run": 0
+          },
+          "stage_timing_ms": {
+            "new_part": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                1875.626,
+                1873.552,
+                1424.601
+              ],
+              "median": 1873.552,
+              "min": 1424.601,
+              "max": 1875.626
+            },
+            "block": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                1620.831,
+                1716.053,
+                1493.745
+              ],
+              "median": 1620.831,
+              "min": 1493.745,
+              "max": 1716.053
+            },
+            "through_hole": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                1548.49,
+                1511.629,
+                1437.61
+              ],
+              "median": 1511.629,
+              "min": 1437.61,
+              "max": 1548.49
+            },
+            "parametric_edit": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                992.888,
+                1015.801,
+                1078.776
+              ],
+              "median": 1015.801,
+              "min": 992.888,
+              "max": 1078.776
+            },
+            "mass_query": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                479.578,
+                492.892,
+                574.365
+              ],
+              "median": 492.892,
+              "min": 479.578,
+              "max": 574.365
+            },
+            "step_export": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                609.733,
+                629.788,
+                612.267
+              ],
+              "median": 612.267,
+              "min": 609.733,
+              "max": 629.788
+            },
+            "close_own_document": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                786.722,
+                956.66,
+                810.206
+              ],
+              "median": 810.206,
+              "min": 786.722,
+              "max": 956.66
+            }
+          },
+          "complete_run_timing_ms": {
+            "status": "measured",
+            "sample_count": 3,
+            "samples": [
+              7913.868,
+              8196.375,
+              7431.57
+            ],
+            "median": 7913.868,
+            "min": 7431.57,
+            "max": 8196.375
+          },
+          "complete_run_tool_calls": {
+            "status": "measured",
+            "sample_count": 3,
+            "samples": [
+              7,
+              7,
+              7
+            ],
+            "median": 7,
+            "min": 7,
+            "max": 7
+          },
+          "observations": []
+        }
+      ],
+      "mass_query_validation": "Call success only; returned mass/volume units were not separately asserted. Modeling-stage volume and bounds were checked by the independent oracle.",
+      "timing_definition": "Sum successful new_part, block, through_hole, parametric_edit, mass_query, step_export, close_own_document MCP timings; excludes policy probes and COM oracle time. Only fully passing seven-stage repetitions enter total speed statistics."
+    },
+    {
+      "label": "after",
+      "benchmark": "serial-live-cad",
+      "generated_at": "2026-11-03T10:15:25.682695+00:00",
+      "run_id": "0adfacf67f63",
+      "repeats": 3,
+      "servers": [
+        {
+          "id": "pro",
+          "repetitions_expected": 3,
+          "repetitions_recorded": 3,
+          "missing_repetitions": [],
+          "sources": [
+            {
+              "revision": "working-tree"
+            }
+          ],
+          "cad_cases": {
+            "pass": 18,
+            "fail": 0,
+            "unsupported": 0,
+            "not_run": 0,
+            "total": 18
+          },
+          "case_results": {
+            "new_part": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "block": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "through_hole": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "parametric_edit": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "mass_query": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "step_export": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            }
+          },
+          "policies": {
+            "unknown_argument_rejected": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "default_no_clobber": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            }
+          },
+          "close_own_document": {
+            "pass": 3,
+            "fail": 0,
+            "unsupported": 0,
+            "not_run": 0
+          },
+          "stage_timing_ms": {
+            "new_part": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                2250.298,
+                1967.462,
+                1486.341
+              ],
+              "median": 1967.462,
+              "min": 1486.341,
+              "max": 2250.298
+            },
+            "block": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                1662.936,
+                1495.496,
+                1491.072
+              ],
+              "median": 1495.496,
+              "min": 1491.072,
+              "max": 1662.936
+            },
+            "through_hole": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                1502.107,
+                1506.767,
+                1391.956
+              ],
+              "median": 1502.107,
+              "min": 1391.956,
+              "max": 1506.767
+            },
+            "parametric_edit": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                973.93,
+                809.891,
+                818.167
+              ],
+              "median": 818.167,
+              "min": 809.891,
+              "max": 973.93
+            },
+            "mass_query": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                125.073,
+                104.869,
+                99.344
+              ],
+              "median": 104.869,
+              "min": 99.344,
+              "max": 125.073
+            },
+            "step_export": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                588.387,
+                475.195,
+                515.828
+              ],
+              "median": 515.828,
+              "min": 475.195,
+              "max": 588.387
+            },
+            "close_own_document": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                1146.61,
+                1148.633,
+                958.763
+              ],
+              "median": 1146.61,
+              "min": 958.763,
+              "max": 1148.633
+            }
+          },
+          "complete_run_timing_ms": {
+            "status": "measured",
+            "sample_count": 3,
+            "samples": [
+              8249.341,
+              7508.313,
+              6761.471
+            ],
+            "median": 7508.313,
+            "min": 6761.471,
+            "max": 8249.341
+          },
+          "complete_run_tool_calls": {
+            "status": "measured",
+            "sample_count": 3,
+            "samples": [
+              7,
+              7,
+              7
+            ],
+            "median": 7,
+            "min": 7,
+            "max": 7
+          },
+          "observations": []
+        },
+        {
+          "id": "andrew",
+          "repetitions_expected": 3,
+          "repetitions_recorded": 3,
+          "missing_repetitions": [],
+          "sources": [
+            {
+              "repository": "https://github.com/andrewbartels1/SolidworksMCP-python",
+              "revision": "126beed0e7a13214ebdd5724929f4c095cf2642f",
+              "license": "MIT",
+              "release_tag": "v1.5.0",
+              "source_modified": false
+            }
+          ],
+          "cad_cases": {
+            "pass": 18,
+            "fail": 0,
+            "unsupported": 0,
+            "not_run": 0,
+            "total": 18
+          },
+          "case_results": {
+            "new_part": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "block": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "through_hole": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "parametric_edit": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "mass_query": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "step_export": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            }
+          },
+          "policies": {
+            "unknown_argument_rejected": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "default_no_clobber": {
+              "pass": 0,
+              "fail": 3,
+              "unsupported": 0,
+              "not_run": 0
+            }
+          },
+          "close_own_document": {
+            "pass": 3,
+            "fail": 0,
+            "unsupported": 0,
+            "not_run": 0
+          },
+          "stage_timing_ms": {
+            "new_part": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                5829.034,
+                4868.287,
+                6167.854
+              ],
+              "median": 5829.034,
+              "min": 4868.287,
+              "max": 6167.854
+            },
+            "block": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                3720.251,
+                3528.036,
+                3474.065
+              ],
+              "median": 3528.036,
+              "min": 3474.065,
+              "max": 3720.251
+            },
+            "through_hole": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                4081.653,
+                3797.73,
+                3793.691
+              ],
+              "median": 3797.73,
+              "min": 3793.691,
+              "max": 4081.653
+            },
+            "parametric_edit": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                363.773,
+                350.126,
+                337.403
+              ],
+              "median": 350.126,
+              "min": 337.403,
+              "max": 363.773
+            },
+            "mass_query": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                347.371,
+                330.179,
+                334.55
+              ],
+              "median": 334.55,
+              "min": 330.179,
+              "max": 347.371
+            },
+            "step_export": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                406.402,
+                401.049,
+                375.139
+              ],
+              "median": 401.049,
+              "min": 375.139,
+              "max": 406.402
+            },
+            "close_own_document": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                1336.619,
+                1242.905,
+                1304.139
+              ],
+              "median": 1304.139,
+              "min": 1242.905,
+              "max": 1336.619
+            }
+          },
+          "complete_run_timing_ms": {
+            "status": "measured",
+            "sample_count": 3,
+            "samples": [
+              16085.103,
+              14518.312,
+              15786.841
+            ],
+            "median": 15786.841,
+            "min": 14518.312,
+            "max": 16085.103
+          },
+          "complete_run_tool_calls": {
+            "status": "measured",
+            "sample_count": 3,
+            "samples": [
+              13,
+              13,
+              13
+            ],
+            "median": 13,
+            "min": 13,
+            "max": 13
+          },
+          "observations": []
+        },
+        {
+          "id": "pro_before",
+          "repetitions_expected": 3,
+          "repetitions_recorded": 3,
+          "missing_repetitions": [],
+          "sources": [
+            {
+              "revision": "frozen-0.1.0",
+              "wheel_sha256": "37791b5f24ba5c4aa5b9c83f313cd33b59640e950e722eaaeedcde1e2d7768fc"
+            }
+          ],
+          "cad_cases": {
+            "pass": 18,
+            "fail": 0,
+            "unsupported": 0,
+            "not_run": 0,
+            "total": 18
+          },
+          "case_results": {
+            "new_part": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "block": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "through_hole": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "parametric_edit": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "mass_query": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "step_export": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            }
+          },
+          "policies": {
+            "unknown_argument_rejected": {
+              "pass": 3,
+              "fail": 0,
+              "unsupported": 0,
+              "not_run": 0
+            },
+            "default_no_clobber": {
+              "pass": 0,
+              "fail": 3,
+              "unsupported": 0,
+              "not_run": 0
+            }
+          },
+          "close_own_document": {
+            "pass": 3,
+            "fail": 0,
+            "unsupported": 0,
+            "not_run": 0
+          },
+          "stage_timing_ms": {
+            "new_part": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                1540.774,
+                1973.984,
+                1469.229
+              ],
+              "median": 1540.774,
+              "min": 1469.229,
+              "max": 1973.984
+            },
+            "block": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                1569.344,
+                1608.331,
+                1448.197
+              ],
+              "median": 1569.344,
+              "min": 1448.197,
+              "max": 1608.331
+            },
+            "through_hole": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                1436.005,
+                1333.317,
+                1435.326
+              ],
+              "median": 1435.326,
+              "min": 1333.317,
+              "max": 1436.005
+            },
+            "parametric_edit": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                724.333,
+                882.34,
+                794.505
+              ],
+              "median": 794.505,
+              "min": 724.333,
+              "max": 882.34
+            },
+            "mass_query": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                379.727,
+                721.238,
+                430.069
+              ],
+              "median": 430.069,
+              "min": 379.727,
+              "max": 721.238
+            },
+            "step_export": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                457.287,
+                632.525,
+                530.284
+              ],
+              "median": 530.284,
+              "min": 457.287,
+              "max": 632.525
+            },
+            "close_own_document": {
+              "status": "measured",
+              "sample_count": 3,
+              "samples": [
+                829.793,
+                841.376,
+                850.831
+              ],
+              "median": 841.376,
+              "min": 829.793,
+              "max": 850.831
+            }
+          },
+          "complete_run_timing_ms": {
+            "status": "measured",
+            "sample_count": 3,
+            "samples": [
+              6937.263,
+              7993.111,
+              6958.441
+            ],
+            "median": 6958.441,
+            "min": 6937.263,
+            "max": 7993.111
+          },
+          "complete_run_tool_calls": {
+            "status": "measured",
+            "sample_count": 3,
+            "samples": [
+              7,
+              7,
+              7
+            ],
+            "median": 7,
+            "min": 7,
+            "max": 7
+          },
+          "observations": []
+        }
+      ],
+      "mass_query_validation": "Call success only; returned mass/volume units were not separately asserted. Modeling-stage volume and bounds were checked by the independent oracle.",
+      "timing_definition": "Sum successful new_part, block, through_hole, parametric_edit, mass_query, step_export, close_own_document MCP timings; excludes policy probes and COM oracle time. Only fully passing seven-stage repetitions enter total speed statistics."
+    }
+  ],
+  "within_run_pro_comparisons": [
+    {
+      "run": "after",
+      "metric": "Mass query",
+      "baseline_median_ms": 430.069,
+      "current_median_ms": 104.869,
+      "baseline_samples": 3,
+      "current_samples": 3,
+      "observed_change_percent": -75.616
+    },
+    {
+      "run": "after",
+      "metric": "Complete CAD sequence",
+      "baseline_median_ms": 6958.441,
+      "current_median_ms": 7508.313,
+      "baseline_samples": 3,
+      "current_samples": 3,
+      "observed_change_percent": 7.902
+    }
+  ],
+  "returned_mass_verification": {
+    "schema_version": 1,
+    "generated_at": "2026-11-03T10:22:49.177888+00:00",
+    "check": "returned-volume-vs-same-record-post-edit-COM-oracle",
+    "relative_tolerance": 1e-06,
+    "scope": "Derived volume check only; original timings/statuses and raw inputs remain unchanged; no inertia validation.",
+    "source_files": [
+      {
+        "path": "benchmarks/results/live-before.json",
+        "sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+        "run_id": "d04da1a18712",
+        "record_count": 12
+      },
+      {
+        "path": "benchmarks/results/live-after.json",
+        "sha256": "c14685a29e9e643a46f47ccfe094944e977b851a607cac7ee4140da0aa9710fd",
+        "run_id": "0adfacf67f63",
+        "record_count": 9
+      }
+    ],
+    "summary": {
+      "sample_count": 21,
+      "pass_count": 21,
+      "fail_count": 0,
+      "by_adapter": {
+        "andrew": {
+          "sample_count": 3,
+          "pass_count": 3,
+          "fail_count": 0
+        },
+        "harrier": {
+          "sample_count": 3,
+          "pass_count": 3,
+          "fail_count": 0
+        },
+        "hjbaard": {
+          "sample_count": 3,
+          "pass_count": 3,
+          "fail_count": 0
+        },
+        "pro": {
+          "sample_count": 3,
+          "pass_count": 3,
+          "fail_count": 0
+        },
+        "pro_before": {
+          "sample_count": 6,
+          "pass_count": 6,
+          "fail_count": 0
+        },
+        "soheil": {
+          "sample_count": 3,
+          "pass_count": 3,
+          "fail_count": 0
+        }
+      }
+    },
+    "samples": [
+      {
+        "adapter_id": "hjbaard",
+        "repetition": 0,
+        "run_id": "d04da1a18712",
+        "source_file": "benchmarks/results/live-before.json",
+        "source_sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+        "record_index": 0,
+        "source_revision": {
+          "repository": "https://github.com/hjbaard/SolidWorks-MCP",
+          "revision": "ddcefc0cfa056002ff8eb8bdb186818ad52dc2f1"
+        },
+        "status": "pass",
+        "oracle_volume_mm3": 47057.522203923065,
+        "call_index": 4,
+        "tool": "get_mass_properties",
+        "returned_volume_mm3": 47057.522203923065,
+        "unit_evidence": "mass_properties.volume_mm3 field",
+        "absolute_error_mm3": 0.0,
+        "relative_error": 0.0,
+        "relative_tolerance": 1e-06,
+        "reason": "Returned volume agrees with same-record post-edit COM oracle"
+      },
+      {
+        "adapter_id": "harrier",
+        "repetition": 0,
+        "run_id": "d04da1a18712",
+        "source_file": "benchmarks/results/live-before.json",
+        "source_sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+        "record_index": 1,
+        "source_revision": {
+          "repository": "https://github.com/HarrierPigeon/Solidworks-MCP-Server",
+          "revision": "60c11fe45b6cfc60c4e2da8ad41fc725a48bf8ea",
+          "license": "MIT",
+          "release_tag": "v0.4.0",
+          "source_modified": false
+        },
+        "status": "pass",
+        "oracle_volume_mm3": 47057.522203923065,
+        "call_index": 8,
+        "tool": "solidworks_get_mass_properties",
+        "returned_volume_mm3": 47057.52,
+        "unit_evidence": "volume_mm3 field",
+        "absolute_error_mm3": 0.002203923068009317,
+        "relative_error": 4.6834660321864155e-08,
+        "relative_tolerance": 1e-06,
+        "reason": "Returned volume agrees with same-record post-edit COM oracle"
+      },
+      {
+        "adapter_id": "soheil",
+        "repetition": 0,
+        "run_id": "d04da1a18712",
+        "source_file": "benchmarks/results/live-before.json",
+        "source_sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+        "record_index": 2,
+        "source_revision": {
+          "repository": "https://github.com/soheil-mp/solidworks-mcp",
+          "revision": "79fb529b67ca4a0587e5570024a772fad0b2c14d",
+          "license": "MIT",
+          "package_version": "0.1.0",
+          "source_modified": false
+        },
+        "status": "pass",
+        "oracle_volume_mm3": 47057.522203923065,
+        "call_index": 7,
+        "tool": "model_mass",
+        "returned_volume_mm3": 47057.522,
+        "unit_evidence": "volumeMm3 field",
+        "absolute_error_mm3": 0.0002039230676018633,
+        "relative_error": 4.333485021122994e-09,
+        "relative_tolerance": 1e-06,
+        "reason": "Returned volume agrees with same-record post-edit COM oracle"
+      },
+      {
+        "adapter_id": "pro_before",
+        "repetition": 0,
+        "run_id": "d04da1a18712",
+        "source_file": "benchmarks/results/live-before.json",
+        "source_sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+        "record_index": 3,
+        "source_revision": {
+          "revision": "frozen-0.1.0",
+          "wheel_sha256": "37791b5f24ba5c4aa5b9c83f313cd33b59640e950e722eaaeedcde1e2d7768fc"
+        },
+        "status": "pass",
+        "oracle_volume_mm3": 47057.522203923065,
+        "call_index": 4,
+        "tool": "get_mass_properties",
+        "returned_volume_mm3": 47057.522203923065,
+        "unit_evidence": "mass_properties.volume_mm3 field",
+        "absolute_error_mm3": 0.0,
+        "relative_error": 0.0,
+        "relative_tolerance": 1e-06,
+        "reason": "Returned volume agrees with same-record post-edit COM oracle"
+      },
+      {
+        "adapter_id": "soheil",
+        "repetition": 1,
+        "run_id": "d04da1a18712",
+        "source_file": "benchmarks/results/live-before.json",
+        "source_sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+        "record_index": 4,
+        "source_revision": {
+          "repository": "https://github.com/soheil-mp/solidworks-mcp",
+          "revision": "79fb529b67ca4a0587e5570024a772fad0b2c14d",
+          "license": "MIT",
+          "package_version": "0.1.0",
+          "source_modified": false
+        },
+        "status": "pass",
+        "oracle_volume_mm3": 47057.52220392307,
+        "call_index": 7,
+        "tool": "model_mass",
+        "returned_volume_mm3": 47057.522,
+        "unit_evidence": "volumeMm3 field",
+        "absolute_error_mm3": 0.0002039230748778209,
+        "relative_error": 4.333485175741368e-09,
+        "relative_tolerance": 1e-06,
+        "reason": "Returned volume agrees with same-record post-edit COM oracle"
+      },
+      {
+        "adapter_id": "harrier",
+        "repetition": 1,
+        "run_id": "d04da1a18712",
+        "source_file": "benchmarks/results/live-before.json",
+        "source_sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+        "record_index": 5,
+        "source_revision": {
+          "repository": "https://github.com/HarrierPigeon/Solidworks-MCP-Server",
+          "revision": "60c11fe45b6cfc60c4e2da8ad41fc725a48bf8ea",
+          "license": "MIT",
+          "release_tag": "v0.4.0",
+          "source_modified": false
+        },
+        "status": "pass",
+        "oracle_volume_mm3": 47057.522203923065,
+        "call_index": 8,
+        "tool": "solidworks_get_mass_properties",
+        "returned_volume_mm3": 47057.52,
+        "unit_evidence": "volume_mm3 field",
+        "absolute_error_mm3": 0.002203923068009317,
+        "relative_error": 4.6834660321864155e-08,
+        "relative_tolerance": 1e-06,
+        "reason": "Returned volume agrees with same-record post-edit COM oracle"
+      },
+      {
+        "adapter_id": "pro_before",
+        "repetition": 1,
+        "run_id": "d04da1a18712",
+        "source_file": "benchmarks/results/live-before.json",
+        "source_sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+        "record_index": 6,
+        "source_revision": {
+          "revision": "frozen-0.1.0",
+          "wheel_sha256": "37791b5f24ba5c4aa5b9c83f313cd33b59640e950e722eaaeedcde1e2d7768fc"
+        },
+        "status": "pass",
+        "oracle_volume_mm3": 47057.522203923065,
+        "call_index": 4,
+        "tool": "get_mass_properties",
+        "returned_volume_mm3": 47057.522203923065,
+        "unit_evidence": "mass_properties.volume_mm3 field",
+        "absolute_error_mm3": 0.0,
+        "relative_error": 0.0,
+        "relative_tolerance": 1e-06,
+        "reason": "Returned volume agrees with same-record post-edit COM oracle"
+      },
+      {
+        "adapter_id": "hjbaard",
+        "repetition": 1,
+        "run_id": "d04da1a18712",
+        "source_file": "benchmarks/results/live-before.json",
+        "source_sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+        "record_index": 7,
+        "source_revision": {
+          "repository": "https://github.com/hjbaard/SolidWorks-MCP",
+          "revision": "ddcefc0cfa056002ff8eb8bdb186818ad52dc2f1"
+        },
+        "status": "pass",
+        "oracle_volume_mm3": 47057.522203923065,
+        "call_index": 4,
+        "tool": "get_mass_properties",
+        "returned_volume_mm3": 47057.522203923065,
+        "unit_evidence": "mass_properties.volume_mm3 field",
+        "absolute_error_mm3": 0.0,
+        "relative_error": 0.0,
+        "relative_tolerance": 1e-06,
+        "reason": "Returned volume agrees with same-record post-edit COM oracle"
+      },
+      {
+        "adapter_id": "soheil",
+        "repetition": 2,
+        "run_id": "d04da1a18712",
+        "source_file": "benchmarks/results/live-before.json",
+        "source_sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+        "record_index": 8,
+        "source_revision": {
+          "repository": "https://github.com/soheil-mp/solidworks-mcp",
+          "revision": "79fb529b67ca4a0587e5570024a772fad0b2c14d",
+          "license": "MIT",
+          "package_version": "0.1.0",
+          "source_modified": false
+        },
+        "status": "pass",
+        "oracle_volume_mm3": 47057.522203923065,
+        "call_index": 7,
+        "tool": "model_mass",
+        "returned_volume_mm3": 47057.522,
+        "unit_evidence": "volumeMm3 field",
+        "absolute_error_mm3": 0.0002039230676018633,
+        "relative_error": 4.333485021122994e-09,
+        "relative_tolerance": 1e-06,
+        "reason": "Returned volume agrees with same-record post-edit COM oracle"
+      },
+      {
+        "adapter_id": "hjbaard",
+        "repetition": 2,
+        "run_id": "d04da1a18712",
+        "source_file": "benchmarks/results/live-before.json",
+        "source_sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+        "record_index": 9,
+        "source_revision": {
+          "repository": "https://github.com/hjbaard/SolidWorks-MCP",
+          "revision": "ddcefc0cfa056002ff8eb8bdb186818ad52dc2f1"
+        },
+        "status": "pass",
+        "oracle_volume_mm3": 47057.522203923065,
+        "call_index": 4,
+        "tool": "get_mass_properties",
+        "returned_volume_mm3": 47057.522203923065,
+        "unit_evidence": "mass_properties.volume_mm3 field",
+        "absolute_error_mm3": 0.0,
+        "relative_error": 0.0,
+        "relative_tolerance": 1e-06,
+        "reason": "Returned volume agrees with same-record post-edit COM oracle"
+      },
+      {
+        "adapter_id": "harrier",
+        "repetition": 2,
+        "run_id": "d04da1a18712",
+        "source_file": "benchmarks/results/live-before.json",
+        "source_sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+        "record_index": 10,
+        "source_revision": {
+          "repository": "https://github.com/HarrierPigeon/Solidworks-MCP-Server",
+          "revision": "60c11fe45b6cfc60c4e2da8ad41fc725a48bf8ea",
+          "license": "MIT",
+          "release_tag": "v0.4.0",
+          "source_modified": false
+        },
+        "status": "pass",
+        "oracle_volume_mm3": 47057.522203923065,
+        "call_index": 8,
+        "tool": "solidworks_get_mass_properties",
+        "returned_volume_mm3": 47057.52,
+        "unit_evidence": "volume_mm3 field",
+        "absolute_error_mm3": 0.002203923068009317,
+        "relative_error": 4.6834660321864155e-08,
+        "relative_tolerance": 1e-06,
+        "reason": "Returned volume agrees with same-record post-edit COM oracle"
+      },
+      {
+        "adapter_id": "pro_before",
+        "repetition": 2,
+        "run_id": "d04da1a18712",
+        "source_file": "benchmarks/results/live-before.json",
+        "source_sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+        "record_index": 11,
+        "source_revision": {
+          "revision": "frozen-0.1.0",
+          "wheel_sha256": "37791b5f24ba5c4aa5b9c83f313cd33b59640e950e722eaaeedcde1e2d7768fc"
+        },
+        "status": "pass",
+        "oracle_volume_mm3": 47057.522203923065,
+        "call_index": 4,
+        "tool": "get_mass_properties",
+        "returned_volume_mm3": 47057.522203923065,
+        "unit_evidence": "mass_properties.volume_mm3 field",
+        "absolute_error_mm3": 0.0,
+        "relative_error": 0.0,
+        "relative_tolerance": 1e-06,
+        "reason": "Returned volume agrees with same-record post-edit COM oracle"
+      },
+      {
+        "adapter_id": "pro",
+        "repetition": 0,
+        "run_id": "0adfacf67f63",
+        "source_file": "benchmarks/results/live-after.json",
+        "source_sha256": "c14685a29e9e643a46f47ccfe094944e977b851a607cac7ee4140da0aa9710fd",
+        "record_index": 0,
+        "source_revision": {
+          "revision": "working-tree"
+        },
+        "status": "pass",
+        "oracle_volume_mm3": 47057.522203923065,
+        "call_index": 4,
+        "tool": "get_mass_properties",
+        "returned_volume_mm3": 47057.522203923065,
+        "unit_evidence": "mass_properties.volume_mm3 field",
+        "absolute_error_mm3": 0.0,
+        "relative_error": 0.0,
+        "relative_tolerance": 1e-06,
+        "reason": "Returned volume agrees with same-record post-edit COM oracle"
+      },
+      {
+        "adapter_id": "andrew",
+        "repetition": 0,
+        "run_id": "0adfacf67f63",
+        "source_file": "benchmarks/results/live-after.json",
+        "source_sha256": "c14685a29e9e643a46f47ccfe094944e977b851a607cac7ee4140da0aa9710fd",
+        "record_index": 1,
+        "source_revision": {
+          "repository": "https://github.com/andrewbartels1/SolidworksMCP-python",
+          "revision": "126beed0e7a13214ebdd5724929f4c095cf2642f",
+          "license": "MIT",
+          "release_tag": "v1.5.0",
+          "source_modified": false
+        },
+        "status": "pass",
+        "oracle_volume_mm3": 47057.522203923065,
+        "call_index": 10,
+        "tool": "get_mass_properties",
+        "returned_volume_mm3": 47057.522203923065,
+        "unit_evidence": "mass_properties.volume.units=mm\u00b3",
+        "absolute_error_mm3": 0.0,
+        "relative_error": 0.0,
+        "relative_tolerance": 1e-06,
+        "reason": "Returned volume agrees with same-record post-edit COM oracle"
+      },
+      {
+        "adapter_id": "pro_before",
+        "repetition": 0,
+        "run_id": "0adfacf67f63",
+        "source_file": "benchmarks/results/live-after.json",
+        "source_sha256": "c14685a29e9e643a46f47ccfe094944e977b851a607cac7ee4140da0aa9710fd",
+        "record_index": 2,
+        "source_revision": {
+          "revision": "frozen-0.1.0",
+          "wheel_sha256": "37791b5f24ba5c4aa5b9c83f313cd33b59640e950e722eaaeedcde1e2d7768fc"
+        },
+        "status": "pass",
+        "oracle_volume_mm3": 47057.522203923065,
+        "call_index": 4,
+        "tool": "get_mass_properties",
+        "returned_volume_mm3": 47057.522203923065,
+        "unit_evidence": "mass_properties.volume_mm3 field",
+        "absolute_error_mm3": 0.0,
+        "relative_error": 0.0,
+        "relative_tolerance": 1e-06,
+        "reason": "Returned volume agrees with same-record post-edit COM oracle"
+      },
+      {
+        "adapter_id": "pro",
+        "repetition": 1,
+        "run_id": "0adfacf67f63",
+        "source_file": "benchmarks/results/live-after.json",
+        "source_sha256": "c14685a29e9e643a46f47ccfe094944e977b851a607cac7ee4140da0aa9710fd",
+        "record_index": 3,
+        "source_revision": {
+          "revision": "working-tree"
+        },
+        "status": "pass",
+        "oracle_volume_mm3": 47057.522203923065,
+        "call_index": 4,
+        "tool": "get_mass_properties",
+        "returned_volume_mm3": 47057.522203923065,
+        "unit_evidence": "mass_properties.volume_mm3 field",
+        "absolute_error_mm3": 0.0,
+        "relative_error": 0.0,
+        "relative_tolerance": 1e-06,
+        "reason": "Returned volume agrees with same-record post-edit COM oracle"
+      },
+      {
+        "adapter_id": "andrew",
+        "repetition": 1,
+        "run_id": "0adfacf67f63",
+        "source_file": "benchmarks/results/live-after.json",
+        "source_sha256": "c14685a29e9e643a46f47ccfe094944e977b851a607cac7ee4140da0aa9710fd",
+        "record_index": 4,
+        "source_revision": {
+          "repository": "https://github.com/andrewbartels1/SolidworksMCP-python",
+          "revision": "126beed0e7a13214ebdd5724929f4c095cf2642f",
+          "license": "MIT",
+          "release_tag": "v1.5.0",
+          "source_modified": false
+        },
+        "status": "pass",
+        "oracle_volume_mm3": 47057.522203923065,
+        "call_index": 10,
+        "tool": "get_mass_properties",
+        "returned_volume_mm3": 47057.522203923065,
+        "unit_evidence": "mass_properties.volume.units=mm\u00b3",
+        "absolute_error_mm3": 0.0,
+        "relative_error": 0.0,
+        "relative_tolerance": 1e-06,
+        "reason": "Returned volume agrees with same-record post-edit COM oracle"
+      },
+      {
+        "adapter_id": "pro_before",
+        "repetition": 1,
+        "run_id": "0adfacf67f63",
+        "source_file": "benchmarks/results/live-after.json",
+        "source_sha256": "c14685a29e9e643a46f47ccfe094944e977b851a607cac7ee4140da0aa9710fd",
+        "record_index": 5,
+        "source_revision": {
+          "revision": "frozen-0.1.0",
+          "wheel_sha256": "37791b5f24ba5c4aa5b9c83f313cd33b59640e950e722eaaeedcde1e2d7768fc"
+        },
+        "status": "pass",
+        "oracle_volume_mm3": 47057.522203923065,
+        "call_index": 4,
+        "tool": "get_mass_properties",
+        "returned_volume_mm3": 47057.522203923065,
+        "unit_evidence": "mass_properties.volume_mm3 field",
+        "absolute_error_mm3": 0.0,
+        "relative_error": 0.0,
+        "relative_tolerance": 1e-06,
+        "reason": "Returned volume agrees with same-record post-edit COM oracle"
+      },
+      {
+        "adapter_id": "pro",
+        "repetition": 2,
+        "run_id": "0adfacf67f63",
+        "source_file": "benchmarks/results/live-after.json",
+        "source_sha256": "c14685a29e9e643a46f47ccfe094944e977b851a607cac7ee4140da0aa9710fd",
+        "record_index": 6,
+        "source_revision": {
+          "revision": "working-tree"
+        },
+        "status": "pass",
+        "oracle_volume_mm3": 47057.522203923065,
+        "call_index": 4,
+        "tool": "get_mass_properties",
+        "returned_volume_mm3": 47057.522203923065,
+        "unit_evidence": "mass_properties.volume_mm3 field",
+        "absolute_error_mm3": 0.0,
+        "relative_error": 0.0,
+        "relative_tolerance": 1e-06,
+        "reason": "Returned volume agrees with same-record post-edit COM oracle"
+      },
+      {
+        "adapter_id": "andrew",
+        "repetition": 2,
+        "run_id": "0adfacf67f63",
+        "source_file": "benchmarks/results/live-after.json",
+        "source_sha256": "c14685a29e9e643a46f47ccfe094944e977b851a607cac7ee4140da0aa9710fd",
+        "record_index": 7,
+        "source_revision": {
+          "repository": "https://github.com/andrewbartels1/SolidworksMCP-python",
+          "revision": "126beed0e7a13214ebdd5724929f4c095cf2642f",
+          "license": "MIT",
+          "release_tag": "v1.5.0",
+          "source_modified": false
+        },
+        "status": "pass",
+        "oracle_volume_mm3": 47057.522203923065,
+        "call_index": 10,
+        "tool": "get_mass_properties",
+        "returned_volume_mm3": 47057.522203923065,
+        "unit_evidence": "mass_properties.volume.units=mm\u00b3",
+        "absolute_error_mm3": 0.0,
+        "relative_error": 0.0,
+        "relative_tolerance": 1e-06,
+        "reason": "Returned volume agrees with same-record post-edit COM oracle"
+      },
+      {
+        "adapter_id": "pro_before",
+        "repetition": 2,
+        "run_id": "0adfacf67f63",
+        "source_file": "benchmarks/results/live-after.json",
+        "source_sha256": "c14685a29e9e643a46f47ccfe094944e977b851a607cac7ee4140da0aa9710fd",
+        "record_index": 8,
+        "source_revision": {
+          "revision": "frozen-0.1.0",
+          "wheel_sha256": "37791b5f24ba5c4aa5b9c83f313cd33b59640e950e722eaaeedcde1e2d7768fc"
+        },
+        "status": "pass",
+        "oracle_volume_mm3": 47057.52220392306,
+        "call_index": 4,
+        "tool": "get_mass_properties",
+        "returned_volume_mm3": 47057.522203923065,
+        "unit_evidence": "mass_properties.volume_mm3 field",
+        "absolute_error_mm3": 7.275957614183426e-12,
+        "relative_error": 1.5461837498908622e-16,
+        "relative_tolerance": 1e-06,
+        "reason": "Returned volume agrees with same-record post-edit COM oracle"
+      }
+    ]
+  }
+}

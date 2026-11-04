@@ -1,0 +1,407 @@
+{
+  "ok": true,
+  "protected_documents": [
+    {
+      "title": "acceptance-plate.SLDPRT",
+      "path": "<REPO>\\artifacts\\acceptance\\45c3dd8341fa\\acceptance-plate.SLDPRT",
+      "dirty": false
+    },
+    {
+      "title": "acceptance-plate.SLDPRT",
+      "path": "<REPO>\\artifacts\\acceptance\\5bf9de99f295\\acceptance-plate.SLDPRT",
+      "dirty": false
+    },
+    {
+      "title": "acceptance-plate.SLDPRT",
+      "path": "<REPO>\\artifacts\\acceptance\\fac1ec721802\\acceptance-plate.SLDPRT",
+      "dirty": false
+    },
+    {
+      "title": "acceptance-plate.SLDPRT",
+      "path": "<REPO>\\artifacts\\acceptance\\f08894009933\\acceptance-plate.SLDPRT",
+      "dirty": true
+    }
+  ],
+  "before": {
+    "revision": "34.4.1",
+    "documents": [
+      {
+        "title": "acceptance-plate.SLDPRT",
+        "path": "<REPO>\\artifacts\\acceptance\\45c3dd8341fa\\acceptance-plate.SLDPRT",
+        "dirty": false
+      },
+      {
+        "title": "acceptance-plate.SLDPRT",
+        "path": "<REPO>\\artifacts\\acceptance\\5bf9de99f295\\acceptance-plate.SLDPRT",
+        "dirty": false
+      },
+      {
+        "title": "acceptance-plate.SLDPRT",
+        "path": "<REPO>\\artifacts\\acceptance\\fac1ec721802\\acceptance-plate.SLDPRT",
+        "dirty": false
+      },
+      {
+        "title": "acceptance-plate.SLDPRT",
+        "path": "<REPO>\\artifacts\\acceptance\\f08894009933\\acceptance-plate.SLDPRT",
+        "dirty": true
+      },
+      {
+        "title": "Part126",
+        "path": "",
+        "dirty": true
+      }
+    ],
+    "active_title": "Part126",
+    "volume_mm3": 32000.000000000004,
+    "surface_area_mm2": 10080.0,
+    "bounds_mm": [
+      0.0,
+      0.0,
+      0.0,
+      80.0,
+      50.0,
+      8.0
+    ],
+    "size_mm": [
+      80.0,
+      50.0,
+      8.0
+    ]
+  },
+  "after": {
+    "revision": "34.4.1",
+    "documents": [
+      {
+        "title": "acceptance-plate.SLDPRT",
+        "path": "<REPO>\\artifacts\\acceptance\\45c3dd8341fa\\acceptance-plate.SLDPRT",
+        "dirty": false
+      },
+      {
+        "title": "acceptance-plate.SLDPRT",
+        "path": "<REPO>\\artifacts\\acceptance\\5bf9de99f295\\acceptance-plate.SLDPRT",
+        "dirty": false
+      },
+      {
+        "title": "acceptance-plate.SLDPRT",
+        "path": "<REPO>\\artifacts\\acceptance\\fac1ec721802\\acceptance-plate.SLDPRT",
+        "dirty": false
+      },
+      {
+        "title": "acceptance-plate.SLDPRT",
+        "path": "<REPO>\\artifacts\\acceptance\\f08894009933\\acceptance-plate.SLDPRT",
+        "dirty": true
+      },
+      {
+        "title": "Part126",
+        "path": "",
+        "dirty": true
+      }
+    ],
+    "active_title": "Part126",
+    "volume_mm3": 32000.000000000004,
+    "surface_area_mm2": 10080.0,
+    "bounds_mm": [
+      0.0,
+      0.0,
+      0.0,
+      80.0,
+      50.0,
+      8.0
+    ],
+    "size_mm": [
+      80.0,
+      50.0,
+      8.0
+    ]
+  },
+  "ui_before": {
+    "command_in_progress": false,
+    "graphics_update": true,
+    "feature_tree": true,
+    "feature_tree_window": true,
+    "display_when_added": false
+  },
+  "ui_after": {
+    "command_in_progress": false,
+    "graphics_update": true,
+    "feature_tree": true,
+    "feature_tree_window": true,
+    "display_when_added": false
+  },
+  "features_before": {
+    "ok": true,
+    "count": 2,
+    "features": [
+      {
+        "name": "\u00c7izim1",
+        "type": "ProfileFeature",
+        "suppressed": false
+      },
+      {
+        "name": "BenchBlock",
+        "type": "Extrusion",
+        "suppressed": false
+      }
+    ],
+    "under_defined_sketches": [],
+    "operation_id": "op_549122add81e4186aee6454b3a452347",
+    "operation_status": "completed",
+    "status": "completed"
+  },
+  "features_after": {
+    "ok": true,
+    "count": 2,
+    "features": [
+      {
+        "name": "\u00c7izim1",
+        "type": "ProfileFeature",
+        "suppressed": false
+      },
+      {
+        "name": "BenchBlock",
+        "type": "Extrusion",
+        "suppressed": false
+      }
+    ],
+    "under_defined_sketches": [],
+    "operation_id": "op_2bb1e271449248318bb738af14dab33d",
+    "operation_status": "completed",
+    "status": "completed"
+  },
+  "failure": {
+    "tool": "cut_profile",
+    "status": "fail",
+    "measurement_status": "measured",
+    "elapsed_ms": 1512.127,
+    "is_error": true,
+    "output": {
+      "ok": false,
+      "error": "FeatureCut4 failed (None). Is the profile on the +Z face?",
+      "operation_id": "op_fffe07f7a06e45899ee4d473fa3f5206",
+      "operation_status": "failed",
+      "status": "failed"
+    },
+    "arguments": {
+      "points_mm": [
+        [
+          1000,
+          1000
+        ],
+        [
+          1010,
+          1000
+        ],
+        [
+          1010,
+          1010
+        ],
+        [
+          1000,
+          1010
+        ]
+      ],
+      "name": "ExpectedFailedCut"
+    }
+  },
+  "calls": [
+    {
+      "tool": "new_part",
+      "status": "pass",
+      "measurement_status": "measured",
+      "elapsed_ms": 1711.067,
+      "is_error": false,
+      "output": {
+        "ok": true,
+        "title": "Part126",
+        "operation_id": "op_4556286ed1b94afa872cb165fe9c7017",
+        "operation_status": "completed",
+        "status": "completed"
+      },
+      "arguments": {}
+    },
+    {
+      "tool": "add_box",
+      "status": "pass",
+      "measurement_status": "measured",
+      "elapsed_ms": 1733.548,
+      "is_error": false,
+      "output": {
+        "ok": true,
+        "feature": "BenchBlock",
+        "rebuild_ok": true,
+        "dimensions": {
+          "width": "width@\u00c7izim1",
+          "height": "height@\u00c7izim1",
+          "depth": "D1@BenchBlock"
+        },
+        "fully_defined": true,
+        "mass_properties": {
+          "volume_mm3": 32000.000000000004,
+          "mass_kg": 0.03200000000000001,
+          "density_kg_m3": 1000.0000000000001,
+          "surface_area_mm2": 10080.0,
+          "center_of_mass_mm": [
+            40.0,
+            25.0,
+            4.0
+          ],
+          "bounding_box_mm": {
+            "min_mm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "max_mm": [
+              80.0,
+              50.0,
+              8.0
+            ],
+            "size_mm": [
+              80.0,
+              50.0,
+              8.0
+            ]
+          }
+        },
+        "depth_dimension": "D1@BenchBlock",
+        "operation_id": "op_3f5b717f3ec64751b6516bd7068e15e2",
+        "operation_status": "completed",
+        "status": "completed"
+      },
+      "arguments": {
+        "width_mm": 80,
+        "height_mm": 50,
+        "depth_mm": 8,
+        "name": "BenchBlock"
+      }
+    },
+    {
+      "tool": "list_features",
+      "status": "pass",
+      "measurement_status": "measured",
+      "elapsed_ms": 493.204,
+      "is_error": false,
+      "output": {
+        "ok": true,
+        "count": 2,
+        "features": [
+          {
+            "name": "\u00c7izim1",
+            "type": "ProfileFeature",
+            "suppressed": false
+          },
+          {
+            "name": "BenchBlock",
+            "type": "Extrusion",
+            "suppressed": false
+          }
+        ],
+        "under_defined_sketches": [],
+        "operation_id": "op_549122add81e4186aee6454b3a452347",
+        "operation_status": "completed",
+        "status": "completed"
+      },
+      "arguments": {}
+    },
+    {
+      "tool": "cut_profile",
+      "status": "fail",
+      "measurement_status": "measured",
+      "elapsed_ms": 1512.127,
+      "is_error": true,
+      "output": {
+        "ok": false,
+        "error": "FeatureCut4 failed (None). Is the profile on the +Z face?",
+        "operation_id": "op_fffe07f7a06e45899ee4d473fa3f5206",
+        "operation_status": "failed",
+        "status": "failed"
+      },
+      "arguments": {
+        "points_mm": [
+          [
+            1000,
+            1000
+          ],
+          [
+            1010,
+            1000
+          ],
+          [
+            1010,
+            1010
+          ],
+          [
+            1000,
+            1010
+          ]
+        ],
+        "name": "ExpectedFailedCut"
+      }
+    },
+    {
+      "tool": "list_features",
+      "status": "pass",
+      "measurement_status": "measured",
+      "elapsed_ms": 322.734,
+      "is_error": false,
+      "output": {
+        "ok": true,
+        "count": 2,
+        "features": [
+          {
+            "name": "\u00c7izim1",
+            "type": "ProfileFeature",
+            "suppressed": false
+          },
+          {
+            "name": "BenchBlock",
+            "type": "Extrusion",
+            "suppressed": false
+          }
+        ],
+        "under_defined_sketches": [],
+        "operation_id": "op_2bb1e271449248318bb738af14dab33d",
+        "operation_status": "completed",
+        "status": "completed"
+      },
+      "arguments": {}
+    },
+    {
+      "tool": "close_part",
+      "status": "pass",
+      "measurement_status": "measured",
+      "elapsed_ms": 819.478,
+      "is_error": false,
+      "output": {
+        "ok": true,
+        "closed": "Part126",
+        "operation_id": "op_55d16239ec9647abaea1d1c92380b335",
+        "operation_status": "completed",
+        "status": "completed"
+      },
+      "arguments": {}
+    }
+  ],
+  "remaining_documents": [
+    {
+      "title": "acceptance-plate.SLDPRT",
+      "path": "<REPO>\\artifacts\\acceptance\\45c3dd8341fa\\acceptance-plate.SLDPRT",
+      "dirty": false
+    },
+    {
+      "title": "acceptance-plate.SLDPRT",
+      "path": "<REPO>\\artifacts\\acceptance\\5bf9de99f295\\acceptance-plate.SLDPRT",
+      "dirty": false
+    },
+    {
+      "title": "acceptance-plate.SLDPRT",
+      "path": "<REPO>\\artifacts\\acceptance\\fac1ec721802\\acceptance-plate.SLDPRT",
+      "dirty": false
+    },
+    {
+      "title": "acceptance-plate.SLDPRT",
+      "path": "<REPO>\\artifacts\\acceptance\\f08894009933\\acceptance-plate.SLDPRT",
+      "dirty": true
+    }
+  ]
+}

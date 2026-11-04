@@ -1,0 +1,11 @@
+# Replace C:/path/to/Solidworks-MCP-PRO with your actual checkout path.
+# Prefer scripts/configure_clients.py to generate the exact absolute paths.
+[mcp_servers.solidworks-pro]
+command = "C:/path/to/Solidworks-MCP-PRO/.venv/Scripts/python.exe"
+args = ["-m", "solidworks_mcp_pro", "--tool-profile", "compact"]
+cwd = "C:/path/to/Solidworks-MCP-PRO"
+startup_timeout_sec = 30
+tool_timeout_sec = 180
+
+[mcp_servers.solidworks-pro.env]
+SW_MCP_PRO_WORKSPACE = "C:/path/to/Solidworks-MCP-PRO/artifacts"

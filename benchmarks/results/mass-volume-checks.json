@@ -1,0 +1,546 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-03T10:22:49.177888+00:00",
+  "check": "returned-volume-vs-same-record-post-edit-COM-oracle",
+  "relative_tolerance": 1e-06,
+  "scope": "Derived volume check only; original timings/statuses and raw inputs remain unchanged; no inertia validation.",
+  "source_files": [
+    {
+      "path": "benchmarks/results/live-before.json",
+      "sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+      "run_id": "d04da1a18712",
+      "record_count": 12
+    },
+    {
+      "path": "benchmarks/results/live-after.json",
+      "sha256": "c14685a29e9e643a46f47ccfe094944e977b851a607cac7ee4140da0aa9710fd",
+      "run_id": "0adfacf67f63",
+      "record_count": 9
+    }
+  ],
+  "summary": {
+    "sample_count": 21,
+    "pass_count": 21,
+    "fail_count": 0,
+    "by_adapter": {
+      "andrew": {
+        "sample_count": 3,
+        "pass_count": 3,
+        "fail_count": 0
+      },
+      "harrier": {
+        "sample_count": 3,
+        "pass_count": 3,
+        "fail_count": 0
+      },
+      "hjbaard": {
+        "sample_count": 3,
+        "pass_count": 3,
+        "fail_count": 0
+      },
+      "pro": {
+        "sample_count": 3,
+        "pass_count": 3,
+        "fail_count": 0
+      },
+      "pro_before": {
+        "sample_count": 6,
+        "pass_count": 6,
+        "fail_count": 0
+      },
+      "soheil": {
+        "sample_count": 3,
+        "pass_count": 3,
+        "fail_count": 0
+      }
+    }
+  },
+  "samples": [
+    {
+      "adapter_id": "hjbaard",
+      "repetition": 0,
+      "run_id": "d04da1a18712",
+      "source_file": "benchmarks/results/live-before.json",
+      "source_sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+      "record_index": 0,
+      "source_revision": {
+        "repository": "https://github.com/hjbaard/SolidWorks-MCP",
+        "revision": "ddcefc0cfa056002ff8eb8bdb186818ad52dc2f1"
+      },
+      "status": "pass",
+      "oracle_volume_mm3": 47057.522203923065,
+      "call_index": 4,
+      "tool": "get_mass_properties",
+      "returned_volume_mm3": 47057.522203923065,
+      "unit_evidence": "mass_properties.volume_mm3 field",
+      "absolute_error_mm3": 0.0,
+      "relative_error": 0.0,
+      "relative_tolerance": 1e-06,
+      "reason": "Returned volume agrees with same-record post-edit COM oracle"
+    },
+    {
+      "adapter_id": "harrier",
+      "repetition": 0,
+      "run_id": "d04da1a18712",
+      "source_file": "benchmarks/results/live-before.json",
+      "source_sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+      "record_index": 1,
+      "source_revision": {
+        "repository": "https://github.com/HarrierPigeon/Solidworks-MCP-Server",
+        "revision": "60c11fe45b6cfc60c4e2da8ad41fc725a48bf8ea",
+        "license": "MIT",
+        "release_tag": "v0.4.0",
+        "source_modified": false
+      },
+      "status": "pass",
+      "oracle_volume_mm3": 47057.522203923065,
+      "call_index": 8,
+      "tool": "solidworks_get_mass_properties",
+      "returned_volume_mm3": 47057.52,
+      "unit_evidence": "volume_mm3 field",
+      "absolute_error_mm3": 0.002203923068009317,
+      "relative_error": 4.6834660321864155e-08,
+      "relative_tolerance": 1e-06,
+      "reason": "Returned volume agrees with same-record post-edit COM oracle"
+    },
+    {
+      "adapter_id": "soheil",
+      "repetition": 0,
+      "run_id": "d04da1a18712",
+      "source_file": "benchmarks/results/live-before.json",
+      "source_sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+      "record_index": 2,
+      "source_revision": {
+        "repository": "https://github.com/soheil-mp/solidworks-mcp",
+        "revision": "79fb529b67ca4a0587e5570024a772fad0b2c14d",
+        "license": "MIT",
+        "package_version": "0.1.0",
+        "source_modified": false
+      },
+      "status": "pass",
+      "oracle_volume_mm3": 47057.522203923065,
+      "call_index": 7,
+      "tool": "model_mass",
+      "returned_volume_mm3": 47057.522,
+      "unit_evidence": "volumeMm3 field",
+      "absolute_error_mm3": 0.0002039230676018633,
+      "relative_error": 4.333485021122994e-09,
+      "relative_tolerance": 1e-06,
+      "reason": "Returned volume agrees with same-record post-edit COM oracle"
+    },
+    {
+      "adapter_id": "pro_before",
+      "repetition": 0,
+      "run_id": "d04da1a18712",
+      "source_file": "benchmarks/results/live-before.json",
+      "source_sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+      "record_index": 3,
+      "source_revision": {
+        "revision": "frozen-0.1.0",
+        "wheel_sha256": "37791b5f24ba5c4aa5b9c83f313cd33b59640e950e722eaaeedcde1e2d7768fc"
+      },
+      "status": "pass",
+      "oracle_volume_mm3": 47057.522203923065,
+      "call_index": 4,
+      "tool": "get_mass_properties",
+      "returned_volume_mm3": 47057.522203923065,
+      "unit_evidence": "mass_properties.volume_mm3 field",
+      "absolute_error_mm3": 0.0,
+      "relative_error": 0.0,
+      "relative_tolerance": 1e-06,
+      "reason": "Returned volume agrees with same-record post-edit COM oracle"
+    },
+    {
+      "adapter_id": "soheil",
+      "repetition": 1,
+      "run_id": "d04da1a18712",
+      "source_file": "benchmarks/results/live-before.json",
+      "source_sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+      "record_index": 4,
+      "source_revision": {
+        "repository": "https://github.com/soheil-mp/solidworks-mcp",
+        "revision": "79fb529b67ca4a0587e5570024a772fad0b2c14d",
+        "license": "MIT",
+        "package_version": "0.1.0",
+        "source_modified": false
+      },
+      "status": "pass",
+      "oracle_volume_mm3": 47057.52220392307,
+      "call_index": 7,
+      "tool": "model_mass",
+      "returned_volume_mm3": 47057.522,
+      "unit_evidence": "volumeMm3 field",
+      "absolute_error_mm3": 0.0002039230748778209,
+      "relative_error": 4.333485175741368e-09,
+      "relative_tolerance": 1e-06,
+      "reason": "Returned volume agrees with same-record post-edit COM oracle"
+    },
+    {
+      "adapter_id": "harrier",
+      "repetition": 1,
+      "run_id": "d04da1a18712",
+      "source_file": "benchmarks/results/live-before.json",
+      "source_sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+      "record_index": 5,
+      "source_revision": {
+        "repository": "https://github.com/HarrierPigeon/Solidworks-MCP-Server",
+        "revision": "60c11fe45b6cfc60c4e2da8ad41fc725a48bf8ea",
+        "license": "MIT",
+        "release_tag": "v0.4.0",
+        "source_modified": false
+      },
+      "status": "pass",
+      "oracle_volume_mm3": 47057.522203923065,
+      "call_index": 8,
+      "tool": "solidworks_get_mass_properties",
+      "returned_volume_mm3": 47057.52,
+      "unit_evidence": "volume_mm3 field",
+      "absolute_error_mm3": 0.002203923068009317,
+      "relative_error": 4.6834660321864155e-08,
+      "relative_tolerance": 1e-06,
+      "reason": "Returned volume agrees with same-record post-edit COM oracle"
+    },
+    {
+      "adapter_id": "pro_before",
+      "repetition": 1,
+      "run_id": "d04da1a18712",
+      "source_file": "benchmarks/results/live-before.json",
+      "source_sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+      "record_index": 6,
+      "source_revision": {
+        "revision": "frozen-0.1.0",
+        "wheel_sha256": "37791b5f24ba5c4aa5b9c83f313cd33b59640e950e722eaaeedcde1e2d7768fc"
+      },
+      "status": "pass",
+      "oracle_volume_mm3": 47057.522203923065,
+      "call_index": 4,
+      "tool": "get_mass_properties",
+      "returned_volume_mm3": 47057.522203923065,
+      "unit_evidence": "mass_properties.volume_mm3 field",
+      "absolute_error_mm3": 0.0,
+      "relative_error": 0.0,
+      "relative_tolerance": 1e-06,
+      "reason": "Returned volume agrees with same-record post-edit COM oracle"
+    },
+    {
+      "adapter_id": "hjbaard",
+      "repetition": 1,
+      "run_id": "d04da1a18712",
+      "source_file": "benchmarks/results/live-before.json",
+      "source_sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+      "record_index": 7,
+      "source_revision": {
+        "repository": "https://github.com/hjbaard/SolidWorks-MCP",
+        "revision": "ddcefc0cfa056002ff8eb8bdb186818ad52dc2f1"
+      },
+      "status": "pass",
+      "oracle_volume_mm3": 47057.522203923065,
+      "call_index": 4,
+      "tool": "get_mass_properties",
+      "returned_volume_mm3": 47057.522203923065,
+      "unit_evidence": "mass_properties.volume_mm3 field",
+      "absolute_error_mm3": 0.0,
+      "relative_error": 0.0,
+      "relative_tolerance": 1e-06,
+      "reason": "Returned volume agrees with same-record post-edit COM oracle"
+    },
+    {
+      "adapter_id": "soheil",
+      "repetition": 2,
+      "run_id": "d04da1a18712",
+      "source_file": "benchmarks/results/live-before.json",
+      "source_sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+      "record_index": 8,
+      "source_revision": {
+        "repository": "https://github.com/soheil-mp/solidworks-mcp",
+        "revision": "79fb529b67ca4a0587e5570024a772fad0b2c14d",
+        "license": "MIT",
+        "package_version": "0.1.0",
+        "source_modified": false
+      },
+      "status": "pass",
+      "oracle_volume_mm3": 47057.522203923065,
+      "call_index": 7,
+      "tool": "model_mass",
+      "returned_volume_mm3": 47057.522,
+      "unit_evidence": "volumeMm3 field",
+      "absolute_error_mm3": 0.0002039230676018633,
+      "relative_error": 4.333485021122994e-09,
+      "relative_tolerance": 1e-06,
+      "reason": "Returned volume agrees with same-record post-edit COM oracle"
+    },
+    {
+      "adapter_id": "hjbaard",
+      "repetition": 2,
+      "run_id": "d04da1a18712",
+      "source_file": "benchmarks/results/live-before.json",
+      "source_sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+      "record_index": 9,
+      "source_revision": {
+        "repository": "https://github.com/hjbaard/SolidWorks-MCP",
+        "revision": "ddcefc0cfa056002ff8eb8bdb186818ad52dc2f1"
+      },
+      "status": "pass",
+      "oracle_volume_mm3": 47057.522203923065,
+      "call_index": 4,
+      "tool": "get_mass_properties",
+      "returned_volume_mm3": 47057.522203923065,
+      "unit_evidence": "mass_properties.volume_mm3 field",
+      "absolute_error_mm3": 0.0,
+      "relative_error": 0.0,
+      "relative_tolerance": 1e-06,
+      "reason": "Returned volume agrees with same-record post-edit COM oracle"
+    },
+    {
+      "adapter_id": "harrier",
+      "repetition": 2,
+      "run_id": "d04da1a18712",
+      "source_file": "benchmarks/results/live-before.json",
+      "source_sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+      "record_index": 10,
+      "source_revision": {
+        "repository": "https://github.com/HarrierPigeon/Solidworks-MCP-Server",
+        "revision": "60c11fe45b6cfc60c4e2da8ad41fc725a48bf8ea",
+        "license": "MIT",
+        "release_tag": "v0.4.0",
+        "source_modified": false
+      },
+      "status": "pass",
+      "oracle_volume_mm3": 47057.522203923065,
+      "call_index": 8,
+      "tool": "solidworks_get_mass_properties",
+      "returned_volume_mm3": 47057.52,
+      "unit_evidence": "volume_mm3 field",
+      "absolute_error_mm3": 0.002203923068009317,
+      "relative_error": 4.6834660321864155e-08,
+      "relative_tolerance": 1e-06,
+      "reason": "Returned volume agrees with same-record post-edit COM oracle"
+    },
+    {
+      "adapter_id": "pro_before",
+      "repetition": 2,
+      "run_id": "d04da1a18712",
+      "source_file": "benchmarks/results/live-before.json",
+      "source_sha256": "ef07c453a37491af49faa51dc5c52f518832e4851c3551f384eb89c227e11502",
+      "record_index": 11,
+      "source_revision": {
+        "revision": "frozen-0.1.0",
+        "wheel_sha256": "37791b5f24ba5c4aa5b9c83f313cd33b59640e950e722eaaeedcde1e2d7768fc"
+      },
+      "status": "pass",
+      "oracle_volume_mm3": 47057.522203923065,
+      "call_index": 4,
+      "tool": "get_mass_properties",
+      "returned_volume_mm3": 47057.522203923065,
+      "unit_evidence": "mass_properties.volume_mm3 field",
+      "absolute_error_mm3": 0.0,
+      "relative_error": 0.0,
+      "relative_tolerance": 1e-06,
+      "reason": "Returned volume agrees with same-record post-edit COM oracle"
+    },
+    {
+      "adapter_id": "pro",
+      "repetition": 0,
+      "run_id": "0adfacf67f63",
+      "source_file": "benchmarks/results/live-after.json",
+      "source_sha256": "c14685a29e9e643a46f47ccfe094944e977b851a607cac7ee4140da0aa9710fd",
+      "record_index": 0,
+      "source_revision": {
+        "revision": "working-tree"
+      },
+      "status": "pass",
+      "oracle_volume_mm3": 47057.522203923065,
+      "call_index": 4,
+      "tool": "get_mass_properties",
+      "returned_volume_mm3": 47057.522203923065,
+      "unit_evidence": "mass_properties.volume_mm3 field",
+      "absolute_error_mm3": 0.0,
+      "relative_error": 0.0,
+      "relative_tolerance": 1e-06,
+      "reason": "Returned volume agrees with same-record post-edit COM oracle"
+    },
+    {
+      "adapter_id": "andrew",
+      "repetition": 0,
+      "run_id": "0adfacf67f63",
+      "source_file": "benchmarks/results/live-after.json",
+      "source_sha256": "c14685a29e9e643a46f47ccfe094944e977b851a607cac7ee4140da0aa9710fd",
+      "record_index": 1,
+      "source_revision": {
+        "repository": "https://github.com/andrewbartels1/SolidworksMCP-python",
+        "revision": "126beed0e7a13214ebdd5724929f4c095cf2642f",
+        "license": "MIT",
+        "release_tag": "v1.5.0",
+        "source_modified": false
+      },
+      "status": "pass",
+      "oracle_volume_mm3": 47057.522203923065,
+      "call_index": 10,
+      "tool": "get_mass_properties",
+      "returned_volume_mm3": 47057.522203923065,
+      "unit_evidence": "mass_properties.volume.units=mm\u00b3",
+      "absolute_error_mm3": 0.0,
+      "relative_error": 0.0,
+      "relative_tolerance": 1e-06,
+      "reason": "Returned volume agrees with same-record post-edit COM oracle"
+    },
+    {
+      "adapter_id": "pro_before",
+      "repetition": 0,
+      "run_id": "0adfacf67f63",
+      "source_file": "benchmarks/results/live-after.json",
+      "source_sha256": "c14685a29e9e643a46f47ccfe094944e977b851a607cac7ee4140da0aa9710fd",
+      "record_index": 2,
+      "source_revision": {
+        "revision": "frozen-0.1.0",
+        "wheel_sha256": "37791b5f24ba5c4aa5b9c83f313cd33b59640e950e722eaaeedcde1e2d7768fc"
+      },
+      "status": "pass",
+      "oracle_volume_mm3": 47057.522203923065,
+      "call_index": 4,
+      "tool": "get_mass_properties",
+      "returned_volume_mm3": 47057.522203923065,
+      "unit_evidence": "mass_properties.volume_mm3 field",
+      "absolute_error_mm3": 0.0,
+      "relative_error": 0.0,
+      "relative_tolerance": 1e-06,
+      "reason": "Returned volume agrees with same-record post-edit COM oracle"
+    },
+    {
+      "adapter_id": "pro",
+      "repetition": 1,
+      "run_id": "0adfacf67f63",
+      "source_file": "benchmarks/results/live-after.json",
+      "source_sha256": "c14685a29e9e643a46f47ccfe094944e977b851a607cac7ee4140da0aa9710fd",
+      "record_index": 3,
+      "source_revision": {
+        "revision": "working-tree"
+      },
+      "status": "pass",
+      "oracle_volume_mm3": 47057.522203923065,
+      "call_index": 4,
+      "tool": "get_mass_properties",
+      "returned_volume_mm3": 47057.522203923065,
+      "unit_evidence": "mass_properties.volume_mm3 field",
+      "absolute_error_mm3": 0.0,
+      "relative_error": 0.0,
+      "relative_tolerance": 1e-06,
+      "reason": "Returned volume agrees with same-record post-edit COM oracle"
+    },
+    {
+      "adapter_id": "andrew",
+      "repetition": 1,
+      "run_id": "0adfacf67f63",
+      "source_file": "benchmarks/results/live-after.json",
+      "source_sha256": "c14685a29e9e643a46f47ccfe094944e977b851a607cac7ee4140da0aa9710fd",
+      "record_index": 4,
+      "source_revision": {
+        "repository": "https://github.com/andrewbartels1/SolidworksMCP-python",
+        "revision": "126beed0e7a13214ebdd5724929f4c095cf2642f",
+        "license": "MIT",
+        "release_tag": "v1.5.0",
+        "source_modified": false
+      },
+      "status": "pass",
+      "oracle_volume_mm3": 47057.522203923065,
+      "call_index": 10,
+      "tool": "get_mass_properties",
+      "returned_volume_mm3": 47057.522203923065,
+      "unit_evidence": "mass_properties.volume.units=mm\u00b3",
+      "absolute_error_mm3": 0.0,
+      "relative_error": 0.0,
+      "relative_tolerance": 1e-06,
+      "reason": "Returned volume agrees with same-record post-edit COM oracle"
+    },
+    {
+      "adapter_id": "pro_before",
+      "repetition": 1,
+      "run_id": "0adfacf67f63",
+      "source_file": "benchmarks/results/live-after.json",
+      "source_sha256": "c14685a29e9e643a46f47ccfe094944e977b851a607cac7ee4140da0aa9710fd",
+      "record_index": 5,
+      "source_revision": {
+        "revision": "frozen-0.1.0",
+        "wheel_sha256": "37791b5f24ba5c4aa5b9c83f313cd33b59640e950e722eaaeedcde1e2d7768fc"
+      },
+      "status": "pass",
+      "oracle_volume_mm3": 47057.522203923065,
+      "call_index": 4,
+      "tool": "get_mass_properties",
+      "returned_volume_mm3": 47057.522203923065,
+      "unit_evidence": "mass_properties.volume_mm3 field",
+      "absolute_error_mm3": 0.0,
+      "relative_error": 0.0,
+      "relative_tolerance": 1e-06,
+      "reason": "Returned volume agrees with same-record post-edit COM oracle"
+    },
+    {
+      "adapter_id": "pro",
+      "repetition": 2,
+      "run_id": "0adfacf67f63",
+      "source_file": "benchmarks/results/live-after.json",
+      "source_sha256": "c14685a29e9e643a46f47ccfe094944e977b851a607cac7ee4140da0aa9710fd",
+      "record_index": 6,
+      "source_revision": {
+        "revision": "working-tree"
+      },
+      "status": "pass",
+      "oracle_volume_mm3": 47057.522203923065,
+      "call_index": 4,
+      "tool": "get_mass_properties",
+      "returned_volume_mm3": 47057.522203923065,
+      "unit_evidence": "mass_properties.volume_mm3 field",
+      "absolute_error_mm3": 0.0,
+      "relative_error": 0.0,
+      "relative_tolerance": 1e-06,
+      "reason": "Returned volume agrees with same-record post-edit COM oracle"
+    },
+    {
+      "adapter_id": "andrew",
+      "repetition": 2,
+      "run_id": "0adfacf67f63",
+      "source_file": "benchmarks/results/live-after.json",
+      "source_sha256": "c14685a29e9e643a46f47ccfe094944e977b851a607cac7ee4140da0aa9710fd",
+      "record_index": 7,
+      "source_revision": {
+        "repository": "https://github.com/andrewbartels1/SolidworksMCP-python",
+        "revision": "126beed0e7a13214ebdd5724929f4c095cf2642f",
+        "license": "MIT",
+        "release_tag": "v1.5.0",
+        "source_modified": false
+      },
+      "status": "pass",
+      "oracle_volume_mm3": 47057.522203923065,
+      "call_index": 10,
+      "tool": "get_mass_properties",
+      "returned_volume_mm3": 47057.522203923065,
+      "unit_evidence": "mass_properties.volume.units=mm\u00b3",
+      "absolute_error_mm3": 0.0,
+      "relative_error": 0.0,
+      "relative_tolerance": 1e-06,
+      "reason": "Returned volume agrees with same-record post-edit COM oracle"
+    },
+    {
+      "adapter_id": "pro_before",
+      "repetition": 2,
+      "run_id": "0adfacf67f63",
+      "source_file": "benchmarks/results/live-after.json",
+      "source_sha256": "c14685a29e9e643a46f47ccfe094944e977b851a607cac7ee4140da0aa9710fd",
+      "record_index": 8,
+      "source_revision": {
+        "revision": "frozen-0.1.0",
+        "wheel_sha256": "37791b5f24ba5c4aa5b9c83f313cd33b59640e950e722eaaeedcde1e2d7768fc"
+      },
+      "status": "pass",
+      "oracle_volume_mm3": 47057.52220392306,
+      "call_index": 4,
+      "tool": "get_mass_properties",
+      "returned_volume_mm3": 47057.522203923065,
+      "unit_evidence": "mass_properties.volume_mm3 field",
+      "absolute_error_mm3": 7.275957614183426e-12,
+      "relative_error": 1.5461837498908622e-16,
+      "relative_tolerance": 1e-06,
+      "reason": "Returned volume agrees with same-record post-edit COM oracle"
+    }
+  ]
+}

@@ -1,0 +1,3039 @@
+{
+  "server_id": "hjbaard",
+  "source": {
+    "repository": "https://github.com/hjbaard/SolidWorks-MCP",
+    "revision": "ddcefc0cfa056002ff8eb8bdb186818ad52dc2f1",
+    "license": "MIT",
+    "package_version": "0.19.0"
+  },
+  "runtime_mode": "native adapter; discovery only, no CAD tool calls",
+  "tools": [
+    {
+      "name": "get_status",
+      "description": "Report whether SolidWorks is reachable, its revision, this server's version, and the active/current part.",
+      "inputSchema": {
+        "properties": {},
+        "title": "get_statusArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "new_part",
+      "description": "Create a new empty part document; it becomes the current part.",
+      "inputSchema": {
+        "properties": {},
+        "title": "new_partArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_box",
+      "description": "Add a rectangular block: sketch width x height on the first plane, extrude by depth.\n\n    Dimensions are in millimetres. Returns the created feature name, the\n    addressable depth dimension ('D1@<name>'), `dimensions` (width, height,\n    depth; for set_dimension) and the resulting mass properties.\n    ",
+      "inputSchema": {
+        "properties": {
+          "width_mm": {
+            "title": "Width Mm",
+            "type": "number"
+          },
+          "height_mm": {
+            "title": "Height Mm",
+            "type": "number"
+          },
+          "depth_mm": {
+            "title": "Depth Mm",
+            "type": "number"
+          },
+          "name": {
+            "default": "BlockExtrude",
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "width_mm",
+          "height_mm",
+          "depth_mm"
+        ],
+        "title": "add_boxArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_extruded_profile",
+      "description": "Extrude a closed polygon into a solid: points_mm = [[x,y], ...] in mm.\n\n    The polygon (first-plane coordinates, same as add_box) is auto-closed and\n    extruded by depth_mm. Unlocks arbitrary prismatic shapes (brackets, profiles,\n    polygons). corner_radii_mm rounds the corners with real sketch fillets: one\n    radius for all, or one per vertex (0 = sharp); equal radii share one\n    dimension ('radius', else 'r<i>'). rotate_deg turns the profile\n    counterclockwise about about_mm ([x, y], the origin by default) first: draw\n    a crank or a lug straight, then set it at its angle. draft_deg tapers the\n    walls inwards as they rise (negative: outwards), a dimension 'draft' (a\n    moulded boss, a printable taper). merge=False keeps the result a separate\n    body: list_bodies, combine_bodies. Returns mass properties (volume = polygon\n    area * depth; a right-angled corner of radius r loses r^2 (1 - pi/4), a\n    concave one gains it).\n    ",
+      "inputSchema": {
+        "properties": {
+          "points_mm": {
+            "items": {},
+            "title": "Points Mm",
+            "type": "array"
+          },
+          "depth_mm": {
+            "title": "Depth Mm",
+            "type": "number"
+          },
+          "name": {
+            "default": "Extrude",
+            "title": "Name",
+            "type": "string"
+          },
+          "corner_radii_mm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "items": {},
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Corner Radii Mm"
+          },
+          "rotate_deg": {
+            "default": 0.0,
+            "title": "Rotate Deg",
+            "type": "number"
+          },
+          "about_mm": {
+            "anyOf": [
+              {
+                "items": {},
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "About Mm"
+          },
+          "draft_deg": {
+            "default": 0.0,
+            "title": "Draft Deg",
+            "type": "number"
+          },
+          "merge": {
+            "default": true,
+            "title": "Merge",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "points_mm",
+          "depth_mm"
+        ],
+        "title": "add_extruded_profileArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_extruded_spline",
+      "description": "Extrude a smooth CLOSED spline through points: points_mm = [[x,y], ...] in mm.\n\n    Like add_extruded_profile but the outline is a smooth curve through the points\n    (free-form/organic shapes: cams, rounded outlines, aesthetic bosses), auto-closed\n    and extruded by depth_mm. A spline's area is not analytic, so the returned volume\n    is the measured value. Returns mass properties. Use new_part first.\n    ",
+      "inputSchema": {
+        "properties": {
+          "points_mm": {
+            "items": {},
+            "title": "Points Mm",
+            "type": "array"
+          },
+          "depth_mm": {
+            "title": "Depth Mm",
+            "type": "number"
+          },
+          "name": {
+            "default": "Spline",
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "points_mm",
+          "depth_mm"
+        ],
+        "title": "add_extruded_splineArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_disc",
+      "description": "Create a disc/puck/flange: a circle extruded along +Z, centred at (x_mm, y_mm).\n\n    Flat faces are +Z/-Z, so add_hole and add_circular_pattern compose with it\n    (round-flange bolt circles). The centre defaults to the origin; off it, its\n    x and y are dimensions. Returns mass properties. Use new_part first.\n    ",
+      "inputSchema": {
+        "properties": {
+          "diameter_mm": {
+            "title": "Diameter Mm",
+            "type": "number"
+          },
+          "thickness_mm": {
+            "title": "Thickness Mm",
+            "type": "number"
+          },
+          "name": {
+            "default": "Disc",
+            "title": "Name",
+            "type": "string"
+          },
+          "x_mm": {
+            "default": 0.0,
+            "title": "X Mm",
+            "type": "number"
+          },
+          "y_mm": {
+            "default": 0.0,
+            "title": "Y Mm",
+            "type": "number"
+          }
+        },
+        "required": [
+          "diameter_mm",
+          "thickness_mm"
+        ],
+        "title": "add_discArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_cylinder",
+      "description": "Create a cylinder by revolving a profile 360\u00b0 about an axis.\n\n    The first revolve-based primitive. Returns the resulting mass properties\n    (volume = \u03c0 \u00b7 r\u00b2 \u00b7 h). Use new_part first.\n    ",
+      "inputSchema": {
+        "properties": {
+          "diameter_mm": {
+            "title": "Diameter Mm",
+            "type": "number"
+          },
+          "height_mm": {
+            "title": "Height Mm",
+            "type": "number"
+          },
+          "name": {
+            "default": "Revolve",
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "diameter_mm",
+          "height_mm"
+        ],
+        "title": "add_cylinderArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_cone",
+      "description": "Create a cone/frustum by revolving a trapezoidal profile 360\u00b0.\n\n    top_diameter_mm = 0 gives a full cone. Returns mass properties\n    (volume = \u03c0\u00b7h/3 \u00b7 (rb\u00b2 + rb\u00b7rt + rt\u00b2)). Use new_part first.\n    ",
+      "inputSchema": {
+        "properties": {
+          "bottom_diameter_mm": {
+            "title": "Bottom Diameter Mm",
+            "type": "number"
+          },
+          "top_diameter_mm": {
+            "title": "Top Diameter Mm",
+            "type": "number"
+          },
+          "height_mm": {
+            "title": "Height Mm",
+            "type": "number"
+          },
+          "name": {
+            "default": "Revolve",
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "bottom_diameter_mm",
+          "top_diameter_mm",
+          "height_mm"
+        ],
+        "title": "add_coneArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_revolved_profile",
+      "description": "Revolve a closed profile on the Front plane about an axis in it.\n\n    Without axis_mm: profile_mm = [[r, z], \u2026] in mm, r = distance from the Y axis,\n    z = position along it. With axis_mm = [[x1, y1], [x2, y2]]: profile_mm gives\n    [x, y] points and the axis is the line through those two points, anywhere and\n    at any angle (a hub turned about its own centre). Auto-closed and spun\n    angle_deg (default 360\u00b0). Points on the axis give a solid (shafts, vases); a\n    profile away from it gives a ring. The profile may not cross the axis.\n    corner_radii_mm rounds corners as for add_extruded_profile (not those on the\n    axis). Returns mass properties. Use new_part first.\n    ",
+      "inputSchema": {
+        "properties": {
+          "profile_mm": {
+            "items": {},
+            "title": "Profile Mm",
+            "type": "array"
+          },
+          "angle_deg": {
+            "default": 360.0,
+            "title": "Angle Deg",
+            "type": "number"
+          },
+          "name": {
+            "default": "Revolve",
+            "title": "Name",
+            "type": "string"
+          },
+          "corner_radii_mm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "items": {},
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Corner Radii Mm"
+          },
+          "axis_mm": {
+            "anyOf": [
+              {
+                "items": {},
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Axis Mm"
+          }
+        },
+        "required": [
+          "profile_mm"
+        ],
+        "title": "add_revolved_profileArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_swept_pipe",
+      "description": "Sweep a circular profile (pipe/tube/rod) along a 2D path on the Front plane.\n\n    path_mm = [[x, y], \u2026] in mm is the centreline. Interior corners are rounded\n    with bend_radius_mm (required when the path turns; a 2-point straight path\n    needs none); smooth=True runs a spline through the points instead, a\n    flowing curve. diameter_mm = outer \u00d8; the round profile is auto-generated\n    perpendicular to the path. Returns mass properties (pi r^2 x\n    path_length_mm). Use new_part first.\n    ",
+      "inputSchema": {
+        "properties": {
+          "path_mm": {
+            "items": {},
+            "title": "Path Mm",
+            "type": "array"
+          },
+          "diameter_mm": {
+            "title": "Diameter Mm",
+            "type": "number"
+          },
+          "bend_radius_mm": {
+            "default": 0.0,
+            "title": "Bend Radius Mm",
+            "type": "number"
+          },
+          "name": {
+            "default": "Pipe",
+            "title": "Name",
+            "type": "string"
+          },
+          "smooth": {
+            "default": false,
+            "title": "Smooth",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "path_mm",
+          "diameter_mm"
+        ],
+        "title": "add_swept_pipeArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_swept_profile",
+      "description": "Sweep an arbitrary closed PROFILE (cross-section) along a 2D PATH.\n\n    profile_mm = [[u,v],\u2026] in mm: the closed cross-section on the Right plane (u \u2192\n    world -Z, v \u2192 world +Y), centred near the origin. path_mm = [[x,y],\u2026] in mm on\n    the Front plane \u2014 MUST start at the origin heading +X (the profile is\n    perpendicular to the path there). Path corners are rounded with bend_radius_mm;\n    corner_radii_mm rounds the profile's corners as for add_extruded_profile.\n    Volume = profile_area \u00b7 path_length. For non-round extrusions along a path\n    (rails, gaskets, trim, channels). Returns mass properties. Use new_part first.\n    ",
+      "inputSchema": {
+        "properties": {
+          "profile_mm": {
+            "items": {},
+            "title": "Profile Mm",
+            "type": "array"
+          },
+          "path_mm": {
+            "items": {},
+            "title": "Path Mm",
+            "type": "array"
+          },
+          "bend_radius_mm": {
+            "default": 0.0,
+            "title": "Bend Radius Mm",
+            "type": "number"
+          },
+          "name": {
+            "default": "Sweep",
+            "title": "Name",
+            "type": "string"
+          },
+          "corner_radii_mm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "items": {},
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Corner Radii Mm"
+          }
+        },
+        "required": [
+          "profile_mm",
+          "path_mm"
+        ],
+        "title": "add_swept_profileArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_lofted_solid",
+      "description": "Loft (blend) 2+ closed profiles on parallel planes stacked along +Z.\n\n    profiles_mm: per profile a polygon [[x,y],\u2026] (mm) in Front-plane coords, or a\n    round section {\"center_mm\": [x, y], \"diameter_mm\": d} (thick at the knee,\n    thin at the foot, centres free to wander). heights_mm = the +Z offset (mm)\n    of each profile, same length, strictly increasing, starting at 0. A\n    2-profile loft is a ruled transition; 3+ blend smoothly. Each profile\n    starts at its first vertex (a round one on +x): give polygons in a\n    consistent vertex order to avoid twist. Returns mass properties. Use\n    new_part first.\n    ",
+      "inputSchema": {
+        "properties": {
+          "profiles_mm": {
+            "items": {},
+            "title": "Profiles Mm",
+            "type": "array"
+          },
+          "heights_mm": {
+            "items": {},
+            "title": "Heights Mm",
+            "type": "array"
+          },
+          "name": {
+            "default": "Loft",
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "profiles_mm",
+          "heights_mm"
+        ],
+        "title": "add_lofted_solidArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "loft_sketches",
+      "description": "Loft through 2+ closed sketches of the current part, by name, in order.\n\n    The sketches may lie on any planes (add_plane, then add_sketch on it, or a\n    person's sketches), so the loft runs in any direction, unlike\n    add_lofted_solid's stack along +Z. Start each sketch at the matching\n    corner (its first segment's start) to keep the loft from twisting. Returns\n    mass properties.\n    ",
+      "inputSchema": {
+        "properties": {
+          "sketches": {
+            "items": {},
+            "title": "Sketches",
+            "type": "array"
+          },
+          "name": {
+            "default": "Loft",
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "sketches"
+        ],
+        "title": "loft_sketchesArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "cut_profile_through_plane",
+      "description": "Cut a polygon sketched on a reference plane, symmetric about that plane.\n\n    plane: 'front' (z = 0), 'top' (y = 0), 'right' (x = 0) or the name of another\n    plane in the part ('Plane1'); points_mm = 3D [x, y, z] points ON that plane\n    (e.g. x = 0 for 'right'), or all [u, v] in the plane's own frame (as\n    add_plane and add_sketch give it). Cuts through all in\n    both directions (depth_mm omitted) or depth_mm in total, centred on the\n    plane. For shapes seen from the side: wedges, windows, symmetric recesses.\n    corner_radii_mm rounds the corners as for add_extruded_profile.\n    keep_inside=True cuts away everything OUTSIDE the profile (through all):\n    extrude the front view, cut the side view with keep_inside, and the part is\n    the 3D shape both views agree on. Returns mass properties.\n    ",
+      "inputSchema": {
+        "properties": {
+          "points_mm": {
+            "items": {},
+            "title": "Points Mm",
+            "type": "array"
+          },
+          "plane": {
+            "title": "Plane",
+            "type": "string"
+          },
+          "depth_mm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Depth Mm"
+          },
+          "name": {
+            "default": "Cut",
+            "title": "Name",
+            "type": "string"
+          },
+          "corner_radii_mm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "items": {},
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Corner Radii Mm"
+          },
+          "keep_inside": {
+            "default": false,
+            "title": "Keep Inside",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "points_mm",
+          "plane"
+        ],
+        "title": "cut_profile_through_planeArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_plane",
+      "description": "Make a reference plane to sketch on: an offset or a turned plane, its position a dimension.\n\n    base moved offset_mm along its normal (base: front/top/right or a plane by\n    name), or a default plane turned angle_deg about a model axis it holds,\n    about='x'/'y'/'z' (front holds x and y, top x and z, right y and z), by the\n    right-hand rule. For both, turn first, then offset that plane. Returns its\n    name for plane= arguments, and origin_mm, normal, x_axis and y_axis: a point\n    (u, v) on it is origin + u x_axis + v y_axis.\n    ",
+      "inputSchema": {
+        "properties": {
+          "base": {
+            "default": "front",
+            "title": "Base",
+            "type": "string"
+          },
+          "offset_mm": {
+            "default": 0.0,
+            "title": "Offset Mm",
+            "type": "number"
+          },
+          "angle_deg": {
+            "default": 0.0,
+            "title": "Angle Deg",
+            "type": "number"
+          },
+          "about": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "About"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Name"
+          }
+        },
+        "title": "add_planeArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_extruded_profile_on_plane",
+      "description": "Extrude a polygon drawn on a reference plane, such as one add_plane made at an angle.\n\n    points_mm = 3D [x, y, z] points ON the plane (origin + u x_axis + v y_axis\n    from add_plane), or all [u, v] in that frame. depth_mm along the plane's normal, or the other way with\n    reverse=True; merged with the part. corner_radii_mm, draft_deg and merge\n    work as for add_extruded_profile. Returns mass properties.\n    ",
+      "inputSchema": {
+        "properties": {
+          "points_mm": {
+            "items": {},
+            "title": "Points Mm",
+            "type": "array"
+          },
+          "plane": {
+            "title": "Plane",
+            "type": "string"
+          },
+          "depth_mm": {
+            "title": "Depth Mm",
+            "type": "number"
+          },
+          "reverse": {
+            "default": false,
+            "title": "Reverse",
+            "type": "boolean"
+          },
+          "name": {
+            "default": "Extrude",
+            "title": "Name",
+            "type": "string"
+          },
+          "corner_radii_mm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "items": {},
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Corner Radii Mm"
+          },
+          "draft_deg": {
+            "default": 0.0,
+            "title": "Draft Deg",
+            "type": "number"
+          },
+          "merge": {
+            "default": true,
+            "title": "Merge",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "points_mm",
+          "plane",
+          "depth_mm"
+        ],
+        "title": "add_extruded_profile_on_planeArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "list_bodies",
+      "description": "List the part's solid bodies: name, volume and bounding box.\n\n    A part holds several after merge=False or split_body; combine_bodies joins\n    them again.\n    ",
+      "inputSchema": {
+        "properties": {},
+        "title": "list_bodiesArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "combine_bodies",
+      "description": "Combine solid bodies of the part into `main` (a list_bodies name).\n\n    operation 'add' joins the tools to main, 'subtract' cuts them out of it,\n    'common' keeps only what main shares with them. tools: body names, every\n    other body by default. Returns mass properties and the bodies left.\n    ",
+      "inputSchema": {
+        "properties": {
+          "operation": {
+            "title": "Operation",
+            "type": "string"
+          },
+          "main": {
+            "title": "Main",
+            "type": "string"
+          },
+          "tools": {
+            "anyOf": [
+              {
+                "items": {},
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Tools"
+          },
+          "name": {
+            "default": "Combine",
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "operation",
+          "main"
+        ],
+        "title": "combine_bodiesArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "split_body",
+      "description": "Split the part's body in two along a plane (front/top/right or a plane by name).\n\n    The two bodies come back by name: combine them differently, or check each\n    with list_bodies. Use add_plane first for a cut anywhere else.\n    ",
+      "inputSchema": {
+        "properties": {
+          "plane": {
+            "title": "Plane",
+            "type": "string"
+          },
+          "name": {
+            "default": "Split",
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "plane"
+        ],
+        "title": "split_bodyArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_thread",
+      "description": "Cut a real, printable ISO metric thread (SolidWorks' own Thread feature).\n\n    size: e.g. 'M10x1.5', 'M3x0.5', 'M10x1.0' -- checked against SolidWorks'\n    thread profiles. (x_mm, y_mm, z_mm) = centre of the circular edge where the\n    thread starts: the end face of a rod, or the mouth of a hole (internal=True).\n    It runs length_mm into the material, right-handed. External: the rod must\n    have the nominal diameter (M10 -> \u00d810). Internal: drill the ISO basic minor\n    diameter first, D - 1.0825*P (M10x1.5 -> \u00d88.376). Returns mass properties\n    and the thread's size, pitch and diameters.\n    ",
+      "inputSchema": {
+        "properties": {
+          "size": {
+            "title": "Size",
+            "type": "string"
+          },
+          "x_mm": {
+            "title": "X Mm",
+            "type": "number"
+          },
+          "y_mm": {
+            "title": "Y Mm",
+            "type": "number"
+          },
+          "z_mm": {
+            "title": "Z Mm",
+            "type": "number"
+          },
+          "length_mm": {
+            "title": "Length Mm",
+            "type": "number"
+          },
+          "internal": {
+            "default": false,
+            "title": "Internal",
+            "type": "boolean"
+          },
+          "name": {
+            "default": "Thread",
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "size",
+          "x_mm",
+          "y_mm",
+          "z_mm",
+          "length_mm"
+        ],
+        "title": "add_threadArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_rib",
+      "description": "Add a straight stiffening rib / gusset in a plane parallel to the Front plane.\n\n    start_mm/end_mm = [x, y] ends of the rib's free edge (add_extruded_profile\n    coordinates); the plane sits at height z_mm. The rib grows toward toward_mm\n    (any [x, y] point on the side to fill, e.g. the inner corner of an L-bracket)\n    until it meets the part, thickness_mm thick, centred on the plane. Returns mass\n    properties: a triangular gusset with legs a and b adds a*b/2 * thickness.\n    ",
+      "inputSchema": {
+        "properties": {
+          "start_mm": {
+            "items": {},
+            "title": "Start Mm",
+            "type": "array"
+          },
+          "end_mm": {
+            "items": {},
+            "title": "End Mm",
+            "type": "array"
+          },
+          "toward_mm": {
+            "items": {},
+            "title": "Toward Mm",
+            "type": "array"
+          },
+          "thickness_mm": {
+            "title": "Thickness Mm",
+            "type": "number"
+          },
+          "z_mm": {
+            "title": "Z Mm",
+            "type": "number"
+          },
+          "name": {
+            "default": "Rib",
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "start_mm",
+          "end_mm",
+          "toward_mm",
+          "thickness_mm",
+          "z_mm"
+        ],
+        "title": "add_ribArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_hole",
+      "description": "Cut a circular through-hole at (x_mm, y_mm), through the part's depth axis.\n\n    The hole runs straight through the thickness (the add_box extrude direction),\n    perpendicular to the width x height profile face. Coordinates share add_box's\n    system (the centre of a 40x20 profile is x=20, y=10). Returns mass properties.\n    ",
+      "inputSchema": {
+        "properties": {
+          "diameter_mm": {
+            "title": "Diameter Mm",
+            "type": "number"
+          },
+          "x_mm": {
+            "title": "X Mm",
+            "type": "number"
+          },
+          "y_mm": {
+            "title": "Y Mm",
+            "type": "number"
+          },
+          "name": {
+            "default": "Hole",
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "diameter_mm",
+          "x_mm",
+          "y_mm"
+        ],
+        "title": "add_holeArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_counterbore_hole",
+      "description": "Cut a counterbored screw hole on the +Z face at (x_mm, y_mm).\n\n    A clearance shank through the thickness plus a larger coaxial flat-bottom\n    pocket of cbore_depth_mm from the top \u2014 so a cap-head screw or heat-set insert\n    sits flush/recessed (common for 3D-printed parts). cbore_diameter must exceed\n    clearance_diameter. Coordinates share add_box's system. Returns mass properties.\n    ",
+      "inputSchema": {
+        "properties": {
+          "clearance_diameter_mm": {
+            "title": "Clearance Diameter Mm",
+            "type": "number"
+          },
+          "cbore_diameter_mm": {
+            "title": "Cbore Diameter Mm",
+            "type": "number"
+          },
+          "cbore_depth_mm": {
+            "title": "Cbore Depth Mm",
+            "type": "number"
+          },
+          "x_mm": {
+            "title": "X Mm",
+            "type": "number"
+          },
+          "y_mm": {
+            "title": "Y Mm",
+            "type": "number"
+          },
+          "name": {
+            "default": "Counterbore",
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "clearance_diameter_mm",
+          "cbore_diameter_mm",
+          "cbore_depth_mm",
+          "x_mm",
+          "y_mm"
+        ],
+        "title": "add_counterbore_holeArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_hole_on_face",
+      "description": "Drill a round hole on ANY planar face, centred at 3D point (x, y, z) mm.\n\n    face is \"+x\"/\"-x\"/\"+y\"/\"-y\"/\"+z\"/\"-z\": the face facing that way through the\n    point is drilled, so a pocket floor or a step works too. Through all, or\n    depth_mm deep (blind: heat-set inserts, screw pilots). Returns mass\n    properties and `dimensions` (diameter, x, y, depth). from_edges=True\n    measures x and y from the face's nearest straight edges instead of the\n    origin, so the hole keeps its distance to them when the part changes\n    (`measured_from` names the edges): use it where the design means it.\n    ",
+      "inputSchema": {
+        "properties": {
+          "diameter_mm": {
+            "title": "Diameter Mm",
+            "type": "number"
+          },
+          "face": {
+            "title": "Face",
+            "type": "string"
+          },
+          "x_mm": {
+            "title": "X Mm",
+            "type": "number"
+          },
+          "y_mm": {
+            "title": "Y Mm",
+            "type": "number"
+          },
+          "z_mm": {
+            "title": "Z Mm",
+            "type": "number"
+          },
+          "depth_mm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Depth Mm"
+          },
+          "name": {
+            "default": "Hole",
+            "title": "Name",
+            "type": "string"
+          },
+          "from_edges": {
+            "default": false,
+            "title": "From Edges",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "diameter_mm",
+          "face",
+          "x_mm",
+          "y_mm",
+          "z_mm"
+        ],
+        "title": "add_hole_on_faceArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_hole_wizard",
+      "description": "An ISO hole from SolidWorks' Hole Wizard, sized by its standard tables.\n\n    kind: 'clearance' (ISO 273), 'counterbore' (socket head cap screw),\n    'countersink' (socket countersunk screw) or 'tapped'; size e.g. 'M3'.\n    Centred at (x, y, z) mm on the face through that point; through all, or\n    depth_mm deep. fit: 'close' / 'normal' / 'loose'. For tapped holes\n    thread='modeled' cuts a real, printable ISO thread instead of SolidWorks'\n    cosmetic one. Returns the standard's sizes in `hole` and mass properties.\n    ",
+      "inputSchema": {
+        "properties": {
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "size": {
+            "title": "Size",
+            "type": "string"
+          },
+          "face": {
+            "title": "Face",
+            "type": "string"
+          },
+          "x_mm": {
+            "title": "X Mm",
+            "type": "number"
+          },
+          "y_mm": {
+            "title": "Y Mm",
+            "type": "number"
+          },
+          "z_mm": {
+            "title": "Z Mm",
+            "type": "number"
+          },
+          "depth_mm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Depth Mm"
+          },
+          "fit": {
+            "default": "normal",
+            "title": "Fit",
+            "type": "string"
+          },
+          "thread": {
+            "default": "cosmetic",
+            "title": "Thread",
+            "type": "string"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Name"
+          }
+        },
+        "required": [
+          "kind",
+          "size",
+          "face",
+          "x_mm",
+          "y_mm",
+          "z_mm"
+        ],
+        "title": "add_hole_wizardArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_boss_on_face",
+      "description": "Grow a round boss (standoff, peg) height_mm out of ANY planar face, centred at (x, y, z) mm.\n\n    The face is found as for add_hole_on_face. For a PCB standoff, add a blind\n    hole in its top. from_edges works as for add_hole_on_face. Returns mass\n    properties and `dimensions`.\n    ",
+      "inputSchema": {
+        "properties": {
+          "diameter_mm": {
+            "title": "Diameter Mm",
+            "type": "number"
+          },
+          "face": {
+            "title": "Face",
+            "type": "string"
+          },
+          "x_mm": {
+            "title": "X Mm",
+            "type": "number"
+          },
+          "y_mm": {
+            "title": "Y Mm",
+            "type": "number"
+          },
+          "z_mm": {
+            "title": "Z Mm",
+            "type": "number"
+          },
+          "height_mm": {
+            "title": "Height Mm",
+            "type": "number"
+          },
+          "name": {
+            "default": "Boss",
+            "title": "Name",
+            "type": "string"
+          },
+          "from_edges": {
+            "default": false,
+            "title": "From Edges",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "diameter_mm",
+          "face",
+          "x_mm",
+          "y_mm",
+          "z_mm",
+          "height_mm"
+        ],
+        "title": "add_boss_on_faceArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_extruded_profile_on_face",
+      "description": "Grow a polygon boss depth_mm out of ANY planar face: points_mm = [[x,y,z], ...] in mm.\n\n    The 3D points lie on the face (found as for add_hole_on_face). For pads,\n    ledges and mounting blocks on an existing part. corner_radii_mm rounds the\n    corners as for add_extruded_profile. Returns mass properties.\n    ",
+      "inputSchema": {
+        "properties": {
+          "points_mm": {
+            "items": {},
+            "title": "Points Mm",
+            "type": "array"
+          },
+          "face": {
+            "title": "Face",
+            "type": "string"
+          },
+          "depth_mm": {
+            "title": "Depth Mm",
+            "type": "number"
+          },
+          "name": {
+            "default": "Boss",
+            "title": "Name",
+            "type": "string"
+          },
+          "corner_radii_mm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "items": {},
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Corner Radii Mm"
+          }
+        },
+        "required": [
+          "points_mm",
+          "face",
+          "depth_mm"
+        ],
+        "title": "add_extruded_profile_on_faceArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_text_on_face",
+      "description": "Engrave text into ANY planar face, or emboss it with emboss=True (labels, version numbers).\n\n    (x, y, z) is the text's lower-left corner on the face; the text runs along\n    the face sketch's horizontal axis: upright along +x on the top (+z) and\n    front (-y) faces, turned on the others (vertical on +/-x, upside down on\n    +y), so put labels on the top or front. height_mm is the\n    character height, depth_mm the engraving depth or embossing height. The\n    position is two dimensions ('x', 'y'); font must be installed (default:\n    SolidWorks' own). Returns text_area_mm2, since letters have no hand calculation.\n    ",
+      "inputSchema": {
+        "properties": {
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "face": {
+            "title": "Face",
+            "type": "string"
+          },
+          "x_mm": {
+            "title": "X Mm",
+            "type": "number"
+          },
+          "y_mm": {
+            "title": "Y Mm",
+            "type": "number"
+          },
+          "z_mm": {
+            "title": "Z Mm",
+            "type": "number"
+          },
+          "height_mm": {
+            "title": "Height Mm",
+            "type": "number"
+          },
+          "depth_mm": {
+            "title": "Depth Mm",
+            "type": "number"
+          },
+          "emboss": {
+            "default": false,
+            "title": "Emboss",
+            "type": "boolean"
+          },
+          "font": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Font"
+          },
+          "name": {
+            "default": "Text",
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text",
+          "face",
+          "x_mm",
+          "y_mm",
+          "z_mm",
+          "height_mm",
+          "depth_mm"
+        ],
+        "title": "add_text_on_faceArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "cut_profile",
+      "description": "Cut a polygonal pocket/slot from the +Z face: points_mm = [[x,y], ...] in mm.\n\n    Auto-closed polygon, cut blind by depth_mm or all the way through when depth_mm\n    is omitted. For pockets, slots, cutouts. corner_radii_mm rounds the corners\n    and rotate_deg turns the profile about about_mm, as for add_extruded_profile\n    (notches at +/-60 degrees around a pivot). Returns mass properties.\n    ",
+      "inputSchema": {
+        "properties": {
+          "points_mm": {
+            "items": {},
+            "title": "Points Mm",
+            "type": "array"
+          },
+          "depth_mm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Depth Mm"
+          },
+          "name": {
+            "default": "Cut",
+            "title": "Name",
+            "type": "string"
+          },
+          "corner_radii_mm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "items": {},
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Corner Radii Mm"
+          },
+          "rotate_deg": {
+            "default": 0.0,
+            "title": "Rotate Deg",
+            "type": "number"
+          },
+          "about_mm": {
+            "anyOf": [
+              {
+                "items": {},
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "About Mm"
+          }
+        },
+        "required": [
+          "points_mm"
+        ],
+        "title": "cut_profileArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "cut_profile_on_face",
+      "description": "Cut a polygon pocket/slot on ANY planar face: points_mm = [[x,y,z], ...] in mm.\n\n    The 3D points must lie on one face facing `face` (\"+x\"/\"-x\"/...), which is\n    found through them; cut blind by depth_mm or through when omitted. For side\n    pockets/cutouts. corner_radii_mm rounds the corners as for\n    add_extruded_profile. Returns mass properties.\n    ",
+      "inputSchema": {
+        "properties": {
+          "points_mm": {
+            "items": {},
+            "title": "Points Mm",
+            "type": "array"
+          },
+          "face": {
+            "title": "Face",
+            "type": "string"
+          },
+          "depth_mm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Depth Mm"
+          },
+          "name": {
+            "default": "Cut",
+            "title": "Name",
+            "type": "string"
+          },
+          "corner_radii_mm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "items": {},
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Corner Radii Mm"
+          }
+        },
+        "required": [
+          "points_mm",
+          "face"
+        ],
+        "title": "cut_profile_on_faceArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "cut_offset_pocket",
+      "description": "Pocket a planar face, leaving a rim rim_mm wide along its outline.\n\n    The recessed web of an I-beam that follows a curved link, a tray, or a frame\n    (depth_mm omitted: through all). The face is the one facing `face`\n    ('+z', ...) through the point (x, y, z). The rim follows the outline, arcs\n    and splines included; holes in the face stay holes. rim and depth come back\n    as dimensions, and the pocket follows the outline when it changes. Returns\n    mass properties.\n    ",
+      "inputSchema": {
+        "properties": {
+          "face": {
+            "title": "Face",
+            "type": "string"
+          },
+          "x_mm": {
+            "title": "X Mm",
+            "type": "number"
+          },
+          "y_mm": {
+            "title": "Y Mm",
+            "type": "number"
+          },
+          "z_mm": {
+            "title": "Z Mm",
+            "type": "number"
+          },
+          "rim_mm": {
+            "title": "Rim Mm",
+            "type": "number"
+          },
+          "depth_mm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Depth Mm"
+          },
+          "name": {
+            "default": "Pocket",
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "face",
+          "x_mm",
+          "y_mm",
+          "z_mm",
+          "rim_mm"
+        ],
+        "title": "cut_offset_pocketArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "cut_slot",
+      "description": "Cut a straight slotted hole (obround) on the +Z face.\n\n    Centred at (x_mm, y_mm); length_mm is centre-to-centre of the rounded ends,\n    width_mm the slot width, angle_deg its orientation in the +Z plane (0 = +X).\n    Cut blind by depth_mm or through when omitted. Returns mass properties.\n    ",
+      "inputSchema": {
+        "properties": {
+          "length_mm": {
+            "title": "Length Mm",
+            "type": "number"
+          },
+          "width_mm": {
+            "title": "Width Mm",
+            "type": "number"
+          },
+          "x_mm": {
+            "title": "X Mm",
+            "type": "number"
+          },
+          "y_mm": {
+            "title": "Y Mm",
+            "type": "number"
+          },
+          "angle_deg": {
+            "default": 0.0,
+            "title": "Angle Deg",
+            "type": "number"
+          },
+          "depth_mm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Depth Mm"
+          },
+          "name": {
+            "default": "Slot",
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "length_mm",
+          "width_mm",
+          "x_mm",
+          "y_mm"
+        ],
+        "title": "cut_slotArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_extruded_slot",
+      "description": "Extrude a stadium (rounded tab, lug or link) from point start_mm to end_mm ([x, y] mm).\n\n    The half-round ends are centred on the two points themselves; width_mm is\n    the tab's width, depth_mm the extrusion along +Z. Volume = (width * length\n    + pi * (width/2)^2) * depth. Returns mass properties.\n    ",
+      "inputSchema": {
+        "properties": {
+          "start_mm": {
+            "items": {},
+            "title": "Start Mm",
+            "type": "array"
+          },
+          "end_mm": {
+            "items": {},
+            "title": "End Mm",
+            "type": "array"
+          },
+          "width_mm": {
+            "title": "Width Mm",
+            "type": "number"
+          },
+          "depth_mm": {
+            "title": "Depth Mm",
+            "type": "number"
+          },
+          "name": {
+            "default": "Slot",
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "start_mm",
+          "end_mm",
+          "width_mm",
+          "depth_mm"
+        ],
+        "title": "add_extruded_slotArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "extrude_sketch",
+      "description": "Extrude an existing sketch of the current part by name, e.g. one a person drew.\n\n    depth_mm along the sketch's normal (reverse=True: the other way), merged\n    with the body. Or up_to='next': up to the next face of the part, ending on\n    its shape (a post into a curved wall) and following it when it changes;\n    or up_to='@x,y,z': up to the face through that point, also where 'next'\n    fails (a side of the profile on a face: the refusal names a point ahead).\n    The sketch keeps its own dimensions and relations, so the person's design\n    stays in charge; read_sketch shows it first. Returns mass properties.\n    ",
+      "inputSchema": {
+        "properties": {
+          "sketch": {
+            "title": "Sketch",
+            "type": "string"
+          },
+          "depth_mm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Depth Mm"
+          },
+          "reverse": {
+            "default": false,
+            "title": "Reverse",
+            "type": "boolean"
+          },
+          "name": {
+            "default": "Extrude",
+            "title": "Name",
+            "type": "string"
+          },
+          "up_to": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Up To"
+          }
+        },
+        "required": [
+          "sketch"
+        ],
+        "title": "extrude_sketchArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_sketch",
+      "description": "Draw a sketch of lines, arcs and splines on a plane, fully defined, to extrude or cut.\n\n    plane: \"front\", \"top\", \"right\" or a plane by name (add_plane). Points are\n    [u, v] in the plane's own axes, which the result gives (origin_mm + u\n    x_axis + v y_axis): front is (x, y), top (x, -z), right (-z, y).\n    The outline starts at start_mm; each segment runs on from where the last\n    ended: {\"line\": [u, v]}; {\"arc\": [u, v], \"through\": [u, v]} (an arc through\n    a middle point); {\"arc\": [u, v], \"tangent\": true} (an arc flowing on from\n    the segment before); {\"spline\": [[u, v], ..., [u, v]]} (through the points,\n    ending at the last). \"tangent\": true on a line checks that it flows on.\n    End on start_mm to close the outline. Segments that meet smoothly get a\n    tangent relation, the rest is dimensioned from the origin: x<i>/y<i> for\n    the i-th point given (points_mm lists them; start_mm is 0), r<k> for the\n    radius of segment k. Then extrude_sketch / cut_sketch the returned sketch.\n    ",
+      "inputSchema": {
+        "properties": {
+          "plane": {
+            "title": "Plane",
+            "type": "string"
+          },
+          "start_mm": {
+            "items": {},
+            "title": "Start Mm",
+            "type": "array"
+          },
+          "segments": {
+            "items": {},
+            "title": "Segments",
+            "type": "array"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Name"
+          }
+        },
+        "required": [
+          "plane",
+          "start_mm",
+          "segments"
+        ],
+        "title": "add_sketchArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "cut_sketch",
+      "description": "Cut an existing sketch of the current part by name into the body.\n\n    depth_mm deep, or through all when depth_mm is omitted, against the\n    sketch's normal: into the part from a face. From a plane with the part in\n    front of it (a box on the Front plane) give reverse=True. Returns mass\n    properties.\n    ",
+      "inputSchema": {
+        "properties": {
+          "sketch": {
+            "title": "Sketch",
+            "type": "string"
+          },
+          "depth_mm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Depth Mm"
+          },
+          "reverse": {
+            "default": false,
+            "title": "Reverse",
+            "type": "boolean"
+          },
+          "name": {
+            "default": "Cut",
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "sketch"
+        ],
+        "title": "cut_sketchArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_fillet",
+      "description": "Round edges of the current part with one constant radius (mm).\n\n    edges: \"all\" (default), \"x\"/\"y\"/\"z\" for edges parallel to that world axis,\n    a face outline like \"+z:outline\" (the outer edges of the top face, not those\n    of holes in it), every edge of one feature like \"feature:Boss\" (its top and\n    where it meets the part: a moulded look), or explicit indices like \"2,5\" from\n    list_edges. radii_at_mm = [[x, y, z, r], ...] makes the radius vary: r at\n    the edge end at each point (list_edges gives the ends), radius_mm at the\n    other ends, straight in between; 'vertex_radii' gives each end's dimension.\n    skip_shorter_mm leaves out edges shorter than that. tangent_propagation=True\n    carries the round on along edges that run on smoothly from the given ones,\n    as SolidWorks does by default: an edge ending where it runs into another\n    tangentially, such as round a fillet, only rounds so. A refusal names the\n    edges the radius does not fit (each tried alone, and with propagation).\n    Returns the number of edges filleted and the mass properties.\n    ",
+      "inputSchema": {
+        "properties": {
+          "radius_mm": {
+            "title": "Radius Mm",
+            "type": "number"
+          },
+          "edges": {
+            "default": "all",
+            "title": "Edges",
+            "type": "string"
+          },
+          "name": {
+            "default": "Fillet",
+            "title": "Name",
+            "type": "string"
+          },
+          "radii_at_mm": {
+            "anyOf": [
+              {
+                "items": {},
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Radii At Mm"
+          },
+          "skip_shorter_mm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Skip Shorter Mm"
+          },
+          "tangent_propagation": {
+            "default": false,
+            "title": "Tangent Propagation",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "radius_mm"
+        ],
+        "title": "add_filletArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_full_round",
+      "description": "Round a rib's top off completely: a full round fillet, as on a moulded part.\n\n    The face facing `face` (\"+z\", ...) through the point (x, y, z) is the top;\n    the two opposite flat side faces along it that lie closest together are the\n    sides, so the round runs across the rib, not along it. The radius is half\n    their distance (width_mm in the result) and follows the rib. Hand\n    calculation: a rib w wide and L long loses L w^2 (1/2 - pi/8).\n    ",
+      "inputSchema": {
+        "properties": {
+          "face": {
+            "title": "Face",
+            "type": "string"
+          },
+          "x_mm": {
+            "title": "X Mm",
+            "type": "number"
+          },
+          "y_mm": {
+            "title": "Y Mm",
+            "type": "number"
+          },
+          "z_mm": {
+            "title": "Z Mm",
+            "type": "number"
+          },
+          "name": {
+            "default": "FullRound",
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "face",
+          "x_mm",
+          "y_mm",
+          "z_mm"
+        ],
+        "title": "add_full_roundArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_chamfer",
+      "description": "Chamfer edges of the current part: distance_mm back along a face, at angle_deg (default 45\u00b0) to it.\n\n    edges: \"all\" (default), \"x\"/\"y\"/\"z\", a face outline like \"+z:outline\", a\n    feature's edges like \"feature:Boss\", or explicit indices like \"2,5\" from\n    list_edges. Another angle than 45\u00b0 needs from_face, which way the face that\n    the distance runs along faces: \"-z\", angle_deg=60 makes an underside edge\n    printable without support (round an arc the chamfer is a cone). Returns the\n    number of edges chamfered and the mass properties.\n    ",
+      "inputSchema": {
+        "properties": {
+          "distance_mm": {
+            "title": "Distance Mm",
+            "type": "number"
+          },
+          "edges": {
+            "default": "all",
+            "title": "Edges",
+            "type": "string"
+          },
+          "name": {
+            "default": "Chamfer",
+            "title": "Name",
+            "type": "string"
+          },
+          "angle_deg": {
+            "default": 45.0,
+            "title": "Angle Deg",
+            "type": "number"
+          },
+          "from_face": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "From Face"
+          }
+        },
+        "required": [
+          "distance_mm"
+        ],
+        "title": "add_chamferArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_linear_pattern",
+      "description": "Repeat a feature `count` times, `spacing_mm` apart, along a direction.\n\n    direction: \"+x\"/\"-x\"/\"+y\"/... feature_name: the feature to repeat (e.g.\n    \"Hole\"); defaults to the most recently added feature. Returns mass properties.\n    ",
+      "inputSchema": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "spacing_mm": {
+            "title": "Spacing Mm",
+            "type": "number"
+          },
+          "direction": {
+            "default": "+x",
+            "title": "Direction",
+            "type": "string"
+          },
+          "feature_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Feature Name"
+          }
+        },
+        "required": [
+          "count",
+          "spacing_mm"
+        ],
+        "title": "add_linear_patternArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_circular_pattern",
+      "description": "Repeat a feature `count` times evenly around 360\u00b0 about an axis.\n\n    The axis is the cylindrical face nearest (center_x_mm, center_y_mm) \u2014 e.g. a\n    centre hole drilled there. feature_name defaults to the last feature. Bolt\n    circle: drill a centre hole + one bolt hole, then pattern the bolt hole.\n    ",
+      "inputSchema": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "center_x_mm": {
+            "title": "Center X Mm",
+            "type": "number"
+          },
+          "center_y_mm": {
+            "title": "Center Y Mm",
+            "type": "number"
+          },
+          "feature_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Feature Name"
+          }
+        },
+        "required": [
+          "count",
+          "center_x_mm",
+          "center_y_mm"
+        ],
+        "title": "add_circular_patternArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_mirror",
+      "description": "Mirror features, or the whole body, about the 'front'/'top'/'right' plane moved offset_mm.\n\n    Mirrors about z / y / x = offset_mm; plane may also name another plane in\n    the part ('Plane1'), moved offset_mm along its normal. features: list_features names; the\n    copies follow their seeds. Without features the body is mirrored and\n    merged: model half of a symmetric part, mirror it about the face where the\n    halves meet. The plane position comes back as dimension 'plane_offset'.\n    Fails, leaving the part as it was, when a copy would land outside the part.\n    ",
+      "inputSchema": {
+        "properties": {
+          "plane": {
+            "title": "Plane",
+            "type": "string"
+          },
+          "offset_mm": {
+            "default": 0.0,
+            "title": "Offset Mm",
+            "type": "number"
+          },
+          "features": {
+            "anyOf": [
+              {
+                "items": {},
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Features"
+          },
+          "name": {
+            "default": "Mirror",
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "plane"
+        ],
+        "title": "add_mirrorArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_shell",
+      "description": "Hollow the current part to a wall of thickness_mm, opening one face or more.\n\n    open_face: a direction \"+z\"/\"-z\"/\"+x\"/... removes that planar face (open\n    shell), \"#5\" the face of that list_faces index, and a list [\"+z\", \"#5\"]\n    opens several; \"none\" makes a closed hollow. Shell before cutting openings:\n    a shell after them puts a wall along every cut edge. Returns the resulting\n    mass properties.\n    ",
+      "inputSchema": {
+        "properties": {
+          "thickness_mm": {
+            "title": "Thickness Mm",
+            "type": "number"
+          },
+          "open_face": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "items": {},
+                "type": "array"
+              }
+            ],
+            "default": "+z",
+            "title": "Open Face"
+          }
+        },
+        "required": [
+          "thickness_mm"
+        ],
+        "title": "add_shellArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "set_dimension",
+      "description": "Set a named driving dimension (e.g. 'D1@BlockExtrude') in mm, rebuild, and remeasure.\n\n    This is the parametric edit at the heart of the correction loop. The result's\n    broken_features names the features that fail since the change (a later cut\n    now off the part, a split whose bodies moved): fix or undo them first. Every\n    modelling tool returns its dimensions by role in `dimensions`. An angle (a\n    revolve, an angle mate) takes degrees; list_dimensions shows the unit. A\n    point's coordinate from the origin (a sketch's 'x3', 'y2') takes a sign,\n    -5 being across the origin; any other length is a size, refused below 0.\n    A value SolidWorks does not take (a dimension an equation drives, a size\n    of 0) is refused with the reason, and the part is left as it was.\n    ",
+      "inputSchema": {
+        "properties": {
+          "dimension_name": {
+            "title": "Dimension Name",
+            "type": "string"
+          },
+          "value_mm": {
+            "title": "Value Mm",
+            "type": "number"
+          }
+        },
+        "required": [
+          "dimension_name",
+          "value_mm"
+        ],
+        "title": "set_dimensionArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "slice_mesh",
+      "description": "Cross-sections of an STL/3MF mesh at the given heights along axis 'x'/'y'/'z'.\n\n    For modelling a part that must fit something that only exists as a mesh.\n    Returns each section's closed loops, largest first, as polygon points (mm)\n    ready to use as profiles. frame (3MF): 'object' (the mesh's own frame) or\n    'build' (as placed on the slicer's plate). Needs no SolidWorks.\n    ",
+      "inputSchema": {
+        "properties": {
+          "path": {
+            "title": "Path",
+            "type": "string"
+          },
+          "axis": {
+            "title": "Axis",
+            "type": "string"
+          },
+          "heights_mm": {
+            "items": {},
+            "title": "Heights Mm",
+            "type": "array"
+          },
+          "frame": {
+            "default": "object",
+            "title": "Frame",
+            "type": "string"
+          }
+        },
+        "required": [
+          "path",
+          "axis",
+          "heights_mm"
+        ],
+        "title": "slice_meshArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "compare_with_mesh",
+      "description": "Compare the current part's cross-sections with a reference mesh's at the same heights.\n\n    offset_mm [dx, dy, dz] moves the mesh into the part's frame. A different\n    area means a misread feature; equal areas with different extents a\n    shifted frame. Returns per-section pairs and the worst differences.\n    ",
+      "inputSchema": {
+        "properties": {
+          "path": {
+            "title": "Path",
+            "type": "string"
+          },
+          "axis": {
+            "title": "Axis",
+            "type": "string"
+          },
+          "heights_mm": {
+            "items": {},
+            "title": "Heights Mm",
+            "type": "array"
+          },
+          "frame": {
+            "default": "object",
+            "title": "Frame",
+            "type": "string"
+          },
+          "offset_mm": {
+            "anyOf": [
+              {
+                "items": {},
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Offset Mm"
+          }
+        },
+        "required": [
+          "path",
+          "axis",
+          "heights_mm"
+        ],
+        "title": "compare_with_meshArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "list_dimensions",
+      "description": "List every dimension in the current part: name (for set_dimension), feature, value, unit.\n\n    For a part opened from disk, or when the names the tools returned are gone.\n    contains (e.g. 'Sketch3' or 'Pad') keeps those whose name or feature holds\n    that text; use it on a large part, whose full list is too long to read.\n    ",
+      "inputSchema": {
+        "properties": {
+          "contains": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Contains"
+          }
+        },
+        "title": "list_dimensionsArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "read_sketch",
+      "description": "Read a sketch of the current part back, e.g. one a person drew (a list_features name).\n\n    Gives its lines, arcs, circles and splines in MODEL coordinates (mm),\n    construction geometry marked, its dimensions (for set_dimension) and\n    whether it is fully defined: check a design against fixed points before\n    building on it with extrude_sketch / cut_sketch.\n    ",
+      "inputSchema": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "read_sketchArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "list_features",
+      "description": "List the current part's modelling history in tree order: name, type, suppressed.\n\n    For a part opened from disk, or to find the step to undo. Flags features\n    that fail to rebuild and names sketches that are not fully defined.\n    ",
+      "inputSchema": {
+        "properties": {},
+        "title": "list_featuresArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "delete_feature",
+      "description": "Delete a feature (a list_features name) with its sketch, then rebuild and remeasure.\n\n    The way to undo a step. Refuses when other features are built on it and\n    names them, and what is built on those; with_children=True deletes them\n    all. dry_run=True only lists what would go (would_delete). Equations that\n    named its dimensions break and come back as broken_equations;\n    with_equations=True deletes them (global variables stay).\n    ",
+      "inputSchema": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "with_children": {
+            "default": false,
+            "title": "With Children",
+            "type": "boolean"
+          },
+          "with_equations": {
+            "default": false,
+            "title": "With Equations",
+            "type": "boolean"
+          },
+          "dry_run": {
+            "default": false,
+            "title": "Dry Run",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "delete_featureArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "suppress_feature",
+      "description": "Suppress a feature, or bring it back with suppress=False; rebuild and remeasure.\n\n    Keeps the feature and its dimensions, unlike delete_feature, so it suits\n    trying a variant. Features that depend on it follow both ways.\n    ",
+      "inputSchema": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "suppress": {
+            "default": true,
+            "title": "Suppress",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "suppress_featureArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "reorder_feature",
+      "description": "Move a feature (a list_features name), with its sketch, to just before another one; rebuild and remeasure.\n\n    For a boss added last that filled holes cut earlier: build it at the end\n    as usual, then move it before the first of those cuts, and they cut\n    through it again. Reference planes and axes it is built on move along\n    (moved_along); refused, the part as it was, when it is built on another\n    feature at or after that place. Returns the new order (features) and the\n    features that fail to rebuild (failing_features).\n    ",
+      "inputSchema": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "before": {
+            "title": "Before",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "before"
+        ],
+        "title": "reorder_featureArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "set_appearance",
+      "description": "Colour and/or see-through of the current part, or of one component in an assembly.\n\n    rgb: [r, g, b], 0..255 each; transparency: 0 solid .. 1 clear (0 makes a\n    see-through component solid again). In an assembly, component names it\n    ('Bracket-1', 'Leg-1/Thigh-1'); the colour then belongs to the assembly and\n    the part keeps its own. What is left out stays as it was.\n    ",
+      "inputSchema": {
+        "properties": {
+          "rgb": {
+            "anyOf": [
+              {
+                "items": {},
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Rgb"
+          },
+          "transparency": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Transparency"
+          },
+          "component": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Component"
+          }
+        },
+        "title": "set_appearanceArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "set_material",
+      "description": "Assign a material by name (e.g. \"6061 Alloy\", \"AISI 1020\", \"ABS\").\n\n    Makes mass and density reflect a real material instead of the 1000 kg/m\u00b3\n    default. One SolidWorks does not have (say \"TPU\") comes with its density:\n    density_kg_m3=1210 makes it, by that name, carrying only the density.\n    The English names work on a SolidWorks in another language too.\n    Returns mass properties including density.\n    ",
+      "inputSchema": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "database": {
+            "default": "",
+            "title": "Database",
+            "type": "string"
+          },
+          "density_kg_m3": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Density Kg M3"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "set_materialArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "set_equation",
+      "description": "Add an equation, or replace the one that sets the same name; rebuild and remeasure.\n\n    A SolidWorks equation string, e.g. '\"D1@BlockExtrude\" = 25' or\n    '\"D1@BlockExtrude\" = 2 * \"D1@Sketch1\"'. A global variable is '\"W\" = 40';\n    link a dimension to it with '\"width@Sketch1\" = \"W\"', and set '\"W\" = 45'\n    again to change it. Persists a relation (unlike set_dimension). Returns\n    the index, whether it replaced one, the features that fail to rebuild\n    (failing_features) and mass properties.\n    ",
+      "inputSchema": {
+        "properties": {
+          "equation": {
+            "title": "Equation",
+            "type": "string"
+          }
+        },
+        "required": [
+          "equation"
+        ],
+        "title": "set_equationArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "set_equations",
+      "description": "Add or replace a list of equations at once, with one rebuild at the end.\n\n    As set_equation for each, in order (later ones may use earlier ones). A\n    refused equation undoes the whole list. Returns per equation its index and\n    whether it replaced one, failing_features and mass properties.\n    ",
+      "inputSchema": {
+        "properties": {
+          "equations": {
+            "items": {},
+            "title": "Equations",
+            "type": "array"
+          }
+        },
+        "required": [
+          "equations"
+        ],
+        "title": "set_equationsArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "list_equations",
+      "description": "List the equations and global variables: index, equation, name it sets, value, global.\n\n    `broken` marks an equation that names a dimension or variable that is gone,\n    as one left behind by delete_feature; delete_equation removes it.\n    automatic_solve_order False means SolidWorks solves them as listed: one\n    above the line that sets its variable then warns and lags a rebuild. Any\n    set_equation turns it on.\n    ",
+      "inputSchema": {
+        "properties": {},
+        "title": "list_equationsArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "delete_equation",
+      "description": "Delete an equation by the name it sets (\"L_thigh\", \"D1@Boss\") or its list_equations index.\n\n    Rebuilds and returns what was deleted, failing_features and mass properties.\n    ",
+      "inputSchema": {
+        "properties": {
+          "equation": {
+            "title": "Equation",
+            "type": "string"
+          }
+        },
+        "required": [
+          "equation"
+        ],
+        "title": "delete_equationArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "list_documents",
+      "description": "List the documents open in SolidWorks: title, path (empty until saved), type, unsaved changes.\n\n    `current` marks the one the tools work on, `active` SolidWorks' own. Parts\n    an open assembly loaded come along, with visible false.\n    ",
+      "inputSchema": {
+        "properties": {},
+        "title": "list_documentsArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "activate_document",
+      "description": "Make an open document current again by its title, also a new one that was never saved.\n\n    For after open_part / close_part on another document; list_documents gives\n    the titles.\n    ",
+      "inputSchema": {
+        "properties": {
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title"
+        ],
+        "title": "activate_documentArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "delete_mate",
+      "description": "Delete a mate of the current assembly by name (list_components, or add_mate's 'mate').\n\n    Its components are free to move again. Returns the mates left.\n    ",
+      "inputSchema": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "delete_mateArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "suppress_mate",
+      "description": "Suppress a mate so it stops holding its components (it stays in the tree), or bring it back.\n\n    suppress=False brings it back. Returns whether it is suppressed now.\n    ",
+      "inputSchema": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "suppress": {
+            "default": true,
+            "title": "Suppress",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "suppress_mateArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "delete_component",
+      "description": "Remove a component from the current assembly, with the mates that hold it.\n\n    component: its name in list_components (\"Bracket-1\", or \"Bracket\" while\n    there is one). Returns the mates deleted, the components left and the\n    assembly's mass properties.\n    ",
+      "inputSchema": {
+        "properties": {
+          "component": {
+            "title": "Component",
+            "type": "string"
+          }
+        },
+        "required": [
+          "component"
+        ],
+        "title": "delete_componentArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "rebuild",
+      "description": "Force a rebuild of the current part or assembly and report whether it rebuilt without errors.\n\n    In an assembly, mate_errors names each mate SolidWorks flags, and each\n    mate that lost a face or edge it used (it rebuilds fine, but holds nothing).\n    ",
+      "inputSchema": {
+        "properties": {
+          "top_only": {
+            "default": false,
+            "title": "Top Only",
+            "type": "boolean"
+          }
+        },
+        "title": "rebuildArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "get_mass_properties",
+      "description": "Get volume (mm^3), mass (kg), surface area (mm^2), centre of mass, and bounding box.",
+      "inputSchema": {
+        "properties": {},
+        "title": "get_mass_propertiesArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "get_bounding_box",
+      "description": "Get the tight bounding box of the current part (min/max/size in mm).",
+      "inputSchema": {
+        "properties": {},
+        "title": "get_bounding_boxArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "list_faces",
+      "description": "List the part's faces (index, planar?, normal, area, centre) for inspection.\n\n    A cylindrical face also gives its axis, radius and a point on the axis (for\n    a hole: its centre), so hole patterns can be read off. component: a\n    component of the current assembly, listed in its own frame (e.g. an\n    imported servo); for a sub-assembly, every part's faces in the\n    sub-assembly's frame, each naming its part. A part's indices shift as\n    features are added; a component's are ordered by part, type, centre and\n    area, so they stay while its shape does. add_mate takes them as '#5'.\n    ",
+      "inputSchema": {
+        "properties": {
+          "component": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Component"
+          }
+        },
+        "title": "list_facesArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "list_edges",
+      "description": "List the part's edges: index, type, length, ends; lines also axis and midpoint.\n\n    Narrow it on a big part: face (a list_faces index, \"#5\"), feature (the edges\n    of the faces it made), within_mm ([[x1, y1, z1], [x2, y2, z2]]: both ends\n    inside), min_length_mm. Indices are always those of the whole part: use them\n    with add_fillet/add_chamfer edges=\"2,5\".\n    ",
+      "inputSchema": {
+        "properties": {
+          "face": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Face"
+          },
+          "feature": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Feature"
+          },
+          "within_mm": {
+            "anyOf": [
+              {
+                "items": {},
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Within Mm"
+          },
+          "min_length_mm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Min Length Mm"
+          }
+        },
+        "title": "list_edgesArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "check_printability",
+      "description": "Check the current part for 3D printing, built along `up` ('+z', '-y', ...).\n\n    Overhangs: downward faces leaning more than overhang_deg from vertical (90 =\n    a flat ceiling) need support; the faces on the bed do not count. Gives the\n    overhanging area per face (list_faces index) with its worst lean and centre,\n    the bed contact area and the print height. Islands: each place where the\n    print starts in the air, its height above the bed, centre and faces; a\n    downward edge between faces too steep to overhang still needs support\n    there. Unsupported edges: stretches of such an edge with air below, also\n    where the rest of it rests on material (the ends of a chamfered pad's edge\n    beside a tube), with length, height, centre and faces. With min_wall_mm (e.g. two\n    nozzle widths) also the walls thinner than that, measured straight through\n    the material from points spread over every face, with where each is thinnest;\n    that stops after a minute on a detailed part, and `rays` then says how much\n    it measured.\n    A spot right beside an edge where faces meet at a sharp angle reads as thin\n    as the wedge of material there is: that is the edge, not a wall.\n    ",
+      "inputSchema": {
+        "properties": {
+          "up": {
+            "default": "+z",
+            "title": "Up",
+            "type": "string"
+          },
+          "overhang_deg": {
+            "default": 45.0,
+            "title": "Overhang Deg",
+            "type": "number"
+          },
+          "min_wall_mm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Min Wall Mm"
+          }
+        },
+        "title": "check_printabilityArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "export",
+      "description": "Export the current part or assembly to STEP/STL/IGES/Parasolid/3MF (format from extension).\n\n    Silent (no prompts). Verifies the file appears on disk and reports its size.\n    For STL/3MF, tessellation resolution is set first: quality 'coarse'|'fine'\n    (default 'fine' for print quality), or pass deviation_mm (+ optional angle_deg)\n    for a reproducible custom resolution (overrides quality). Ignored for other formats.\n    An assembly goes to STL as one file, or one file per component with\n    per_component=True (SolidWorks names them); `files` lists what was written.\n    STL/3MF keep the part's or assembly's own coordinates (`frame`), also per\n    component, so a mesh measures back where the model is; slicers place it anyway.\n    ",
+      "inputSchema": {
+        "properties": {
+          "path": {
+            "title": "Path",
+            "type": "string"
+          },
+          "file_format": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "File Format"
+          },
+          "quality": {
+            "default": "fine",
+            "title": "Quality",
+            "type": "string"
+          },
+          "deviation_mm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Deviation Mm"
+          },
+          "angle_deg": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Angle Deg"
+          },
+          "per_component": {
+            "default": false,
+            "title": "Per Component",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "title": "exportArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "screenshot",
+      "description": "Save a screenshot of the current part or assembly (PNG/JPG/TIF).\n\n    view: 'iso' (default), 'front', 'back', 'left', 'right', 'top' or 'bottom';\n    or from_dir = [x, y, z], the direction to look from, e.g. [-1, 1, -1] to\n    see from behind and below what iso hides (the model's +y stays up).\n    Zoomed to fit, or onto a detail: zoom_mm = [[x1, y1, z1], [x2, y2, z2]], the\n    corners of the region to fill the image (model mm, in any view). Reference\n    planes and axes are left out, so they do not cut through the shape;\n    show_planes=True keeps them.\n    ",
+      "inputSchema": {
+        "properties": {
+          "path": {
+            "title": "Path",
+            "type": "string"
+          },
+          "view": {
+            "default": "iso",
+            "title": "View",
+            "type": "string"
+          },
+          "zoom_mm": {
+            "anyOf": [
+              {
+                "items": {},
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Zoom Mm"
+          },
+          "show_planes": {
+            "default": false,
+            "title": "Show Planes",
+            "type": "boolean"
+          },
+          "from_dir": {
+            "anyOf": [
+              {
+                "items": {},
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "From Dir"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "title": "screenshotArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "make_drawing",
+      "description": "Make a 2D drawing of the current part: a PDF, or an editable .slddrw.\n\n    Front, top and right views in European (first angle) projection plus an\n    isometric view, on an A4 sheet at the scale SolidWorks picks, with the\n    model's own dimensions, each shown once: a dimensioned sketch to print or\n    send. Save the part first (save_part): the drawing refers to its file.\n    ",
+      "inputSchema": {
+        "properties": {
+          "path": {
+            "title": "Path",
+            "type": "string"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "title": "make_drawingArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "close_part",
+      "description": "Close the current part or assembly without saving (export/save first if needed).\n\n    With no current document it closes SolidWorks' active one, but only when\n    that has no unsaved changes.\n    ",
+      "inputSchema": {
+        "properties": {
+          "save": {
+            "default": false,
+            "title": "Save",
+            "type": "boolean"
+          }
+        },
+        "title": "close_partArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "save_part",
+      "description": "Save the current part to a native .sldprt file (so it can be reopened/edited).",
+      "inputSchema": {
+        "properties": {
+          "path": {
+            "title": "Path",
+            "type": "string"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "title": "save_partArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "open_part",
+      "description": "Open a .sldprt, or import a STEP/IGES/Parasolid file as a new part; it becomes the current part.\n\n    list_features shows its history, list_dimensions its dimensions. An\n    imported body has no history, but the tools work on it (holes and pockets\n    on its faces, bosses, fillets); an import returns its solid body count and\n    mass properties. A file holding an assembly is refused, and an import over\n    30 MB unless allow_large=True (it can outlast the 2-minute call limit).\n    ",
+      "inputSchema": {
+        "properties": {
+          "path": {
+            "title": "Path",
+            "type": "string"
+          },
+          "allow_large": {
+            "default": false,
+            "title": "Allow Large",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "title": "open_partArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "new_assembly",
+      "description": "Create a new empty assembly document; it becomes the current document.\n\n    Assemblies compose saved parts: insert_component places each part, add_mate\n    constrains them, check_interference proves nothing overlaps.\n    ",
+      "inputSchema": {
+        "properties": {},
+        "title": "new_assemblyArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "open_assembly",
+      "description": "Open a .sldasm, or import a STEP/IGES/Parasolid assembly; it becomes the current document.\n\n    An imported assembly's parts arrive as components at their places, ready\n    for list_components and add_mate; the result gives the component count.\n    A file holding a single part is refused (use open_part), and an import over\n    30 MB unless allow_large=True (it can outlast the 2-minute call limit).\n    ",
+      "inputSchema": {
+        "properties": {
+          "path": {
+            "title": "Path",
+            "type": "string"
+          },
+          "allow_large": {
+            "default": false,
+            "title": "Allow Large",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "title": "open_assemblyArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "save_assembly",
+      "description": "Save the current assembly to a native .sldasm file (so it can be reopened).",
+      "inputSchema": {
+        "properties": {
+          "path": {
+            "title": "Path",
+            "type": "string"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "title": "save_assemblyArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "insert_component",
+      "description": "Insert a .sldprt, or a .sldasm as a sub-assembly, with its ORIGIN at (x, y, z) mm.\n\n    The part's own origin lands exactly on that point, and the placement is read\n    back and verified. fixed=True pins the component; fixed=False leaves it free\n    for mates. The default fixes only the FIRST component, giving the assembly a\n    ground to build against. Returns the component's name, placement and box.\n    ",
+      "inputSchema": {
+        "properties": {
+          "path": {
+            "title": "Path",
+            "type": "string"
+          },
+          "x_mm": {
+            "default": 0.0,
+            "title": "X Mm",
+            "type": "number"
+          },
+          "y_mm": {
+            "default": 0.0,
+            "title": "Y Mm",
+            "type": "number"
+          },
+          "z_mm": {
+            "default": 0.0,
+            "title": "Z Mm",
+            "type": "number"
+          },
+          "fixed": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Fixed"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "title": "insert_componentArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "list_components",
+      "description": "List the assembly's components (name, path, fixed, position, rotation, bounding box) and mates.\n\n    Positions are in mm and rotations in degrees, both in assembly coordinates;\n    the bounding box of each component is in assembly coordinates too. Each\n    mate gives its name, SolidWorks type, the dimension of a distance or angle\n    mate, and an error when SolidWorks flags it. A component that shows no\n    geometry carries a `problem` (see replace_component).\n    ",
+      "inputSchema": {
+        "properties": {},
+        "title": "list_componentsArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "replace_component",
+      "description": "Put another part or assembly file in the place of a component of the current assembly.\n\n    Keeps its position and, with reattach_mates, its mates where they still\n    find their faces; `mate_errors` lists the ones that do not. Also the cure\n    for a component that vanished after its part was made anew under the same\n    path. Returns the new component (name, path, placement, bounding box).\n    ",
+      "inputSchema": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "path": {
+            "title": "Path",
+            "type": "string"
+          },
+          "reattach_mates": {
+            "default": true,
+            "title": "Reattach Mates",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "path"
+        ],
+        "title": "replace_componentArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "set_component_transform",
+      "description": "Move/rotate a component: its origin to (x, y, z) mm, rotated rx/ry/rz degrees.\n\n    name is the component name ('Bed' or 'Bed-1'); rotations apply X, then Y,\n    then Z about the assembly axes, and work on a fixed component too. The\n    transform is read back and compared, so a move SolidWorks ignored (e.g. one\n    already pinned by mates) fails loudly instead of silently leaving the part\n    where it was.\n    ",
+      "inputSchema": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "x_mm": {
+            "title": "X Mm",
+            "type": "number"
+          },
+          "y_mm": {
+            "title": "Y Mm",
+            "type": "number"
+          },
+          "z_mm": {
+            "title": "Z Mm",
+            "type": "number"
+          },
+          "rx_deg": {
+            "default": 0.0,
+            "title": "Rx Deg",
+            "type": "number"
+          },
+          "ry_deg": {
+            "default": 0.0,
+            "title": "Ry Deg",
+            "type": "number"
+          },
+          "rz_deg": {
+            "default": 0.0,
+            "title": "Rz Deg",
+            "type": "number"
+          }
+        },
+        "required": [
+          "name",
+          "x_mm",
+          "y_mm",
+          "z_mm"
+        ],
+        "title": "set_component_transformArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "add_mate",
+      "description": "Mate a face of one component to a face of another.\n\n    comp_a/comp_b are component names ('Bed' or 'Bed-1'; 'Leg-1/Thigh-1' inside\n    a sub-assembly). face_a/face_b select a face in that component's OWN frame:\n    by direction \"+x\"/\"-x\"/\"+y\"/... (optionally \"+y:inner\" for the cavity side\n    of a hollow part), by its list_faces(component=...) index, \"#5\", or by a\n    point on it, \"@x,y,z\" (a hole's wall: its centre plus the radius along x).\n    mate_type between planar faces:\n    \"coincident\", \"distance\" (distance_mm), \"parallel\", \"perpendicular\" or\n    \"angle\" (angle_deg between the faces' normals, 0..180); \"concentric\" between\n    two cylindrical faces (a pin in a hole, a hinge axis), leaving the turn\n    about the axis free. flip takes the other solution: the mirror side of a\n    distance, the other turning direction of an angle. A distance or angle\n    mate returns its `dimension`: drive it with\n    set_dimension, or step it with check_motion. An angle mate's dimension\n    then turns the joint the whole way round, past 180 and below 0 (-30 is 30\n    the other way, the same turn as 330). The result is measured back\n    after the rebuild; a mate that does not hold is removed and the components\n    are put back.\n    ",
+      "inputSchema": {
+        "properties": {
+          "comp_a": {
+            "title": "Comp A",
+            "type": "string"
+          },
+          "face_a": {
+            "title": "Face A",
+            "type": "string"
+          },
+          "comp_b": {
+            "title": "Comp B",
+            "type": "string"
+          },
+          "face_b": {
+            "title": "Face B",
+            "type": "string"
+          },
+          "mate_type": {
+            "default": "coincident",
+            "title": "Mate Type",
+            "type": "string"
+          },
+          "distance_mm": {
+            "default": 0.0,
+            "title": "Distance Mm",
+            "type": "number"
+          },
+          "angle_deg": {
+            "default": 0.0,
+            "title": "Angle Deg",
+            "type": "number"
+          },
+          "flip": {
+            "default": false,
+            "title": "Flip",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "comp_a",
+          "face_a",
+          "comp_b",
+          "face_b"
+        ],
+        "title": "add_mateArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "check_interference",
+      "description": "Report component pairs whose solids overlap, with the volume in mm^3.\n\n    Touching faces do not count (a bed standing on the floor is fine); only real\n    overlapping material does. count == 0 means the assembly is clash-free.\n    ",
+      "inputSchema": {
+        "properties": {},
+        "title": "check_interferenceArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "measure_distance",
+      "description": "The smallest distance (mm) from a component to another one, a point or an axis.\n\n    Give component_b; or point_mm = [x, y, z] in assembly mm, and the nearest\n    point on the component comes back too, with inside: true when the point lies\n    in its material; or axis_mm = [[x, y, z], [dx, dy, dz]], the endless line\n    through that point along that direction, such as a bolt's axis. 0 means they\n    touch or overlap; check_interference tells which. Sub-assemblies count with\n    all their parts; one part inside is 'Leg-1/Thigh-1'.\n    ",
+      "inputSchema": {
+        "properties": {
+          "component_a": {
+            "title": "Component A",
+            "type": "string"
+          },
+          "component_b": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Component B"
+          },
+          "point_mm": {
+            "anyOf": [
+              {
+                "items": {},
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Point Mm"
+          },
+          "axis_mm": {
+            "anyOf": [
+              {
+                "items": {},
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Axis Mm"
+          }
+        },
+        "required": [
+          "component_a"
+        ],
+        "title": "measure_distanceArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "check_motion",
+      "description": "Step a joint through its range and check the assembly at every step.\n\n    dimension_name: an angle or distance mate's dimension (add_mate returns it);\n    values in degrees for an angle, mm for a distance, e.g. [30, 60, 90, 120,\n    150]. Each step gives the overlapping pairs with their volume and the\n    distance between each pair in distances ([[\"Rod\", \"Bolt\"], ...]); the\n    summary gives clash_free and each pair's smallest distance with the value\n    where it occurs. The dimension goes back to its value afterwards. A joint\n    inside a sub-assembly is 'D1@Angle1@Leg-1'. Refused while a mate is broken:\n    the parts it should hold would drift and the result mean nothing.\n    ",
+      "inputSchema": {
+        "properties": {
+          "dimension_name": {
+            "title": "Dimension Name",
+            "type": "string"
+          },
+          "values": {
+            "items": {},
+            "title": "Values",
+            "type": "array"
+          },
+          "distances": {
+            "anyOf": [
+              {
+                "items": {},
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Distances"
+          }
+        },
+        "required": [
+          "dimension_name",
+          "values"
+        ],
+        "title": "check_motionArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "swept_region",
+      "description": "Outline what a component covers in a plane while a joint moves, to keep\n    clear of it or cut it away.\n\n    Steps the joint's dimension through values (as check_motion, e.g. every\n    5 degrees over 30..150), cuts the component at axis = each of heights_mm\n    (a few heights inside a layer, not on its faces) and joins all of it, made\n    margin_mm wider, within about tolerance_mm. frame: the component to give the\n    coordinates in, such as the part to cut from; else the assembly's. Each\n    region's outline runs counter-clockwise in the plane's other two axes,\n    (x, y) across z: give it to add_sketch as a spline. count says how many\n    separate regions there are.\n    ",
+      "inputSchema": {
+        "properties": {
+          "component": {
+            "title": "Component",
+            "type": "string"
+          },
+          "dimension": {
+            "title": "Dimension",
+            "type": "string"
+          },
+          "values": {
+            "items": {},
+            "title": "Values",
+            "type": "array"
+          },
+          "heights_mm": {
+            "items": {},
+            "title": "Heights Mm",
+            "type": "array"
+          },
+          "axis": {
+            "default": "z",
+            "title": "Axis",
+            "type": "string"
+          },
+          "margin_mm": {
+            "default": 0.0,
+            "title": "Margin Mm",
+            "type": "number"
+          },
+          "tolerance_mm": {
+            "default": 0.2,
+            "title": "Tolerance Mm",
+            "type": "number"
+          },
+          "frame": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Frame"
+          }
+        },
+        "required": [
+          "component",
+          "dimension",
+          "values",
+          "heights_mm"
+        ],
+        "title": "swept_regionArguments",
+        "type": "object"
+      }
+    },
+    {
+      "name": "get_assembly_bounding_box",
+      "description": "Get the bounding box of the whole assembly (min/max/size in mm).",
+      "inputSchema": {
+        "properties": {},
+        "title": "get_assembly_bounding_boxArguments",
+        "type": "object"
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "solidworks-pro": {
+      "type": "stdio",
+      "command": "C:/path/to/Solidworks-MCP-PRO/.venv/Scripts/python.exe",
+      "args": ["-m", "solidworks_mcp_pro", "--tool-profile", "compact"],
+      "env": {
+        "SW_MCP_PRO_WORKSPACE": "C:/path/to/Solidworks-MCP-PRO/artifacts"
+      }
+    }
+  }
+}

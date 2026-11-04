@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-11-03",
+  "servers": [
+    {
+      "id": "harrier",
+      "name": "HarrierPigeon/Solidworks-MCP-Server",
+      "command": "C:\\Users\\ASUS\\Documents\\GitHub\\Solidworks-MCP-PRO\\.local\\competitors\\harrier\\.venv\\Scripts\\python.exe",
+      "args": [
+        "C:\\Users\\ASUS\\Documents\\GitHub\\Solidworks-MCP-PRO\\.local\\competitors\\harrier\\server.py"
+      ],
+      "cwd": "C:\\Users\\ASUS\\Documents\\GitHub\\Solidworks-MCP-PRO\\.local\\competitors\\harrier",
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "PYTHONUTF8": "1"
+      },
+      "source": {
+        "repository": "https://github.com/HarrierPigeon/Solidworks-MCP-Server",
+        "revision": "60c11fe45b6cfc60c4e2da8ad41fc725a48bf8ea",
+        "license": "MIT",
+        "release_tag": "v0.4.0",
+        "source_modified": false
+      },
+      "enabled": true,
+      "startup_timeout_seconds": 60,
+      "request_timeout_seconds": 120,
+      "runtime_mode": "native; connects to CAD only on tool invocation"
+    },
+    {
+      "id": "soheil",
+      "name": "soheil-mp/solidworks-mcp",
+      "command": "C:\\Users\\ASUS\\AppData\\Local\\solidworks-mcp\\dotnet\\dotnet.exe",
+      "args": [
+        "C:\\Users\\ASUS\\AppData\\Local\\solidworks-mcp\\bin\\0.1.0-79fb529\\solidworks-mcp.dll"
+      ],
+      "cwd": "C:\\Users\\ASUS\\Documents\\GitHub\\Solidworks-MCP-PRO\\.local\\competitors\\soheil",
+      "env": {
+        "SWMCP_AUTO_LAUNCH": "off",
+        "SWMCP_VBA": "off",
+        "SWMCP_DATA_DIR": "C:\\Users\\ASUS\\Documents\\GitHub\\Solidworks-MCP-PRO\\.local\\competitors\\soheil\\runtime",
+        "SWMCP_TIMEOUT_S": "90"
+      },
+      "source": {
+        "repository": "https://github.com/soheil-mp/solidworks-mcp",
+        "revision": "79fb529b67ca4a0587e5570024a772fad0b2c14d",
+        "license": "MIT",
+        "package_version": "0.1.0",
+        "source_modified": false
+      },
+      "enabled": true,
+      "startup_timeout_seconds": 60,
+      "request_timeout_seconds": 120,
+      "runtime_mode": "native; lazy attach, auto launch disabled"
+    },
+    {
+      "id": "andrew",
+      "name": "andrewbartels1/SolidworksMCP-python",
+      "command": "C:\\Users\\ASUS\\Documents\\GitHub\\Solidworks-MCP-PRO\\.local\\competitors\\andrew\\.venv\\Scripts\\python.exe",
+      "args": [
+        "-m",
+        "solidworks_mcp.server",
+        "--mock",
+        "--mode",
+        "local",
+        "--year",
+        "2026"
+      ],
+      "env": {
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8",
+        "SOLIDWORKS_MCP_DATA_DIR": "C:\\Users\\ASUS\\Documents\\GitHub\\Solidworks-MCP-PRO\\.local\\competitors\\andrew\\runtime",
+        "OPENAI_API_KEY": "",
+        "ANTHROPIC_API_KEY": ""
+      },
+      "enabled": true,
+      "source": {
+        "repository": "https://github.com/andrewbartels1/SolidworksMCP-python",
+        "revision": "126beed0e7a13214ebdd5724929f4c095cf2642f",
+        "license": "MIT",
+        "release_tag": "v1.5.0",
+        "source_modified": false
+      },
+      "cwd": "C:\\Users\\ASUS\\Documents\\GitHub\\Solidworks-MCP-PRO\\.local\\competitors\\andrew",
+      "startup_timeout_seconds": 90,
+      "request_timeout_seconds": 120,
+      "runtime_mode": "upstream mock adapter; discovery only; not native CAD evidence"
+    }
+  ]
+}

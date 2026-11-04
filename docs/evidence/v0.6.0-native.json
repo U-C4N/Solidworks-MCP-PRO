@@ -1,0 +1,467 @@
+{
+  "schema_version": 1,
+  "release": "0.6.0",
+  "date": "2026-11-04",
+  "environment": {
+    "platform": "Windows",
+    "python": "3.12.16",
+    "solidworks_revision": "34.4.1",
+    "upstream": "solidworks-mcp==0.19.0"
+  },
+  "connection_doctor": {
+    "status": "ready",
+    "healthy": true,
+    "catalogue": {
+      "tool_profile": "full",
+      "observation_supplied": true,
+      "expected_count": 123,
+      "published_count": 123,
+      "comparison": "match",
+      "missing_tools": [],
+      "unexpected_tools": [],
+      "duplicate_tools": [],
+      "contains_pro_tools": true
+    }
+  },
+  "render_probe": {
+    "ok": true,
+    "status": "passed",
+    "route": "addin",
+    "execution": "solidworks_in_process_macro",
+    "render_verified": true,
+    "addin_render_verified": true,
+    "project_render_verified": false,
+    "macro_render_verified": true,
+    "settings": {
+      "width": 640,
+      "height": 360,
+      "passes": 16,
+      "denoiser": true
+    },
+    "images": [
+      {
+        "width": 640,
+        "height": 360,
+        "format": "PNG",
+        "sha256": "b2f71436fd011237df39488e4f0b1c831d82f12d80a810e7e36c5bc5ad8b5128",
+        "bytes": 73779
+      }
+    ],
+    "cleanup_verified": true
+  },
+  "static_render_jobs": [
+    {
+      "mode": "normal",
+      "ok": true,
+      "images": [
+        {
+          "width": 1920,
+          "height": 1080,
+          "sha256": "b4dda58e7fce241401fe969a09ed84c2181477a80e6ee64d0d1b880801107e8f",
+          "bytes": 280804
+        }
+      ],
+      "cleanup": {
+        "camera": true
+      }
+    },
+    {
+      "mode": "exploded",
+      "ok": true,
+      "images": [
+        {
+          "width": 1920,
+          "height": 1080,
+          "sha256": "d625bbee01208b4395ac19a522506dd73c47afef6b4606ec465945dd88743071",
+          "bytes": 340798
+        }
+      ],
+      "cleanup": {
+        "poses": true,
+        "camera": true
+      }
+    }
+  ],
+  "design_requirements": {
+    "expected_analytic_volume_mm3": 63465.48728053323,
+    "counts": {
+      "total": 4,
+      "passed": 4,
+      "failed": 0,
+      "unknown": 0
+    },
+    "assertions": [
+      {
+        "id": "thickness",
+        "kind": "dimension",
+        "unit": "mm",
+        "expected": 10.0,
+        "actual": 10.0,
+        "status": "pass",
+        "passed": true,
+        "effective_tolerance": 1e-06
+      },
+      {
+        "id": "analytic-volume",
+        "kind": "volume",
+        "unit": "mm3",
+        "expected": 63465.48728053323,
+        "actual": 63465.48728053324,
+        "status": "pass",
+        "passed": true,
+        "effective_tolerance": 0.001
+      },
+      {
+        "id": "z-size",
+        "kind": "bbox_size",
+        "unit": "mm",
+        "expected": 10.0,
+        "actual": 10.0,
+        "status": "pass",
+        "passed": true,
+        "effective_tolerance": 1e-06
+      },
+      {
+        "id": "native-mass",
+        "kind": "mass",
+        "unit": "kg",
+        "min": 0.0,
+        "actual": 0.06346548728053324,
+        "status": "pass",
+        "passed": true,
+        "effective_tolerance": 0.0
+      }
+    ],
+    "state_unchanged": true,
+    "intentionally_failed_condition": {
+      "ok": true,
+      "passed": false,
+      "counts": {
+        "total": 1,
+        "passed": 0,
+        "failed": 1,
+        "unknown": 0
+      }
+    }
+  },
+  "variant_study": {
+    "counts": {
+      "planned": 3,
+      "evaluated": 3,
+      "valid": 3,
+      "invalid": 0,
+      "unknown": 0
+    },
+    "source_sha256_before": "3b87387eeff597157ebb4bfcdf4139cdee19e8c70b8f7868153313b1e2ef2c13",
+    "source_sha256_after": "3b87387eeff597157ebb4bfcdf4139cdee19e8c70b8f7868153313b1e2ef2c13",
+    "source_unchanged": true,
+    "source_document_unchanged": true,
+    "active_document_restored": true,
+    "closed_owned_copy_count": 3,
+    "variants": [
+      {
+        "id": "variant_001",
+        "parameters": {
+          "D1@BlockExtrude": 6.0
+        },
+        "valid": true,
+        "rebuild_ok": true,
+        "mass_kg": 0.038079292368319945,
+        "volume_mm3": 38079.29236831994,
+        "dimension_readback": {
+          "D1@BlockExtrude": {
+            "requested": 6.0,
+            "actual": 6.0,
+            "unit": "mm",
+            "abs_tolerance": 1e-06
+          }
+        }
+      },
+      {
+        "id": "variant_002",
+        "parameters": {
+          "D1@BlockExtrude": 8.0
+        },
+        "valid": true,
+        "rebuild_ok": true,
+        "mass_kg": 0.050772389824426584,
+        "volume_mm3": 50772.38982442659,
+        "dimension_readback": {
+          "D1@BlockExtrude": {
+            "requested": 8.0,
+            "actual": 8.0,
+            "unit": "mm",
+            "abs_tolerance": 1e-06
+          }
+        }
+      },
+      {
+        "id": "variant_003",
+        "parameters": {
+          "D1@BlockExtrude": 10.0
+        },
+        "valid": true,
+        "rebuild_ok": true,
+        "mass_kg": 0.06346548728053324,
+        "volume_mm3": 63465.48728053324,
+        "dimension_readback": {
+          "D1@BlockExtrude": {
+            "requested": 10.0,
+            "actual": 10.0,
+            "unit": "mm",
+            "abs_tolerance": 1e-06
+          }
+        }
+      }
+    ]
+  },
+  "shot_pack": {
+    "render_route": "project",
+    "counts": {
+      "requested_shots": 3,
+      "completed_shots": 3,
+      "verified_previews": 3,
+      "verified_finals": 3
+    },
+    "shots": [
+      {
+        "name": "hero",
+        "camera": {
+          "view": "isometric",
+          "fit": true,
+          "zoom_factor": 1.0
+        },
+        "project_camera": {
+          "camera_position_mm": [
+            191.09434786147241,
+            176.09434786147241,
+            146.09434786147241
+          ],
+          "camera_target_mm": [
+            50.0,
+            35.0,
+            5.0
+          ],
+          "vertical_fov_deg": 32
+        },
+        "preview_settings": {
+          "width": 512,
+          "height": 512,
+          "passes": 16,
+          "denoiser": true
+        },
+        "final_settings": {
+          "width": 512,
+          "height": 512,
+          "passes": 16,
+          "denoiser": true
+        },
+        "images": [
+          {
+            "width": 512,
+            "height": 512,
+            "sha256": "0563e6ca2f435b2bc69b4d636af779e7976dad575ba3196c9b0ce6fa8709f988",
+            "bytes": 101548,
+            "role": "final",
+            "render_route": "project",
+            "execution": "native_offline_renderer_project_copy"
+          }
+        ]
+      },
+      {
+        "name": "front",
+        "camera": {
+          "view": "front",
+          "fit": true,
+          "zoom_factor": 1.0
+        },
+        "project_camera": {
+          "camera_position_mm": [
+            50.0,
+            35.0,
+            249.38257915686734
+          ],
+          "camera_target_mm": [
+            50.0,
+            35.0,
+            5.0
+          ],
+          "vertical_fov_deg": 32
+        },
+        "preview_settings": {
+          "width": 640,
+          "height": 360,
+          "passes": 16,
+          "denoiser": true
+        },
+        "final_settings": {
+          "width": 640,
+          "height": 360,
+          "passes": 16,
+          "denoiser": true
+        },
+        "images": [
+          {
+            "width": 640,
+            "height": 360,
+            "sha256": "fc024b3fc4dc25ba6be80214ac040f1c15d3cc2dfea9e47a0778323a06b11874",
+            "bytes": 66246,
+            "role": "final",
+            "render_route": "project",
+            "execution": "native_offline_renderer_project_copy"
+          }
+        ]
+      },
+      {
+        "name": "portrait",
+        "camera": {
+          "view": "custom",
+          "fit": true,
+          "zoom_factor": 1.0,
+          "from_direction": [
+            1,
+            0.55,
+            1.4
+          ]
+        },
+        "project_camera": {
+          "camera_position_mm": [
+            284.20228490600283,
+            163.81125669830158,
+            332.8831988684039
+          ],
+          "camera_target_mm": [
+            50.0,
+            35.0,
+            5.0
+          ],
+          "vertical_fov_deg": 32
+        },
+        "preview_settings": {
+          "width": 360,
+          "height": 640,
+          "passes": 16,
+          "denoiser": true
+        },
+        "final_settings": {
+          "width": 360,
+          "height": 640,
+          "passes": 16,
+          "denoiser": true
+        },
+        "images": [
+          {
+            "width": 360,
+            "height": 640,
+            "sha256": "1069862650a38deeb88447589a78dd9c20e41904ae2623bd44109be020e52e6a",
+            "bytes": 74104,
+            "role": "final",
+            "render_route": "project",
+            "execution": "native_offline_renderer_project_copy"
+          }
+        ]
+      }
+    ],
+    "camera_restored": true,
+    "contact_sheet": {
+      "width": 1024,
+      "height": 352,
+      "sha256": "c025010c60779d423825e0f02257243981dd7001094f763d60239cc5d4527cf6",
+      "bytes": 68894,
+      "role": "contact_sheet"
+    },
+    "visual_fit_reviewed": true
+  },
+  "assembly_requirements": {
+    "counts": {
+      "total": 3,
+      "passed": 3,
+      "failed": 0,
+      "unknown": 0
+    },
+    "assertions": [
+      {
+        "id": "assembly-width",
+        "kind": "bbox_size",
+        "unit": "mm",
+        "expected": 240.0,
+        "actual": 240.00000000000003,
+        "status": "pass",
+        "passed": true,
+        "effective_tolerance": 1e-05
+      },
+      {
+        "id": "clearance",
+        "kind": "distance",
+        "unit": "mm",
+        "expected": 40.0,
+        "actual": 40.0,
+        "status": "pass",
+        "passed": true,
+        "effective_tolerance": 1e-05
+      },
+      {
+        "id": "assembly-mass",
+        "kind": "mass",
+        "unit": "kg",
+        "expected": 0.12693097456106647,
+        "actual": 0.12693097456106647,
+        "status": "pass",
+        "passed": true,
+        "effective_tolerance": 1e-07
+      }
+    ]
+  },
+  "fixture_cleanup": {
+    "ok": true,
+    "verified": true,
+    "closed": [
+      "EngineeringAssembly.SLDASM",
+      "EngineeringPlate.SLDPRT"
+    ],
+    "errors": []
+  },
+  "raw_evidence": [
+    {
+      "path": "artifacts/v060-engineering/acceptance-02/evidence.json",
+      "sha256": "3a713837ed9a54ab92987316f78bc340f53bdbd4590abcbc504b110a121b119a"
+    },
+    {
+      "path": "artifacts/v060-prerequisites/fast-render-20261104/evidence.json",
+      "sha256": "2a20fd712f38fd4e6eac22bc1f6db810eb92bd6fbcadd07c0b1c400ed2c7905f"
+    },
+    {
+      "path": "artifacts/v060-prerequisites/render-probe-20261104/evidence.json",
+      "sha256": "0a0b77e65f99bb1b417c559226e84a95f2ae55731709a0ef005122c0a62b9530"
+    },
+    {
+      "path": "artifacts/v060-engineering/acceptance-project-final/evidence.json",
+      "sha256": "24fac22206fbd28f95497a21eafc07cf9312744ed00cb57e3ab05765d78e3cd7"
+    }
+  ],
+  "limits": [
+    "Native results cover one scratch plate and a two-instance assembly on the stated installation.",
+    "No arbitrary nested-assembly, physical-strength, manufacturability or material-fidelity guarantee.",
+    "No GPU attribution or native speed comparison.",
+    "Raw workstation-specific evidence remains local; no generated CAD files are shipped."
+  ],
+  "addin_shot_pack_integrity": {
+    "counts": {
+      "requested_shots": 3,
+      "completed_shots": 3,
+      "verified_previews": 3,
+      "verified_finals": 3
+    },
+    "camera_restored": true,
+    "visual_fit_verified": false,
+    "limit": "Native model-view framing cropped the portrait; project route was added and accepted separately."
+  },
+  "automated_verification": {
+    "tests_passed": 1326,
+    "ruff": "passed",
+    "full_tool_count": 123,
+    "compact_tool_count": 14,
+    "protocol_smoke": "passed",
+    "native_tests_counted_as_unit_tests": false
+  }
+}

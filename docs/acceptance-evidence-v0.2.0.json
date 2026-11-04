@@ -1,0 +1,692 @@
+[
+  {
+    "tool": "pro_capabilities",
+    "arguments": {},
+    "result": {
+      "ok": true,
+      "version": "0.2.0",
+      "upstream": "solidworks-mcp==0.19.0",
+      "native_tool_count": 88,
+      "pro_tool_count": 13,
+      "units": {
+        "length": "mm",
+        "angle": "degrees",
+        "mass": "kg"
+      },
+      "transport": "stdio",
+      "workspace": "<REPO>\\artifacts\\acceptance\\f08894009933",
+      "visualize": "Official add-in API, SW2025+; grouping SW2026+",
+      "limits": [
+        "Replay protection lasts one server process",
+        "Plans are sequential, not atomic",
+        "PRO lock does not coordinate unrelated MCP servers",
+        "STL units assumed mm"
+      ]
+    },
+    "content_types": [
+      "text"
+    ]
+  },
+  {
+    "tool": "pro_run_plan",
+    "arguments": {
+      "steps": [
+        {
+          "tool": "add_box",
+          "arguments": {}
+        }
+      ],
+      "request_id": "invalid",
+      "dry_run": true
+    },
+    "result": {
+      "ok": false,
+      "status": "rejected",
+      "error": "Step 1 (add_box), arguments: 'width_mm' is a required property",
+      "executed_steps": 0
+    },
+    "content_types": [
+      "text"
+    ]
+  },
+  {
+    "tool": "get_status",
+    "arguments": {},
+    "result": {
+      "ok": true,
+      "connected": true,
+      "server_version": "0.19.0",
+      "revision": "34.4.1",
+      "active_document": "acceptance-plate.SLDPRT",
+      "current_part": null,
+      "operation_id": "op_8685c3a09288439f92d5b5fe4d7638f6",
+      "operation_status": "completed",
+      "status": "completed"
+    },
+    "content_types": [
+      "text"
+    ]
+  },
+  {
+    "tool": "pro_run_plan",
+    "arguments": {
+      "steps": [
+        {
+          "tool": "new_part",
+          "arguments": {}
+        },
+        {
+          "tool": "add_box",
+          "arguments": {
+            "width_mm": 80,
+            "height_mm": 50,
+            "depth_mm": 8
+          }
+        },
+        {
+          "tool": "add_hole",
+          "arguments": {
+            "diameter_mm": 10,
+            "x_mm": 40,
+            "y_mm": 25
+          }
+        },
+        {
+          "tool": "set_appearance",
+          "arguments": {
+            "rgb": [
+              35,
+              110,
+              180
+            ]
+          }
+        }
+      ],
+      "request_id": "plate",
+      "dry_run": true
+    },
+    "result": {
+      "ok": true,
+      "status": "validated",
+      "request_id": "plate",
+      "dry_run": true,
+      "executed_steps": 0,
+      "steps": [
+        {
+          "index": 1,
+          "tool": "new_part"
+        },
+        {
+          "index": 2,
+          "tool": "add_box"
+        },
+        {
+          "index": 3,
+          "tool": "add_hole"
+        },
+        {
+          "index": 4,
+          "tool": "set_appearance"
+        }
+      ],
+      "rollback": "not_attempted",
+      "idempotency_scope": "current_process"
+    },
+    "content_types": [
+      "text"
+    ]
+  },
+  {
+    "tool": "pro_run_plan",
+    "arguments": {
+      "steps": [
+        {
+          "tool": "new_part",
+          "arguments": {}
+        },
+        {
+          "tool": "add_box",
+          "arguments": {
+            "width_mm": 80,
+            "height_mm": 50,
+            "depth_mm": 8
+          }
+        },
+        {
+          "tool": "add_hole",
+          "arguments": {
+            "diameter_mm": 10,
+            "x_mm": 40,
+            "y_mm": 25
+          }
+        },
+        {
+          "tool": "set_appearance",
+          "arguments": {
+            "rgb": [
+              35,
+              110,
+              180
+            ]
+          }
+        }
+      ],
+      "request_id": "plate",
+      "dry_run": false
+    },
+    "result": {
+      "ok": true,
+      "status": "completed",
+      "request_id": "plate",
+      "dry_run": false,
+      "steps": [
+        {
+          "index": 1,
+          "tool": "new_part",
+          "ok": true,
+          "result": {
+            "ok": true,
+            "title": "Part29"
+          }
+        },
+        {
+          "index": 2,
+          "tool": "add_box",
+          "ok": true,
+          "result": {
+            "ok": true,
+            "feature": "BlockExtrude",
+            "rebuild_ok": true,
+            "dimensions": {
+              "width": "width@\u00c7izim1",
+              "height": "height@\u00c7izim1",
+              "depth": "D1@BlockExtrude"
+            },
+            "fully_defined": true,
+            "mass_properties": {
+              "volume_mm3": 32000.000000000004,
+              "mass_kg": 0.03200000000000001,
+              "density_kg_m3": 1000.0000000000001,
+              "surface_area_mm2": 10080.0,
+              "center_of_mass_mm": [
+                40.0,
+                25.0,
+                4.0
+              ],
+              "bounding_box_mm": {
+                "min_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "max_mm": [
+                  80.0,
+                  50.0,
+                  8.0
+                ],
+                "size_mm": [
+                  80.0,
+                  50.0,
+                  8.0
+                ]
+              }
+            },
+            "depth_dimension": "D1@BlockExtrude"
+          }
+        },
+        {
+          "index": 3,
+          "tool": "add_hole",
+          "ok": true,
+          "result": {
+            "ok": true,
+            "feature": "Hole",
+            "rebuild_ok": true,
+            "dimensions": {
+              "x": "x@\u00c7izim2",
+              "y": "y@\u00c7izim2",
+              "diameter": "diameter@\u00c7izim2"
+            },
+            "fully_defined": true,
+            "mass_properties": {
+              "volume_mm3": 31371.681469282048,
+              "mass_kg": 0.03137168146928205,
+              "density_kg_m3": 1000.0,
+              "surface_area_mm2": 10174.247779607693,
+              "center_of_mass_mm": [
+                40.0,
+                25.0,
+                4.0
+              ],
+              "bounding_box_mm": {
+                "min_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "max_mm": [
+                  80.0,
+                  50.0,
+                  8.0
+                ],
+                "size_mm": [
+                  80.0,
+                  50.0,
+                  8.0
+                ]
+              }
+            }
+          }
+        },
+        {
+          "index": 4,
+          "tool": "set_appearance",
+          "ok": true,
+          "result": {
+            "ok": true,
+            "rgb": [
+              35,
+              110,
+              180
+            ],
+            "transparency": 0.0
+          }
+        }
+      ],
+      "completed_steps": 4,
+      "executed_steps": 4,
+      "rollback": "not_attempted",
+      "idempotency_scope": "current_process",
+      "operation_id": "op_1ee2f99f3b15436d95518f02a0b7f57a",
+      "operation_status": "completed"
+    },
+    "content_types": [
+      "text"
+    ]
+  },
+  {
+    "tool": "pro_run_plan",
+    "arguments": {
+      "steps": [
+        {
+          "tool": "new_part",
+          "arguments": {}
+        },
+        {
+          "tool": "add_box",
+          "arguments": {
+            "width_mm": 80,
+            "height_mm": 50,
+            "depth_mm": 8
+          }
+        },
+        {
+          "tool": "add_hole",
+          "arguments": {
+            "diameter_mm": 10,
+            "x_mm": 40,
+            "y_mm": 25
+          }
+        },
+        {
+          "tool": "set_appearance",
+          "arguments": {
+            "rgb": [
+              35,
+              110,
+              180
+            ]
+          }
+        }
+      ],
+      "request_id": "plate",
+      "dry_run": false
+    },
+    "result": {
+      "ok": true,
+      "status": "completed",
+      "request_id": "plate",
+      "dry_run": false,
+      "steps": [
+        {
+          "index": 1,
+          "tool": "new_part",
+          "ok": true,
+          "result": {
+            "ok": true,
+            "title": "Part29"
+          }
+        },
+        {
+          "index": 2,
+          "tool": "add_box",
+          "ok": true,
+          "result": {
+            "ok": true,
+            "feature": "BlockExtrude",
+            "rebuild_ok": true,
+            "dimensions": {
+              "width": "width@\u00c7izim1",
+              "height": "height@\u00c7izim1",
+              "depth": "D1@BlockExtrude"
+            },
+            "fully_defined": true,
+            "mass_properties": {
+              "volume_mm3": 32000.000000000004,
+              "mass_kg": 0.03200000000000001,
+              "density_kg_m3": 1000.0000000000001,
+              "surface_area_mm2": 10080.0,
+              "center_of_mass_mm": [
+                40.0,
+                25.0,
+                4.0
+              ],
+              "bounding_box_mm": {
+                "min_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "max_mm": [
+                  80.0,
+                  50.0,
+                  8.0
+                ],
+                "size_mm": [
+                  80.0,
+                  50.0,
+                  8.0
+                ]
+              }
+            },
+            "depth_dimension": "D1@BlockExtrude"
+          }
+        },
+        {
+          "index": 3,
+          "tool": "add_hole",
+          "ok": true,
+          "result": {
+            "ok": true,
+            "feature": "Hole",
+            "rebuild_ok": true,
+            "dimensions": {
+              "x": "x@\u00c7izim2",
+              "y": "y@\u00c7izim2",
+              "diameter": "diameter@\u00c7izim2"
+            },
+            "fully_defined": true,
+            "mass_properties": {
+              "volume_mm3": 31371.681469282048,
+              "mass_kg": 0.03137168146928205,
+              "density_kg_m3": 1000.0,
+              "surface_area_mm2": 10174.247779607693,
+              "center_of_mass_mm": [
+                40.0,
+                25.0,
+                4.0
+              ],
+              "bounding_box_mm": {
+                "min_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "max_mm": [
+                  80.0,
+                  50.0,
+                  8.0
+                ],
+                "size_mm": [
+                  80.0,
+                  50.0,
+                  8.0
+                ]
+              }
+            }
+          }
+        },
+        {
+          "index": 4,
+          "tool": "set_appearance",
+          "ok": true,
+          "result": {
+            "ok": true,
+            "rgb": [
+              35,
+              110,
+              180
+            ],
+            "transparency": 0.0
+          }
+        }
+      ],
+      "completed_steps": 4,
+      "executed_steps": 4,
+      "rollback": "not_attempted",
+      "idempotency_scope": "current_process",
+      "operation_id": "op_1ee2f99f3b15436d95518f02a0b7f57a",
+      "operation_status": "completed",
+      "replayed": true
+    },
+    "content_types": [
+      "text"
+    ]
+  },
+  {
+    "tool": "pro_verify_volume",
+    "arguments": {
+      "expected_mm3": 31371.68146928204
+    },
+    "result": {
+      "ok": true,
+      "passed": true,
+      "actual_mm3": 31371.681469282048,
+      "expected_mm3": 31371.68146928204,
+      "relative_error": 2.319275624836293e-16,
+      "relative_tolerance": 0.001,
+      "operation_id": "op_0c7a14fec47a4b9cb558c00f8fbee999",
+      "operation_status": "completed",
+      "status": "completed"
+    },
+    "content_types": [
+      "text"
+    ]
+  },
+  {
+    "tool": "save_part",
+    "arguments": {
+      "path": "<REPO>\\artifacts\\acceptance\\f08894009933\\acceptance-plate.sldprt"
+    },
+    "result": {
+      "ok": true,
+      "path": "<REPO>\\artifacts\\acceptance\\f08894009933\\acceptance-plate.sldprt",
+      "bytes": 49965,
+      "operation_id": "op_4a3445698472493aaaf4be2774f77d20",
+      "operation_status": "completed",
+      "status": "completed"
+    },
+    "content_types": [
+      "text"
+    ]
+  },
+  {
+    "tool": "export",
+    "arguments": {
+      "path": "<REPO>\\artifacts\\acceptance\\f08894009933\\acceptance-plate.step"
+    },
+    "result": {
+      "ok": true,
+      "path": "<REPO>\\artifacts\\acceptance\\f08894009933\\acceptance-plate.step",
+      "format": "step",
+      "files": [
+        "<REPO>\\artifacts\\acceptance\\f08894009933\\acceptance-plate.step"
+      ],
+      "bytes": 21131,
+      "operation_id": "op_09e790d0c590481f825d3e39efe4e4d0",
+      "operation_status": "completed",
+      "status": "completed"
+    },
+    "content_types": [
+      "text"
+    ]
+  },
+  {
+    "tool": "pro_capture_view",
+    "arguments": {},
+    "result": {
+      "ok": true,
+      "path": "<REPO>\\artifacts\\acceptance\\f08894009933\\92bb880aecfc4dc78de7841baeb4b947.png",
+      "uri": "solidworks-pro://artifact/2417f5b70a774ce0bfc6aa0870778180.png",
+      "image_artifacts": [
+        "2417f5b70a774ce0bfc6aa0870778180.png"
+      ],
+      "operation_id": "op_60d1dd25906c43f5a772546e1faa91b3",
+      "operation_status": "completed",
+      "status": "completed"
+    },
+    "content_types": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "tool": "pro_preview_model",
+    "arguments": {},
+    "result": {
+      "ok": true,
+      "viewer_path": "<REPO>\\artifacts\\acceptance\\f08894009933\\4e10694c9fd14bd5ab1be3ba4a34a2b7.html",
+      "mime_type": "text/html",
+      "displayed_triangles": 160,
+      "sampled": false,
+      "mesh": {
+        "units": "mm",
+        "units_note": "STL has no units; coordinates are interpreted as millimetres.",
+        "triangle_count": 160,
+        "bounds": {
+          "min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "max": [
+            80.0,
+            50.0,
+            8.0
+          ],
+          "size": [
+            80.0,
+            50.0,
+            8.0
+          ]
+        },
+        "surface_area_mm2": 10174.72518355698,
+        "topology": {
+          "method": "exact coordinate edge matching; no automatic welding",
+          "edge_count": 240,
+          "boundary_edges": 0,
+          "nonmanifold_edges": 0,
+          "inconsistent_orientation_edges": 0,
+          "degenerate_triangles": 0,
+          "watertight": true,
+          "consistently_oriented": true,
+          "self_intersections_checked": false
+        },
+        "volume_mm3": 31374.866648618976,
+        "volume_note": "Signed mesh volume magnitude; assumes no self-intersections and correctly oriented disconnected shells."
+      },
+      "resource_uri": "solidworks-pro://artifact/91afecff870641d383acadb8876f2d9b.html",
+      "operation_id": "op_7c68cccf80e34c1caf4e854be25e5857",
+      "operation_status": "completed",
+      "status": "completed"
+    },
+    "content_types": [
+      "text"
+    ]
+  },
+  {
+    "tool": "pro_visualize_status",
+    "arguments": {
+      "load_if_missing": true
+    },
+    "result": {
+      "ok": true,
+      "available": true,
+      "renderer": "SOLIDWORKS Visualize",
+      "solidworks_revision": "34.4.1",
+      "render_api": "IVisualizeAddinManager.Render",
+      "project_grouping_supported": true,
+      "license_verified": false,
+      "note": "Add-in is reachable; a successful render is required to verify renderer/license readiness.",
+      "load_code": null,
+      "already_loaded": true,
+      "operation_id": "op_545e1653ec594966b5abb89b34fb1dc2",
+      "operation_status": "completed",
+      "status": "completed"
+    },
+    "content_types": [
+      "text"
+    ]
+  },
+  {
+    "tool": "pro_visualize_render",
+    "arguments": {
+      "request_id": "render-plate",
+      "width": 640,
+      "height": 360,
+      "passes": 50,
+      "image_format": "png"
+    },
+    "result": {
+      "ok": true,
+      "renderer": "SOLIDWORKS Visualize",
+      "api": "IVisualizeAddinManager.Render",
+      "output_dir": "<REPO>\\artifacts\\acceptance\\f08894009933\\535170710b9c49c286649fe68918f537-render",
+      "images": [
+        {
+          "path": "<REPO>\\artifacts\\acceptance\\f08894009933\\535170710b9c49c286649fe68918f537-render\\render\\render.png",
+          "bytes": 292786,
+          "sha256": "6259c68d326f1cb6081f49ae93e4d984fcdb2bd2fe89252be076d60c2ee51933",
+          "width": 640,
+          "height": 360,
+          "mime_type": "image/png"
+        }
+      ],
+      "passes": 50,
+      "denoiser": false,
+      "verification": "Decoded image format and dimensions, file size and SHA-256; scene fidelity needs visual review.",
+      "image_artifacts": [
+        "e98bf4f2ada144d09a65077bb74c416b.png"
+      ],
+      "operation_id": "op_a2111c8760904b79b52c748e5574d59e",
+      "operation_status": "completed",
+      "status": "completed"
+    },
+    "content_types": [
+      "text",
+      "image"
+    ]
+  },
+  {
+    "tool": "pro_visualize_export",
+    "arguments": {
+      "grouping": "part"
+    },
+    "result": {
+      "ok": true,
+      "path": "<REPO>\\artifacts\\acceptance\\f08894009933\\581c1c9ea21847e4bc1c500d22e46ac7.svpj",
+      "bytes": 7179804,
+      "sha256": "afa3ae1697470c066bd0593c5f2ef6651fee56fa9b0e141a2fcbca561e56c2db",
+      "grouping": "part",
+      "requested_grouping": "part",
+      "api": "IVisualizeAddinManager2.SaveWithPartGrouping",
+      "verification": "Non-empty exported file and SHA-256; reopen in Visualize for scene acceptance.",
+      "operation_id": "op_8cbe45d1578b412a91224ce8629c1b2b",
+      "operation_status": "completed",
+      "status": "completed"
+    },
+    "content_types": [
+      "text"
+    ]
+  }
+]

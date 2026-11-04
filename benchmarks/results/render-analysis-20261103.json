@@ -1,0 +1,642 @@
+{
+  "schema_version": 1,
+  "analysis": "Kollu Pres native Visualize render acceptance, 2026-11-03",
+  "source_files": [
+    {
+      "run_id": "77b6a66f4e03",
+      "path": "C:\\Users\\ASUS\\Documents\\Solidworks\\render_work\\Kollu_Pres_4K_20261103\\renders\\77b6a66f4e03-evidence.json",
+      "sha256": "103d68bd594e8571e5c6d9170604b03e1c2639a13371302087d1625e64ea7388"
+    },
+    {
+      "run_id": "2ce5cf24299b",
+      "path": "C:\\Users\\ASUS\\Documents\\Solidworks\\render_work\\Kollu_Pres_4K_20261103\\renders\\2ce5cf24299b-evidence.json",
+      "sha256": "8c84e52a3a829402505efffeac400a1e6ab9f1a452aa265fb1ee3aa8dcc91662"
+    },
+    {
+      "run_id": "6236e04180fc",
+      "path": "C:\\Users\\ASUS\\Documents\\Solidworks\\render_work\\Kollu_Pres_4K_20261103\\renders\\6236e04180fc-evidence.json",
+      "sha256": "b6f9ef8440ef2f84ac9b37bf29a395a55fa73a03e7ffe2c804c60681730b8875"
+    },
+    {
+      "run_id": "7f7246e76979",
+      "path": "C:\\Users\\ASUS\\Documents\\Solidworks\\render_work\\Kollu_Pres_4K_20261103\\renders\\7f7246e76979-evidence.json",
+      "sha256": "c12a787afcfcbe782193c6e2efa13132df7560d81fa6add46ab41a964a6c7587"
+    }
+  ],
+  "attempts": [
+    {
+      "run_id": "77b6a66f4e03",
+      "settings": {
+        "width": 960,
+        "height": 540,
+        "passes": 50,
+        "denoiser": true
+      },
+      "native_status": "pass",
+      "visual_status": "fail",
+      "reported_total_ms": 171613.25,
+      "finished_4k": false
+    },
+    {
+      "run_id": "2ce5cf24299b",
+      "settings": "not recorded in raw failed attempt",
+      "native_status": "fail",
+      "visual_status": "not_run",
+      "recorded_render_and_poll_call_sum_ms": 30347.563,
+      "reported_total_ms": null,
+      "error": {
+        "code": "OPERATION_FAILED",
+        "message": "COMError: (-2146233087, None, (\"OleInitialize failed for '-2147417850'.\", 'PresentationCore', None, 0, None))"
+      },
+      "outcome_may_be_indeterminate": true,
+      "finished_4k": false
+    },
+    {
+      "run_id": "6236e04180fc",
+      "settings": {
+        "width": 960,
+        "height": 540,
+        "passes": 50,
+        "denoiser": true
+      },
+      "native_status": "pass",
+      "visual_status": "pass",
+      "reported_total_ms": 9176.91,
+      "finished_4k": false
+    },
+    {
+      "run_id": "7f7246e76979",
+      "settings": {
+        "width": 3840,
+        "height": 2160,
+        "passes": 200,
+        "denoiser": true
+      },
+      "native_status": "pass",
+      "visual_status": "pass",
+      "reported_total_ms": 25590.765,
+      "finished_4k": true
+    }
+  ],
+  "render_analyses": {
+    "77b6a66f4e03": {
+      "schema_version": 1,
+      "run_id": "77b6a66f4e03",
+      "model": {
+        "path": "C:\\Users\\ASUS\\Documents\\Solidworks\\render_work\\Kollu_Pres_4K_20261103\\Render_Kollu_Pres.SLDASM",
+        "sha256": "bd1b50ed0151aa3696859250484f7b0d3da7d085a7908f3cc0ccd65f6766b7bb",
+        "configuration": "Sonuc"
+      },
+      "scene_id": null,
+      "environment": {
+        "solidworks": "2026 SP4.1",
+        "gpu_installed": "NVIDIA RTX 5080 Laptop GPU",
+        "gpu_execution_verified": false,
+        "renderer_engine": "Stellar",
+        "requested_render_device": "NVIDIA GeForce RTX 5080 Laptop GPU",
+        "gpu_image_conversion_logged": true,
+        "gpu_path_tracing_telemetry_verified": false,
+        "engine_device_evidence": {
+          "manifest": "C:\\Users\\ASUS\\Documents\\Solidworks\\render_work\\Kollu_Pres_4K_20261103\\renders\\77b6a66f4e03\\logs-first-preview\\manifest.json",
+          "scope": "Exact-run renderer log identifies Stellar initialization, requested RTX device and completed GPU image conversions. No direct GPU path-tracing utilization/timing telemetry."
+        }
+      },
+      "timing_definitions": {
+        "client_wall": "Client request through verified terminal response; includes polling and transport.",
+        "operation": "Operation task duration; may include queue/lease wait, native work, verification and registration.",
+        "native_render": "Wall time around native Render(); may include preparation/import and file output; not GPU execution time.",
+        "import": "Explicitly instrumented import stage only.",
+        "verify": "Explicitly instrumented output verification stage only.",
+        "setup": "Explicitly instrumented bridge manager/option setup, excluding native Render().",
+        "verify_output": "Explicitly instrumented image decode/hash verification.",
+        "restore_options": "Explicitly instrumented restoration of prior renderer options.",
+        "bridge_total": "Bridge manager/options through restore; excludes preflight, queue, registration and transport.",
+        "total": "Caller-reported total; consult timing_scope for its exact boundary."
+      },
+      "records": [
+        {
+          "id": "77b6a66f4e03",
+          "phase": "preview",
+          "reported_status": "pass",
+          "status": "fail",
+          "artifact_verified": true,
+          "finished_4k": false,
+          "visual_review": {
+            "status": "fail",
+            "reviewer": "Codex visual inspection of the native 960x540 PNG",
+            "notes": [
+              "The complete lever, base and assembly are visible within the frame.",
+              "All rendered components have a white/clay appearance; intended paint, metal and rubber material distinctions are absent.",
+              "Bright diffuse surfaces and prominent multiple cast shadows reduce part separation; native appearance transfer and lighting need correction.",
+              "This is a 960x540 diagnostic preview, not the requested finished 3840x2160 deliverable.",
+              "The recorded total is 171613.25 ms (171.61325 s). Import, native Render-only, verification and GPU execution times were not separately recorded."
+            ],
+            "evidence_before_annotation_sha256": "ae7026046afa92c837e2d02347d7448cd1aee1e84d73649c46e055fcda39a0d9"
+          },
+          "timings_ms": {
+            "total": 171613.25
+          },
+          "timing_scope": {},
+          "gpu_execution": "unverified; no GPU telemetry is inferred from elapsed time",
+          "settings": {
+            "width": 960,
+            "height": 540,
+            "passes": 50,
+            "denoiser": true
+          },
+          "image": {
+            "path": "C:\\Users\\ASUS\\Documents\\Solidworks\\render_work\\Kollu_Pres_4K_20261103\\renders\\77b6a66f4e03\\8fc0dc2f028a42db97e32e9d99feb1e0-render\\render\\render.png",
+            "format": "PNG",
+            "width": 960,
+            "height": 540,
+            "mode": "RGBA",
+            "bytes": 164798,
+            "sha256": "284878015b3da0fac662e89b6e44b50ac9d2fe4c8e09908d3ff64d437029c894",
+            "luminance_mean_0_255": 218.27590603298611,
+            "luminance_stddev_0_255": 14.687110994902485,
+            "constant_rgb_sample": false,
+            "pixel_statistics_scope": "Downsampled descriptive diagnostics only; not noise, sharpness or scene-fidelity acceptance."
+          }
+        }
+      ],
+      "groups": [],
+      "summary": {
+        "record_count": 1,
+        "pass_count": 0,
+        "fail_count": 1,
+        "not_run_count": 0,
+        "finished_4k_ids": []
+      },
+      "limitations": [
+        "Warm-ups are retained and excluded from grouped timings.",
+        "Different resolutions, passes and denoiser settings are different workloads; no equal-quality speedup is inferred.",
+        "Missing stage timings are unmeasured, not zero; native Render wall time is not GPU execution time.",
+        "Visual acceptance is a recorded human/agent review; decoding, size and pixel statistics cannot establish scene fidelity."
+      ],
+      "source_file": {
+        "run_id": "77b6a66f4e03",
+        "path": "C:\\Users\\ASUS\\Documents\\Solidworks\\render_work\\Kollu_Pres_4K_20261103\\renders\\77b6a66f4e03-evidence.json",
+        "sha256": "103d68bd594e8571e5c6d9170604b03e1c2639a13371302087d1625e64ea7388"
+      }
+    },
+    "2ce5cf24299b": {
+      "schema_version": 1,
+      "run_id": "2ce5cf24299b",
+      "model": {
+        "path": "C:\\Users\\ASUS\\Documents\\Solidworks\\render_work\\Kollu_Pres_4K_20261103\\Render_Kollu_Pres.SLDASM",
+        "sha256": "677b3bf09f3e61a5b7580326541159601da6da543799f9cf46dafc3dd81e66ff",
+        "configuration": "Sonuc"
+      },
+      "scene_id": null,
+      "environment": {
+        "solidworks": "2026 SP4.1",
+        "gpu_installed": "NVIDIA RTX 5080 Laptop GPU",
+        "gpu_execution_verified": false
+      },
+      "timing_definitions": {
+        "client_wall": "Client request through verified terminal response; includes polling and transport.",
+        "operation": "Operation task duration; may include queue/lease wait, native work, verification and registration.",
+        "native_render": "Wall time around native Render(); may include preparation/import and file output; not GPU execution time.",
+        "import": "Explicitly instrumented import stage only.",
+        "verify": "Explicitly instrumented output verification stage only.",
+        "setup": "Explicitly instrumented bridge manager/option setup, excluding native Render().",
+        "verify_output": "Explicitly instrumented image decode/hash verification.",
+        "restore_options": "Explicitly instrumented restoration of prior renderer options.",
+        "bridge_total": "Bridge manager/options through restore; excludes preflight, queue, registration and transport.",
+        "total": "Caller-reported total; consult timing_scope for its exact boundary."
+      },
+      "records": [],
+      "groups": [],
+      "summary": {
+        "record_count": 0,
+        "pass_count": 0,
+        "fail_count": 0,
+        "not_run_count": 0,
+        "finished_4k_ids": []
+      },
+      "limitations": [
+        "Warm-ups are retained and excluded from grouped timings.",
+        "Different resolutions, passes and denoiser settings are different workloads; no equal-quality speedup is inferred.",
+        "Missing stage timings are unmeasured, not zero; native Render wall time is not GPU execution time.",
+        "Visual acceptance is a recorded human/agent review; decoding, size and pixel statistics cannot establish scene fidelity."
+      ],
+      "source_file": {
+        "run_id": "2ce5cf24299b",
+        "path": "C:\\Users\\ASUS\\Documents\\Solidworks\\render_work\\Kollu_Pres_4K_20261103\\renders\\2ce5cf24299b-evidence.json",
+        "sha256": "8c84e52a3a829402505efffeac400a1e6ab9f1a452aa265fb1ee3aa8dcc91662"
+      }
+    },
+    "6236e04180fc": {
+      "schema_version": 1,
+      "run_id": "6236e04180fc",
+      "model": {
+        "path": "C:\\Users\\ASUS\\Documents\\Solidworks\\render_work\\Kollu_Pres_4K_20261103\\Render_Kollu_Pres.SLDASM",
+        "sha256": "677b3bf09f3e61a5b7580326541159601da6da543799f9cf46dafc3dd81e66ff",
+        "configuration": "Sonuc"
+      },
+      "scene_id": null,
+      "environment": {
+        "solidworks": "2026 SP4.1",
+        "gpu_installed": "NVIDIA RTX 5080 Laptop GPU",
+        "gpu_execution_verified": false
+      },
+      "timing_definitions": {
+        "client_wall": "Client request through verified terminal response; includes polling and transport.",
+        "operation": "Operation task duration; may include queue/lease wait, native work, verification and registration.",
+        "native_render": "Wall time around native Render(); may include preparation/import and file output; not GPU execution time.",
+        "import": "Explicitly instrumented import stage only.",
+        "verify": "Explicitly instrumented output verification stage only.",
+        "setup": "Explicitly instrumented bridge manager/option setup, excluding native Render().",
+        "verify_output": "Explicitly instrumented image decode/hash verification.",
+        "restore_options": "Explicitly instrumented restoration of prior renderer options.",
+        "bridge_total": "Bridge manager/options through restore; excludes preflight, queue, registration and transport.",
+        "total": "Caller-reported total; consult timing_scope for its exact boundary."
+      },
+      "records": [
+        {
+          "id": "6236e04180fc",
+          "phase": "preview",
+          "reported_status": "pass",
+          "status": "pass",
+          "artifact_verified": true,
+          "finished_4k": false,
+          "visual_review": {
+            "status": "pass",
+            "reviewer": "Codex direct inspection of the native PNG; root independently accepted final framing",
+            "notes": [
+              "The entire lever handle and base are inside the frame.",
+              "Blue painted structure, gold/brass-colored crosshead and collars, steel-colored components and black handle are visually distinct.",
+              "Both return springs, mounting holes and central tooling are visible; the rendered assembly is consistent with the reviewed model composition.",
+              "Default-scene hard multiple floor shadows and strong reflections remain an aesthetic limitation; a softer studio HDRI setup is a candidate improvement.",
+              "Image review establishes visible appearance and framing, not physical material-property accuracy or complete hidden-geometry validation."
+            ],
+            "evidence_before_annotation_sha256": "a8907cf2148c192c98bd35d433157d9f934647508cac546308420c6b1710edb4"
+          },
+          "timings_ms": {
+            "setup": 15.002,
+            "native_render": 9115.427,
+            "verify_output": 24.616,
+            "restore_options": 0.815,
+            "bridge_total": 9155.876,
+            "total": 9176.91
+          },
+          "timing_scope": {},
+          "gpu_execution": "unverified; no GPU telemetry is inferred from elapsed time",
+          "settings": {
+            "width": 960,
+            "height": 540,
+            "passes": 50,
+            "denoiser": true
+          },
+          "image": {
+            "path": "C:\\Users\\ASUS\\Documents\\Solidworks\\render_work\\Kollu_Pres_4K_20261103\\renders\\6236e04180fc\\5d153cae19e34e0fa2226108c355012e-render\\render\\render.png",
+            "format": "PNG",
+            "width": 960,
+            "height": 540,
+            "mode": "RGBA",
+            "bytes": 212419,
+            "sha256": "63b08d7b9c3975b2e2c65fb21b4ec2808588654ddfe18adc9520d968cfff1623",
+            "luminance_mean_0_255": 208.59130859375,
+            "luminance_stddev_0_255": 40.52272069273486,
+            "constant_rgb_sample": false,
+            "pixel_statistics_scope": "Downsampled descriptive diagnostics only; not noise, sharpness or scene-fidelity acceptance."
+          }
+        }
+      ],
+      "groups": [
+        {
+          "model": {
+            "path": "C:\\Users\\ASUS\\Documents\\Solidworks\\render_work\\Kollu_Pres_4K_20261103\\Render_Kollu_Pres.SLDASM",
+            "sha256": "677b3bf09f3e61a5b7580326541159601da6da543799f9cf46dafc3dd81e66ff",
+            "configuration": "Sonuc"
+          },
+          "scene_id": null,
+          "phase": "preview",
+          "settings": {
+            "width": 960,
+            "height": 540,
+            "passes": 50,
+            "denoiser": true
+          },
+          "record_ids": [
+            "6236e04180fc"
+          ],
+          "timings_ms": {
+            "setup": {
+              "status": "measured",
+              "sample_count": 1,
+              "samples": [
+                15.002
+              ],
+              "median": 15.002,
+              "min": 15.002,
+              "max": 15.002,
+              "mean": 15.002,
+              "sample_stdev": null
+            },
+            "native_render": {
+              "status": "measured",
+              "sample_count": 1,
+              "samples": [
+                9115.427
+              ],
+              "median": 9115.427,
+              "min": 9115.427,
+              "max": 9115.427,
+              "mean": 9115.427,
+              "sample_stdev": null
+            },
+            "verify_output": {
+              "status": "measured",
+              "sample_count": 1,
+              "samples": [
+                24.616
+              ],
+              "median": 24.616,
+              "min": 24.616,
+              "max": 24.616,
+              "mean": 24.616,
+              "sample_stdev": null
+            },
+            "restore_options": {
+              "status": "measured",
+              "sample_count": 1,
+              "samples": [
+                0.815
+              ],
+              "median": 0.815,
+              "min": 0.815,
+              "max": 0.815,
+              "mean": 0.815,
+              "sample_stdev": null
+            },
+            "bridge_total": {
+              "status": "measured",
+              "sample_count": 1,
+              "samples": [
+                9155.876
+              ],
+              "median": 9155.876,
+              "min": 9155.876,
+              "max": 9155.876,
+              "mean": 9155.876,
+              "sample_stdev": null
+            },
+            "total": {
+              "status": "measured",
+              "sample_count": 1,
+              "samples": [
+                9176.91
+              ],
+              "median": 9176.91,
+              "min": 9176.91,
+              "max": 9176.91,
+              "mean": 9176.91,
+              "sample_stdev": null
+            }
+          }
+        }
+      ],
+      "summary": {
+        "record_count": 1,
+        "pass_count": 1,
+        "fail_count": 0,
+        "not_run_count": 0,
+        "finished_4k_ids": []
+      },
+      "limitations": [
+        "Warm-ups are retained and excluded from grouped timings.",
+        "Different resolutions, passes and denoiser settings are different workloads; no equal-quality speedup is inferred.",
+        "Missing stage timings are unmeasured, not zero; native Render wall time is not GPU execution time.",
+        "Visual acceptance is a recorded human/agent review; decoding, size and pixel statistics cannot establish scene fidelity."
+      ],
+      "source_file": {
+        "run_id": "6236e04180fc",
+        "path": "C:\\Users\\ASUS\\Documents\\Solidworks\\render_work\\Kollu_Pres_4K_20261103\\renders\\6236e04180fc-evidence.json",
+        "sha256": "b6f9ef8440ef2f84ac9b37bf29a395a55fa73a03e7ffe2c804c60681730b8875"
+      }
+    },
+    "7f7246e76979": {
+      "schema_version": 1,
+      "run_id": "7f7246e76979",
+      "model": {
+        "path": "C:\\Users\\ASUS\\Documents\\Solidworks\\render_work\\Kollu_Pres_4K_20261103\\Render_Kollu_Pres.SLDASM",
+        "sha256": "677b3bf09f3e61a5b7580326541159601da6da543799f9cf46dafc3dd81e66ff",
+        "configuration": "Sonuc"
+      },
+      "scene_id": null,
+      "environment": {
+        "solidworks": "2026 SP4.1",
+        "gpu_installed": "NVIDIA RTX 5080 Laptop GPU",
+        "gpu_execution_verified": false,
+        "renderer_engine": "Stellar",
+        "requested_render_device": "NVIDIA GeForce RTX 5080 Laptop GPU",
+        "gpu_image_conversion_logged": true,
+        "gpu_path_tracing_telemetry_verified": false,
+        "engine_device_evidence": {
+          "manifest": "C:\\Users\\ASUS\\Documents\\Solidworks\\render_work\\Kollu_Pres_4K_20261103\\renders\\7f7246e76979\\logs-completed-4k\\manifest.json",
+          "scope": "The exact-output-matched renderer log and supporting Stellar log identify the engine and requested device; GPU kernel utilization is not measured."
+        }
+      },
+      "timing_definitions": {
+        "client_wall": "Client request through verified terminal response; includes polling and transport.",
+        "operation": "Operation task duration; may include queue/lease wait, native work, verification and registration.",
+        "native_render": "Wall time around native Render(); may include preparation/import and file output; not GPU execution time.",
+        "import": "Explicitly instrumented import stage only.",
+        "verify": "Explicitly instrumented output verification stage only.",
+        "setup": "Explicitly instrumented bridge manager/option setup, excluding native Render().",
+        "verify_output": "Explicitly instrumented image decode/hash verification.",
+        "restore_options": "Explicitly instrumented restoration of prior renderer options.",
+        "bridge_total": "Bridge manager/options through restore; excludes preflight, queue, registration and transport.",
+        "total": "Caller-reported total; consult timing_scope for its exact boundary."
+      },
+      "records": [
+        {
+          "id": "7f7246e76979",
+          "phase": "final",
+          "reported_status": "pass",
+          "status": "pass",
+          "artifact_verified": true,
+          "finished_4k": true,
+          "visual_review": {
+            "status": "pass",
+            "reviewer": "Codex direct inspection of the native PNG; root independently accepted final framing",
+            "notes": [
+              "The entire lever handle and base are inside the frame.",
+              "Blue painted structure, gold/brass-colored crosshead and collars, steel-colored components and black handle are visually distinct.",
+              "Both return springs, mounting holes and central tooling are visible; the rendered assembly is consistent with the reviewed model composition.",
+              "Default-scene hard multiple floor shadows and strong reflections remain an aesthetic limitation; a softer studio HDRI setup is a candidate improvement.",
+              "Image review establishes visible appearance and framing, not physical material-property accuracy or complete hidden-geometry validation.",
+              "Native PNG is 3840x2160 UHD 4K at 200 passes with denoiser enabled; accepted as the requested finished artifact."
+            ],
+            "evidence_before_annotation_sha256": "9568276f6027544c4d3019cfdf76ab02b1fb35bfb9bfc503cbeafab1f0ac59f1"
+          },
+          "timings_ms": {
+            "setup": 16.311,
+            "native_render": 25453.92,
+            "verify_output": 57.329,
+            "restore_options": 0.917,
+            "bridge_total": 25528.493,
+            "total": 25590.765
+          },
+          "timing_scope": {},
+          "gpu_execution": "unverified; no GPU telemetry is inferred from elapsed time",
+          "settings": {
+            "width": 3840,
+            "height": 2160,
+            "passes": 200,
+            "denoiser": true
+          },
+          "image": {
+            "path": "C:\\Users\\ASUS\\Documents\\Solidworks\\render_work\\Kollu_Pres_4K_20261103\\renders\\7f7246e76979\\fd15c8bb2b8b4ad5ae6c562a1446ab05-render\\render\\render.png",
+            "format": "PNG",
+            "width": 3840,
+            "height": 2160,
+            "mode": "RGBA",
+            "bytes": 2051050,
+            "sha256": "7fcc185a1e7cc91ea86da0c68d269f883e8f4af5725a7e442523ace71a7bbea2",
+            "luminance_mean_0_255": 208.475341796875,
+            "luminance_stddev_0_255": 40.768889671700606,
+            "constant_rgb_sample": false,
+            "pixel_statistics_scope": "Downsampled descriptive diagnostics only; not noise, sharpness or scene-fidelity acceptance."
+          }
+        }
+      ],
+      "groups": [
+        {
+          "model": {
+            "path": "C:\\Users\\ASUS\\Documents\\Solidworks\\render_work\\Kollu_Pres_4K_20261103\\Render_Kollu_Pres.SLDASM",
+            "sha256": "677b3bf09f3e61a5b7580326541159601da6da543799f9cf46dafc3dd81e66ff",
+            "configuration": "Sonuc"
+          },
+          "scene_id": null,
+          "phase": "final",
+          "settings": {
+            "width": 3840,
+            "height": 2160,
+            "passes": 200,
+            "denoiser": true
+          },
+          "record_ids": [
+            "7f7246e76979"
+          ],
+          "timings_ms": {
+            "setup": {
+              "status": "measured",
+              "sample_count": 1,
+              "samples": [
+                16.311
+              ],
+              "median": 16.311,
+              "min": 16.311,
+              "max": 16.311,
+              "mean": 16.311,
+              "sample_stdev": null
+            },
+            "native_render": {
+              "status": "measured",
+              "sample_count": 1,
+              "samples": [
+                25453.92
+              ],
+              "median": 25453.92,
+              "min": 25453.92,
+              "max": 25453.92,
+              "mean": 25453.92,
+              "sample_stdev": null
+            },
+            "verify_output": {
+              "status": "measured",
+              "sample_count": 1,
+              "samples": [
+                57.329
+              ],
+              "median": 57.329,
+              "min": 57.329,
+              "max": 57.329,
+              "mean": 57.329,
+              "sample_stdev": null
+            },
+            "restore_options": {
+              "status": "measured",
+              "sample_count": 1,
+              "samples": [
+                0.917
+              ],
+              "median": 0.917,
+              "min": 0.917,
+              "max": 0.917,
+              "mean": 0.917,
+              "sample_stdev": null
+            },
+            "bridge_total": {
+              "status": "measured",
+              "sample_count": 1,
+              "samples": [
+                25528.493
+              ],
+              "median": 25528.493,
+              "min": 25528.493,
+              "max": 25528.493,
+              "mean": 25528.493,
+              "sample_stdev": null
+            },
+            "total": {
+              "status": "measured",
+              "sample_count": 1,
+              "samples": [
+                25590.765
+              ],
+              "median": 25590.765,
+              "min": 25590.765,
+              "max": 25590.765,
+              "mean": 25590.765,
+              "sample_stdev": null
+            }
+          }
+        }
+      ],
+      "summary": {
+        "record_count": 1,
+        "pass_count": 1,
+        "fail_count": 0,
+        "not_run_count": 0,
+        "finished_4k_ids": [
+          "7f7246e76979"
+        ]
+      },
+      "limitations": [
+        "Warm-ups are retained and excluded from grouped timings.",
+        "Different resolutions, passes and denoiser settings are different workloads; no equal-quality speedup is inferred.",
+        "Missing stage timings are unmeasured, not zero; native Render wall time is not GPU execution time.",
+        "Visual acceptance is a recorded human/agent review; decoding, size and pixel statistics cannot establish scene fidelity."
+      ],
+      "source_file": {
+        "run_id": "7f7246e76979",
+        "path": "C:\\Users\\ASUS\\Documents\\Solidworks\\render_work\\Kollu_Pres_4K_20261103\\renders\\7f7246e76979-evidence.json",
+        "sha256": "c12a787afcfcbe782193c6e2efa13132df7560d81fa6add46ab41a964a6c7587"
+      }
+    }
+  },
+  "summary": {
+    "attempt_count": 4,
+    "native_success_count": 3,
+    "visual_acceptance_pass_count": 2,
+    "visual_acceptance_fail_count": 1,
+    "failed_native_attempt_count": 1,
+    "finished_4k_ids": [
+      "7f7246e76979"
+    ]
+  },
+  "timing_limits": [
+    "Single observations, not repeated matched benchmarks.",
+    "Old clay and colored previews differ in native materials, cache/application state and execution path; no causal speedup is inferred.",
+    "960x540/50 and3840x2160/200 are different workloads.",
+    "Failed attempt elapsed sum is recorded render/poll calls, not full wall time and not a completed render.",
+    "Renderer log single-image timing is nested within native/total wall time, not additive and not GPU-kernel time."
+  ],
+  "archived_logs": [
+    "C:\\Users\\ASUS\\Documents\\Solidworks\\render_work\\Kollu_Pres_4K_20261103\\renders\\77b6a66f4e03\\logs-first-preview\\manifest.json",
+    "C:\\Users\\ASUS\\Documents\\Solidworks\\render_work\\Kollu_Pres_4K_20261103\\renders\\7f7246e76979\\logs-completed-4k\\manifest.json"
+  ]
+}

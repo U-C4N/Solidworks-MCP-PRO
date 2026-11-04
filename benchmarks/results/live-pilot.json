@@ -1,0 +1,2386 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-03T10:08:05.677564+00:00",
+  "benchmark": "serial-live-cad",
+  "run_id": "020ccd6947f4",
+  "repeats": 1,
+  "methodology": "Unmodified competitor sources; same SW instance; fresh documents; fixed seeded order; independent COM mass/bounds oracle; tool latencies exclude oracle time. No LLM inference. Safety policies scored separately from CAD geometry.",
+  "records": [
+    {
+      "id": "hjbaard",
+      "repetition": 0,
+      "source": {
+        "repository": "https://github.com/hjbaard/SolidWorks-MCP",
+        "revision": "ddcefc0cfa056002ff8eb8bdb186818ad52dc2f1"
+      },
+      "cases": {
+        "new_part": {
+          "status": "pass",
+          "mcp_elapsed_ms": 2288.652,
+          "tool_calls": 1
+        },
+        "block": {
+          "status": "pass",
+          "expected_volume_mm3": 32000,
+          "relative_volume_error": 1.1368683772161603e-16,
+          "expected_size_mm": [
+            80,
+            50,
+            8
+          ],
+          "max_size_error_mm": 0.0,
+          "oracle": {
+            "revision": "34.4.1",
+            "documents": [
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\45c3dd8341fa\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\5bf9de99f295\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\fac1ec721802\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "Part4",
+                "path": "",
+                "dirty": true
+              }
+            ],
+            "active_title": "Part4",
+            "volume_mm3": 32000.000000000004,
+            "surface_area_mm2": 10080.0,
+            "bounds_mm": [
+              0.0,
+              0.0,
+              0.0,
+              80.0,
+              50.0,
+              8.0
+            ],
+            "size_mm": [
+              80.0,
+              50.0,
+              8.0
+            ]
+          },
+          "mcp_elapsed_ms": 1339.226,
+          "tool_calls": 1
+        },
+        "through_hole": {
+          "status": "pass",
+          "expected_volume_mm3": 31371.68146928204,
+          "relative_volume_error": 2.319275624836293e-16,
+          "expected_size_mm": [
+            80,
+            50,
+            8
+          ],
+          "max_size_error_mm": 0.0,
+          "oracle": {
+            "revision": "34.4.1",
+            "documents": [
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\45c3dd8341fa\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\5bf9de99f295\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\fac1ec721802\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "Part4",
+                "path": "",
+                "dirty": true
+              }
+            ],
+            "active_title": "Part4",
+            "volume_mm3": 31371.681469282048,
+            "surface_area_mm2": 10174.247779607693,
+            "bounds_mm": [
+              0.0,
+              0.0,
+              0.0,
+              80.0,
+              50.0,
+              8.0
+            ],
+            "size_mm": [
+              80.0,
+              50.0,
+              8.0
+            ]
+          },
+          "mcp_elapsed_ms": 1481.967,
+          "tool_calls": 1
+        },
+        "parametric_edit": {
+          "status": "pass",
+          "expected_volume_mm3": 47057.52220392306,
+          "relative_volume_error": 1.5461837498908622e-16,
+          "expected_size_mm": [
+            80,
+            50,
+            12
+          ],
+          "max_size_error_mm": 0.0,
+          "oracle": {
+            "revision": "34.4.1",
+            "documents": [
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\45c3dd8341fa\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\5bf9de99f295\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\fac1ec721802\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "Part4",
+                "path": "",
+                "dirty": true
+              }
+            ],
+            "active_title": "Part4",
+            "volume_mm3": 47057.522203923065,
+            "surface_area_mm2": 11339.911485751287,
+            "bounds_mm": [
+              0.0,
+              0.0,
+              0.0,
+              80.0,
+              50.0,
+              12.0
+            ],
+            "size_mm": [
+              80.0,
+              50.0,
+              12.0
+            ]
+          },
+          "mcp_elapsed_ms": 1224.892,
+          "tool_calls": 1
+        },
+        "mass_query": {
+          "status": "pass",
+          "mcp_elapsed_ms": 610.105,
+          "tool_calls": 1
+        },
+        "step_export": {
+          "status": "pass",
+          "mcp_elapsed_ms": 704.065,
+          "tool_calls": 1,
+          "bytes": 21085
+        },
+        "unknown_argument_rejected": {
+          "status": "fail",
+          "mcp_elapsed_ms": 508.835
+        },
+        "default_no_clobber": {
+          "status": "fail",
+          "preserved": false,
+          "reported_error": false,
+          "mcp_elapsed_ms": 629.415
+        },
+        "close_own_document": {
+          "status": "pass",
+          "mcp_elapsed_ms": 1221.187,
+          "tool_calls": 1
+        }
+      },
+      "calls": [
+        {
+          "tool": "new_part",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 2288.652,
+          "is_error": false,
+          "output": {
+            "ok": true,
+            "title": "Part4"
+          },
+          "arguments": {}
+        },
+        {
+          "tool": "add_box",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 1339.226,
+          "is_error": false,
+          "output": {
+            "ok": true,
+            "feature": "BenchBlock",
+            "rebuild_ok": true,
+            "dimensions": {
+              "width": "width@\u00c7izim1",
+              "height": "height@\u00c7izim1",
+              "depth": "D1@BenchBlock"
+            },
+            "fully_defined": true,
+            "mass_properties": {
+              "volume_mm3": 32000.0,
+              "mass_kg": 0.032,
+              "density_kg_m3": 1000.0000000000001,
+              "surface_area_mm2": 10080.0,
+              "center_of_mass_mm": [
+                40.0,
+                25.0,
+                4.0
+              ],
+              "bounding_box_mm": {
+                "min_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "max_mm": [
+                  80.0,
+                  50.0,
+                  8.0
+                ],
+                "size_mm": [
+                  80.0,
+                  50.0,
+                  8.0
+                ]
+              }
+            },
+            "depth_dimension": "D1@BenchBlock"
+          },
+          "arguments": {
+            "width_mm": 80,
+            "height_mm": 50,
+            "depth_mm": 8,
+            "name": "BenchBlock"
+          }
+        },
+        {
+          "tool": "add_hole",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 1481.967,
+          "is_error": false,
+          "output": {
+            "ok": true,
+            "feature": "Hole",
+            "rebuild_ok": true,
+            "dimensions": {
+              "x": "x@\u00c7izim2",
+              "y": "y@\u00c7izim2",
+              "diameter": "diameter@\u00c7izim2"
+            },
+            "fully_defined": true,
+            "mass_properties": {
+              "volume_mm3": 31371.681469282048,
+              "mass_kg": 0.03137168146928205,
+              "density_kg_m3": 1000.0,
+              "surface_area_mm2": 10174.247779607693,
+              "center_of_mass_mm": [
+                40.0,
+                25.0,
+                4.0
+              ],
+              "bounding_box_mm": {
+                "min_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "max_mm": [
+                  80.0,
+                  50.0,
+                  8.0
+                ],
+                "size_mm": [
+                  80.0,
+                  50.0,
+                  8.0
+                ]
+              }
+            }
+          },
+          "arguments": {
+            "diameter_mm": 10,
+            "x_mm": 40,
+            "y_mm": 25
+          }
+        },
+        {
+          "tool": "set_dimension",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 1224.892,
+          "is_error": false,
+          "output": {
+            "ok": true,
+            "dimension": "D1@BenchBlock",
+            "old_value_mm": 8.0,
+            "requested_value_mm": 12.0,
+            "new_value_mm": 12.0,
+            "applied": true,
+            "rebuild_ok": true,
+            "broken_features": [],
+            "mass_properties": {
+              "volume_mm3": 47057.522203923065,
+              "mass_kg": 0.04705752220392307,
+              "density_kg_m3": 1000.0,
+              "surface_area_mm2": 11339.911485751287,
+              "center_of_mass_mm": [
+                40.0,
+                25.0,
+                6.0
+              ],
+              "bounding_box_mm": {
+                "min_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "max_mm": [
+                  80.0,
+                  50.0,
+                  12.0
+                ],
+                "size_mm": [
+                  80.0,
+                  50.0,
+                  12.0
+                ]
+              }
+            }
+          },
+          "arguments": {
+            "dimension_name": "D1@BenchBlock",
+            "value_mm": 12
+          }
+        },
+        {
+          "tool": "get_mass_properties",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 610.105,
+          "is_error": false,
+          "output": {
+            "ok": true,
+            "mass_properties": {
+              "volume_mm3": 47057.522203923065,
+              "mass_kg": 0.04705752220392307,
+              "density_kg_m3": 1000.0,
+              "surface_area_mm2": 11339.911485751287,
+              "center_of_mass_mm": [
+                40.0,
+                25.0,
+                6.0
+              ],
+              "bounding_box_mm": {
+                "min_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "max_mm": [
+                  80.0,
+                  50.0,
+                  12.0
+                ],
+                "size_mm": [
+                  80.0,
+                  50.0,
+                  12.0
+                ]
+              }
+            }
+          },
+          "arguments": {}
+        },
+        {
+          "tool": "export",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 704.065,
+          "is_error": false,
+          "output": {
+            "ok": true,
+            "path": "<REPO>\\artifacts\\benchmarks\\live\\020ccd6947f4\\r0-hjbaard\\model.step",
+            "format": "step",
+            "files": [
+              "<REPO>\\artifacts\\benchmarks\\live\\020ccd6947f4\\r0-hjbaard\\model.step"
+            ],
+            "bytes": 21085
+          },
+          "arguments": {
+            "path": "<REPO>\\artifacts\\benchmarks\\live\\020ccd6947f4\\r0-hjbaard\\model.step"
+          }
+        },
+        {
+          "tool": "get_mass_properties",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 508.835,
+          "is_error": false,
+          "output": {
+            "ok": true,
+            "mass_properties": {
+              "volume_mm3": 47057.522203923065,
+              "mass_kg": 0.04705752220392307,
+              "density_kg_m3": 1000.0,
+              "surface_area_mm2": 11339.911485751287,
+              "center_of_mass_mm": [
+                40.0,
+                25.0,
+                6.0
+              ],
+              "bounding_box_mm": {
+                "min_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "max_mm": [
+                  80.0,
+                  50.0,
+                  12.0
+                ],
+                "size_mm": [
+                  80.0,
+                  50.0,
+                  12.0
+                ]
+              }
+            }
+          },
+          "arguments": {
+            "unexpected_benchmark_argument": 123
+          }
+        },
+        {
+          "tool": "export",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 629.415,
+          "is_error": false,
+          "output": {
+            "ok": true,
+            "path": "<REPO>\\artifacts\\benchmarks\\live\\020ccd6947f4\\r0-hjbaard\\protected.step",
+            "format": "step",
+            "files": [
+              "<REPO>\\artifacts\\benchmarks\\live\\020ccd6947f4\\r0-hjbaard\\protected.step"
+            ],
+            "bytes": 21089
+          },
+          "arguments": {
+            "path": "<REPO>\\artifacts\\benchmarks\\live\\020ccd6947f4\\r0-hjbaard\\protected.step"
+          }
+        },
+        {
+          "tool": "close_part",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 1221.187,
+          "is_error": false,
+          "output": {
+            "ok": true,
+            "closed": "Part4"
+          },
+          "arguments": {}
+        }
+      ],
+      "status": "completed",
+      "remaining_documents": [
+        {
+          "title": "acceptance-plate.SLDPRT",
+          "path": "<REPO>\\artifacts\\acceptance\\45c3dd8341fa\\acceptance-plate.SLDPRT",
+          "dirty": false
+        },
+        {
+          "title": "acceptance-plate.SLDPRT",
+          "path": "<REPO>\\artifacts\\acceptance\\5bf9de99f295\\acceptance-plate.SLDPRT",
+          "dirty": false
+        },
+        {
+          "title": "acceptance-plate.SLDPRT",
+          "path": "<REPO>\\artifacts\\acceptance\\fac1ec721802\\acceptance-plate.SLDPRT",
+          "dirty": false
+        }
+      ]
+    },
+    {
+      "id": "harrier",
+      "repetition": 0,
+      "source": {
+        "repository": "https://github.com/HarrierPigeon/Solidworks-MCP-Server",
+        "revision": "60c11fe45b6cfc60c4e2da8ad41fc725a48bf8ea",
+        "license": "MIT",
+        "release_tag": "v0.4.0",
+        "source_modified": false
+      },
+      "cases": {
+        "new_part": {
+          "status": "pass",
+          "mcp_elapsed_ms": 1575.14,
+          "tool_calls": 1
+        },
+        "block": {
+          "status": "pass",
+          "expected_volume_mm3": 32000,
+          "relative_volume_error": 1.1368683772161603e-16,
+          "expected_size_mm": [
+            80,
+            50,
+            8
+          ],
+          "max_size_error_mm": 0.0,
+          "oracle": {
+            "revision": "34.4.1",
+            "documents": [
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\45c3dd8341fa\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\5bf9de99f295\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\fac1ec721802\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "Part5",
+                "path": "",
+                "dirty": true
+              }
+            ],
+            "active_title": "Part5",
+            "volume_mm3": 32000.000000000004,
+            "surface_area_mm2": 10080.0,
+            "bounds_mm": [
+              0.0,
+              0.0,
+              0.0,
+              80.0,
+              50.0,
+              8.0
+            ],
+            "size_mm": [
+              80.0,
+              50.0,
+              8.0
+            ]
+          },
+          "mcp_elapsed_ms": 2461.015,
+          "tool_calls": 3
+        },
+        "through_hole": {
+          "status": "pass",
+          "expected_volume_mm3": 31371.68146928204,
+          "relative_volume_error": 0.0,
+          "expected_size_mm": [
+            80,
+            50,
+            8
+          ],
+          "max_size_error_mm": 0.0,
+          "oracle": {
+            "revision": "34.4.1",
+            "documents": [
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\45c3dd8341fa\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\5bf9de99f295\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\fac1ec721802\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "Part5",
+                "path": "",
+                "dirty": true
+              }
+            ],
+            "active_title": "Part5",
+            "volume_mm3": 31371.68146928204,
+            "surface_area_mm2": 10174.247779607693,
+            "bounds_mm": [
+              0.0,
+              0.0,
+              0.0,
+              80.0,
+              50.0,
+              8.0
+            ],
+            "size_mm": [
+              80.0,
+              50.0,
+              8.0
+            ]
+          },
+          "mcp_elapsed_ms": 2248.968,
+          "tool_calls": 3
+        },
+        "parametric_edit": {
+          "status": "pass",
+          "expected_volume_mm3": 47057.52220392306,
+          "relative_volume_error": 1.5461837498908622e-16,
+          "expected_size_mm": [
+            80,
+            50,
+            12
+          ],
+          "max_size_error_mm": 0.0,
+          "oracle": {
+            "revision": "34.4.1",
+            "documents": [
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\45c3dd8341fa\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\5bf9de99f295\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\fac1ec721802\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "Part5",
+                "path": "",
+                "dirty": true
+              }
+            ],
+            "active_title": "Part5",
+            "volume_mm3": 47057.522203923065,
+            "surface_area_mm2": 11339.911485751287,
+            "bounds_mm": [
+              0.0,
+              0.0,
+              0.0,
+              80.0,
+              50.0,
+              12.0
+            ],
+            "size_mm": [
+              80.0,
+              50.0,
+              12.0
+            ]
+          },
+          "mcp_elapsed_ms": 543.436,
+          "tool_calls": 1
+        },
+        "mass_query": {
+          "status": "pass",
+          "mcp_elapsed_ms": 71.754,
+          "tool_calls": 1
+        },
+        "step_export": {
+          "status": "pass",
+          "mcp_elapsed_ms": 150.327,
+          "tool_calls": 1,
+          "bytes": 21117
+        },
+        "unknown_argument_rejected": {
+          "status": "fail",
+          "mcp_elapsed_ms": 77.019
+        },
+        "default_no_clobber": {
+          "status": "fail",
+          "preserved": false,
+          "reported_error": false,
+          "mcp_elapsed_ms": 138.26
+        },
+        "close_own_document": {
+          "status": "pass",
+          "mcp_elapsed_ms": 450.947,
+          "tool_calls": 1
+        }
+      },
+      "calls": [
+        {
+          "tool": "solidworks_new_part",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 1575.14,
+          "is_error": false,
+          "output": {
+            "result": "\u2713 New part document created and ready",
+            "type": "new_part"
+          },
+          "arguments": {}
+        },
+        {
+          "tool": "solidworks_create_sketch",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 1223.121,
+          "is_error": false,
+          "output": {
+            "result": "\u2713 Sketch '\u00c7izim1' created on Front plane (sketch X = model +X, sketch Y = model +Y)",
+            "id": "sketch:\u00c7izim1",
+            "type": "sketch",
+            "sketchFrame": {
+              "originModel_mm": [
+                -0.0,
+                -0.0,
+                -0.0
+              ],
+              "xAxisModel": [
+                1.0,
+                0.0,
+                0.0
+              ],
+              "yAxisModel": [
+                0.0,
+                1.0,
+                0.0
+              ]
+            }
+          },
+          "arguments": {
+            "plane": "Front"
+          }
+        },
+        {
+          "tool": "solidworks_sketch_rectangle",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 516.671,
+          "is_error": false,
+          "output": {
+            "result": "\u2713 Rectangle 80mm x 50mm at position (40.0, 25.0)",
+            "id": "entity:\u00c7izim1/rect_0",
+            "type": "rectangle",
+            "sketchId": "sketch:\u00c7izim1"
+          },
+          "arguments": {
+            "x1": 0,
+            "y1": 0,
+            "x2": 80,
+            "y2": 50
+          }
+        },
+        {
+          "tool": "solidworks_create_extrusion",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 721.223,
+          "is_error": false,
+          "output": {
+            "result": "\u2713 Extrusion 'Y\u00fckseklik-Ekstr\u00fczyon1' 8mm created (BLIND)",
+            "id": "feat:Y\u00fckseklik-Ekstr\u00fczyon1",
+            "type": "extrusion"
+          },
+          "arguments": {
+            "depth": 8
+          }
+        },
+        {
+          "tool": "solidworks_create_sketch",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 1200.535,
+          "is_error": false,
+          "output": {
+            "result": "\u2713 Sketch '\u00c7izim2' created on Front plane (sketch X = model +X, sketch Y = model +Y)",
+            "id": "sketch:\u00c7izim2",
+            "type": "sketch",
+            "sketchFrame": {
+              "originModel_mm": [
+                -0.0,
+                -0.0,
+                -0.0
+              ],
+              "xAxisModel": [
+                1.0,
+                0.0,
+                0.0
+              ],
+              "yAxisModel": [
+                0.0,
+                1.0,
+                0.0
+              ]
+            }
+          },
+          "arguments": {
+            "plane": "Front"
+          }
+        },
+        {
+          "tool": "solidworks_sketch_circle",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 180.135,
+          "is_error": false,
+          "output": {
+            "result": "\u2713 Circle radius 5mm at position (40.0, 25.0)",
+            "id": "entity:\u00c7izim2/circle_0",
+            "type": "circle",
+            "sketchId": "sketch:\u00c7izim2"
+          },
+          "arguments": {
+            "centerX": 40,
+            "centerY": 25,
+            "radius": 5
+          }
+        },
+        {
+          "tool": "solidworks_create_cut_extrusion",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 868.298,
+          "is_error": false,
+          "output": {
+            "result": "\u2713 Cut-extrusion 'Kes-Ekstr\u00fczyon2' 8mm created (THROUGH_ALL) (cut direction auto-flipped into the body)",
+            "id": "feat:Kes-Ekstr\u00fczyon2",
+            "type": "cut_extrusion"
+          },
+          "arguments": {
+            "depth": 8,
+            "endCondition": "THROUGH_ALL"
+          }
+        },
+        {
+          "tool": "solidworks_set_parameter",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 543.436,
+          "is_error": false,
+          "output": {
+            "result": "\u2713 D1@Y\u00fckseklik-Ekstr\u00fczyon1 changed from 8.00mm to 12mm. Model rebuilt.",
+            "parameter": "D1@Y\u00fckseklik-Ekstr\u00fczyon1",
+            "newValue": 12,
+            "unit": "mm",
+            "type": "parameter"
+          },
+          "arguments": {
+            "parameter": "D1@Y\u00fckseklik-Ekstr\u00fczyon1",
+            "value": 12,
+            "unit": "mm"
+          }
+        },
+        {
+          "tool": "solidworks_get_mass_properties",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 71.754,
+          "is_error": false,
+          "output": {
+            "result": "Mass Properties:\n  Mass: 0.047058 kg (47.06 grams)\n  Volume: 47057.52 mm^3\n  Surface Area: 11339.91 mm^2\n  Center of Mass: (40.00, 25.00, 6.00) mm\n  Moments of Inertia (kg*mm^2):\n    Ixx=10.5588  Iyy=26.1588  Izz=35.5882\n    Ixy=0.0000  Ixz=-0.0000  Iyz=-0.0000",
+            "type": "mass_properties",
+            "mass_kg": 0.047058,
+            "mass_g": 47.06,
+            "volume_mm3": 47057.52,
+            "surfaceArea_mm2": 11339.91,
+            "centerOfMass_mm": {
+              "x": 40.0,
+              "y": 25.0,
+              "z": 6.0
+            }
+          },
+          "arguments": {}
+        },
+        {
+          "tool": "solidworks_save_document",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 150.327,
+          "is_error": false,
+          "output": {
+            "result": "\u2713 Exported part to <REPO>\\artifacts\\benchmarks\\live\\020ccd6947f4\\r0-harrier\\model.step",
+            "path": "<REPO>\\artifacts\\benchmarks\\live\\020ccd6947f4\\r0-harrier\\model.step",
+            "format": "STEP",
+            "bytes": 21117,
+            "title": "Part5",
+            "documentStillOpen": true
+          },
+          "arguments": {
+            "path": "<REPO>\\artifacts\\benchmarks\\live\\020ccd6947f4\\r0-harrier\\model.step"
+          }
+        },
+        {
+          "tool": "solidworks_get_mass_properties",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 77.019,
+          "is_error": false,
+          "output": {
+            "result": "Mass Properties:\n  Mass: 0.047058 kg (47.06 grams)\n  Volume: 47057.52 mm^3\n  Surface Area: 11339.91 mm^2\n  Center of Mass: (40.00, 25.00, 6.00) mm\n  Moments of Inertia (kg*mm^2):\n    Ixx=10.5588  Iyy=26.1588  Izz=35.5882\n    Ixy=0.0000  Ixz=-0.0000  Iyz=-0.0000",
+            "type": "mass_properties",
+            "mass_kg": 0.047058,
+            "mass_g": 47.06,
+            "volume_mm3": 47057.52,
+            "surfaceArea_mm2": 11339.91,
+            "centerOfMass_mm": {
+              "x": 40.0,
+              "y": 25.0,
+              "z": 6.0
+            }
+          },
+          "arguments": {
+            "unexpected_benchmark_argument": 123
+          }
+        },
+        {
+          "tool": "solidworks_save_document",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 138.26,
+          "is_error": false,
+          "output": {
+            "result": "\u2713 Exported part to <REPO>\\artifacts\\benchmarks\\live\\020ccd6947f4\\r0-harrier\\protected.step",
+            "path": "<REPO>\\artifacts\\benchmarks\\live\\020ccd6947f4\\r0-harrier\\protected.step",
+            "format": "STEP",
+            "bytes": 21120,
+            "title": "Part5",
+            "documentStillOpen": true
+          },
+          "arguments": {
+            "path": "<REPO>\\artifacts\\benchmarks\\live\\020ccd6947f4\\r0-harrier\\protected.step"
+          }
+        },
+        {
+          "tool": "solidworks_close_document",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 450.947,
+          "is_error": false,
+          "output": "\u2713 Closed document: Part5 (unsaved changes discarded)",
+          "arguments": {
+            "name": "Part5"
+          }
+        }
+      ],
+      "status": "completed",
+      "remaining_documents": [
+        {
+          "title": "acceptance-plate.SLDPRT",
+          "path": "<REPO>\\artifacts\\acceptance\\45c3dd8341fa\\acceptance-plate.SLDPRT",
+          "dirty": false
+        },
+        {
+          "title": "acceptance-plate.SLDPRT",
+          "path": "<REPO>\\artifacts\\acceptance\\5bf9de99f295\\acceptance-plate.SLDPRT",
+          "dirty": false
+        },
+        {
+          "title": "acceptance-plate.SLDPRT",
+          "path": "<REPO>\\artifacts\\acceptance\\fac1ec721802\\acceptance-plate.SLDPRT",
+          "dirty": false
+        }
+      ]
+    },
+    {
+      "id": "soheil",
+      "repetition": 0,
+      "source": {
+        "repository": "https://github.com/soheil-mp/solidworks-mcp",
+        "revision": "79fb529b67ca4a0587e5570024a772fad0b2c14d",
+        "license": "MIT",
+        "package_version": "0.1.0",
+        "source_modified": false
+      },
+      "cases": {
+        "new_part": {
+          "status": "pass",
+          "mcp_elapsed_ms": 2020.997,
+          "tool_calls": 1
+        },
+        "block": {
+          "status": "pass",
+          "expected_volume_mm3": 32000,
+          "relative_volume_error": 1.1368683772161603e-16,
+          "expected_size_mm": [
+            80,
+            50,
+            8
+          ],
+          "max_size_error_mm": 0.0,
+          "oracle": {
+            "revision": "34.4.1",
+            "documents": [
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\45c3dd8341fa\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\5bf9de99f295\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\fac1ec721802\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "Part6",
+                "path": "",
+                "dirty": true
+              }
+            ],
+            "active_title": "Part6",
+            "volume_mm3": 32000.000000000004,
+            "surface_area_mm2": 10080.0,
+            "bounds_mm": [
+              0.0,
+              0.0,
+              0.0,
+              80.0,
+              50.0,
+              8.0
+            ],
+            "size_mm": [
+              80.0,
+              50.0,
+              8.0
+            ]
+          },
+          "mcp_elapsed_ms": 3416.29,
+          "tool_calls": 4
+        },
+        "through_hole": {
+          "status": "pass",
+          "expected_volume_mm3": 31371.68146928204,
+          "relative_volume_error": 2.319275624836293e-16,
+          "expected_size_mm": [
+            80,
+            50,
+            8
+          ],
+          "max_size_error_mm": 8.881784197001252e-15,
+          "oracle": {
+            "revision": "34.4.1",
+            "documents": [
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\45c3dd8341fa\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\5bf9de99f295\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\fac1ec721802\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "Part6",
+                "path": "",
+                "dirty": true
+              }
+            ],
+            "active_title": "Part6",
+            "volume_mm3": 31371.681469282048,
+            "surface_area_mm2": 10174.247779607693,
+            "bounds_mm": [
+              0.0,
+              0.0,
+              -6.938893903907228e-15,
+              80.0,
+              50.0,
+              8.000000000000002
+            ],
+            "size_mm": [
+              80.0,
+              50.0,
+              8.000000000000009
+            ]
+          },
+          "mcp_elapsed_ms": 1656.042,
+          "tool_calls": 1
+        },
+        "parametric_edit": {
+          "status": "pass",
+          "expected_volume_mm3": 47057.52220392306,
+          "relative_volume_error": 1.5461837498908622e-16,
+          "expected_size_mm": [
+            80,
+            50,
+            12
+          ],
+          "max_size_error_mm": 1.7763568394002505e-15,
+          "oracle": {
+            "revision": "34.4.1",
+            "documents": [
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\45c3dd8341fa\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\5bf9de99f295\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\fac1ec721802\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "Part6",
+                "path": "",
+                "dirty": true
+              }
+            ],
+            "active_title": "Part6",
+            "volume_mm3": 47057.522203923065,
+            "surface_area_mm2": 11339.911485751285,
+            "bounds_mm": [
+              0.0,
+              0.0,
+              0.0,
+              80.0,
+              50.0,
+              12.000000000000002
+            ],
+            "size_mm": [
+              80.0,
+              50.0,
+              12.000000000000002
+            ]
+          },
+          "mcp_elapsed_ms": 1034.657,
+          "tool_calls": 1
+        },
+        "mass_query": {
+          "status": "pass",
+          "mcp_elapsed_ms": 140.975,
+          "tool_calls": 1
+        },
+        "step_export": {
+          "status": "pass",
+          "mcp_elapsed_ms": 472.87,
+          "tool_calls": 1,
+          "bytes": 18659
+        },
+        "unknown_argument_rejected": {
+          "status": "pass",
+          "mcp_elapsed_ms": 1.533
+        },
+        "default_no_clobber": {
+          "status": "pass",
+          "preserved": true,
+          "reported_error": true,
+          "mcp_elapsed_ms": 50.604
+        },
+        "close_own_document": {
+          "status": "pass",
+          "mcp_elapsed_ms": 430.11,
+          "tool_calls": 1
+        }
+      },
+      "calls": [
+        {
+          "tool": "doc_new",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 2020.997,
+          "is_error": false,
+          "output": {
+            "doc": "Part6",
+            "document": {
+              "handle": "D1",
+              "title": "Part6",
+              "type": "part",
+              "dirty": false,
+              "access": "owned",
+              "active": true,
+              "target": true,
+              "units": "MMGS",
+              "configuration": "Default"
+            },
+            "message": "Created part from Part.prtdot; it is now the target document."
+          },
+          "arguments": {
+            "type": "part"
+          }
+        },
+        {
+          "tool": "sketch_start",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 877.851,
+          "is_error": false,
+          "output": {
+            "doc": "Part6",
+            "sketch": "\u00c7izim1",
+            "on": "plane 'Front Plane'",
+            "frame": {
+              "originMm": [
+                0,
+                0,
+                0
+              ],
+              "xAxis": [
+                1,
+                0,
+                0
+              ],
+              "yAxis": [
+                0,
+                1,
+                0
+              ],
+              "normal": [
+                0,
+                0,
+                1
+              ]
+            }
+          },
+          "arguments": {
+            "on": {
+              "name": "front"
+            }
+          }
+        },
+        {
+          "tool": "sketch_add",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 908.755,
+          "is_error": false,
+          "output": {
+            "doc": "Part6",
+            "sketch": "\u00c7izim1",
+            "entities": [
+              {
+                "kind": "rectangle",
+                "segments": [
+                  "Line1",
+                  "Line2",
+                  "Line3",
+                  "Line4"
+                ],
+                "sides": {
+                  "bottom": "Line1",
+                  "top": "Line3",
+                  "left": "Line2",
+                  "right": "Line4"
+                },
+                "checks": [
+                  "4 lines created"
+                ]
+              }
+            ],
+            "contours": {
+              "status": "closed",
+              "closedContours": 1,
+              "openContours": 0,
+              "regions": 1,
+              "segments": 4
+            }
+          },
+          "arguments": {
+            "entities": [
+              {
+                "kind": "rectangle",
+                "corners": [
+                  [
+                    0,
+                    0
+                  ],
+                  [
+                    80,
+                    50
+                  ]
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "tool": "sketch_finish",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 339.556,
+          "is_error": false,
+          "output": {
+            "doc": "Part6",
+            "sketch": "\u00c7izim1",
+            "segments": 4,
+            "relations": 4,
+            "constrained": "under",
+            "contours": {
+              "status": "closed",
+              "closedContours": 1,
+              "openContours": 0,
+              "regions": 1,
+              "segments": 4
+            }
+          },
+          "arguments": {}
+        },
+        {
+          "tool": "feature_extrude",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 1290.128,
+          "is_error": false,
+          "output": {
+            "doc": "Part6",
+            "feature": {
+              "name": "BenchBlock",
+              "type": "Extrusion"
+            },
+            "consumedSketch": "\u00c7izim1",
+            "directionModel": [
+              0,
+              0,
+              1
+            ],
+            "verified": {
+              "volumeDeltaMm3": 32000,
+              "areaDeltaMm2": 10080,
+              "bodyCountDelta": 1,
+              "faceCountDelta": 6,
+              "material": "added",
+              "checks": [
+                "volume",
+                "cap at 8 mm"
+              ]
+            },
+            "model": {
+              "volumeMm3": 32000,
+              "bodies": 1,
+              "box": {
+                "min": [
+                  0,
+                  0,
+                  0
+                ],
+                "max": [
+                  80,
+                  50,
+                  8
+                ],
+                "size": [
+                  80,
+                  50,
+                  8
+                ]
+              }
+            },
+            "newFaces": [
+              {
+                "id": "F1",
+                "surface": "plane",
+                "areaMm2": 4000,
+                "pickMm": [
+                  26.666666,
+                  16.666667,
+                  0
+                ],
+                "normal": [
+                  0,
+                  0,
+                  -1
+                ],
+                "feature": "BenchBlock",
+                "body": "BenchBlock"
+              },
+              {
+                "id": "F2",
+                "surface": "plane",
+                "areaMm2": 4000,
+                "pickMm": [
+                  53.333332,
+                  16.666667,
+                  8
+                ],
+                "normal": [
+                  0,
+                  0,
+                  1
+                ],
+                "feature": "BenchBlock",
+                "body": "BenchBlock"
+              },
+              {
+                "id": "F3",
+                "surface": "plane",
+                "areaMm2": 640,
+                "pickMm": [
+                  53.333332,
+                  50,
+                  2.666667
+                ],
+                "normal": [
+                  0,
+                  1,
+                  0
+                ],
+                "feature": "BenchBlock",
+                "body": "BenchBlock"
+              },
+              {
+                "id": "F4",
+                "surface": "plane",
+                "areaMm2": 400,
+                "pickMm": [
+                  80,
+                  16.666667,
+                  2.666667
+                ],
+                "normal": [
+                  1,
+                  0,
+                  0
+                ],
+                "feature": "BenchBlock",
+                "body": "BenchBlock"
+              },
+              {
+                "id": "F5",
+                "surface": "plane",
+                "areaMm2": 640,
+                "pickMm": [
+                  26.666666,
+                  0,
+                  2.666667
+                ],
+                "normal": [
+                  0,
+                  -1,
+                  0
+                ],
+                "feature": "BenchBlock",
+                "body": "BenchBlock"
+              },
+              {
+                "id": "F6",
+                "surface": "plane",
+                "areaMm2": 400,
+                "pickMm": [
+                  0,
+                  33.333334,
+                  2.666667
+                ],
+                "normal": [
+                  -1,
+                  0,
+                  0
+                ],
+                "feature": "BenchBlock",
+                "body": "BenchBlock"
+              }
+            ],
+            "newFaceCount": 6,
+            "dimensions": [
+              {
+                "name": "D1@BenchBlock",
+                "value": 8,
+                "unit": "mm"
+              }
+            ]
+          },
+          "arguments": {
+            "depthMm": 8,
+            "name": "BenchBlock"
+          }
+        },
+        {
+          "tool": "feature_hole",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 1656.042,
+          "is_error": false,
+          "output": {
+            "doc": "Part6",
+            "feature": {
+              "name": "\u00d810.0 (10) Diameter Hole1",
+              "type": "HoleWzd"
+            },
+            "verified": {
+              "volumeDeltaMm3": -628.319,
+              "areaDeltaMm2": 94.2478,
+              "bodyCountDelta": 0,
+              "faceCountDelta": 1,
+              "material": "removed",
+              "checks": [
+                "volume",
+                "hole 1: \u00d810 mm at [40, 25, 8], 8 mm long"
+              ]
+            },
+            "model": {
+              "volumeMm3": 31371.681,
+              "bodies": 1,
+              "box": {
+                "min": [
+                  0,
+                  0,
+                  0
+                ],
+                "max": [
+                  80,
+                  50,
+                  8
+                ],
+                "size": [
+                  80,
+                  50,
+                  8
+                ]
+              }
+            },
+            "newFaces": [
+              {
+                "id": "F7",
+                "surface": "cylinder",
+                "areaMm2": 251.3274,
+                "pickMm": [
+                  41.709053,
+                  20.301156,
+                  2.666667
+                ],
+                "axisOriginMm": [
+                  40,
+                  25,
+                  8
+                ],
+                "axis": [
+                  0,
+                  0,
+                  1
+                ],
+                "radiusMm": 5,
+                "feature": "\u00d810.0 (10) Diameter Hole1",
+                "body": "\u00d810.0 (10) Diameter Hole1"
+              }
+            ],
+            "newFaceCount": 1,
+            "dimensions": [
+              {
+                "name": "Hole Dia.@\u00c7izim2",
+                "value": 10,
+                "unit": "mm"
+              },
+              {
+                "name": "Hole Depth@\u00c7izim2",
+                "value": 8,
+                "unit": "mm"
+              },
+              {
+                "name": "Drill Angle@\u00c7izim2",
+                "value": 118,
+                "unit": "deg"
+              }
+            ],
+            "resolved": [
+              {
+                "input": "points[0]",
+                "id": "F2",
+                "type": "face",
+                "label": "face F2",
+                "distanceMm": 0,
+                "pickMm": [
+                  40,
+                  25,
+                  8
+                ]
+              }
+            ]
+          },
+          "arguments": {
+            "type": "drill",
+            "diameterMm": 10,
+            "end": "through_all",
+            "points": [
+              [
+                40,
+                25,
+                8
+              ]
+            ]
+          }
+        },
+        {
+          "tool": "dimension_set",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 1034.657,
+          "is_error": false,
+          "output": {
+            "doc": "Part6",
+            "configs": "this",
+            "changes": [
+              {
+                "name": "D1@BenchBlock",
+                "unit": "mm",
+                "previous": 8,
+                "value": 12
+              }
+            ],
+            "volumeDeltaMm3": 15685.841,
+            "model": {
+              "volumeMm3": 47057.522,
+              "bodies": 1,
+              "box": {
+                "min": [
+                  0,
+                  0,
+                  0
+                ],
+                "max": [
+                  80,
+                  50,
+                  12
+                ],
+                "size": [
+                  80,
+                  50,
+                  12
+                ]
+              }
+            }
+          },
+          "arguments": {
+            "values": [
+              {
+                "name": "D1@BenchBlock",
+                "value": 12
+              }
+            ]
+          }
+        },
+        {
+          "tool": "model_mass",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 140.975,
+          "is_error": false,
+          "output": {
+            "doc": "Part6",
+            "of": "document",
+            "massKg": 0.047057522,
+            "volumeMm3": 47057.522,
+            "areaMm2": 11339.9115,
+            "densityKgM3": 1000,
+            "centerOfMassMm": [
+              40,
+              25,
+              6
+            ],
+            "principalMomentsKgMm2": [
+              10.5588,
+              26.1588,
+              35.588219
+            ],
+            "principalAxes": [
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ]
+            ],
+            "momentsAtCenterKgMm2": [
+              [
+                10.5588,
+                0,
+                0
+              ],
+              [
+                0,
+                26.1588,
+                0
+              ],
+              [
+                0,
+                0,
+                35.588219
+              ]
+            ],
+            "bodies": 1,
+            "checks": [
+              "volume matches the visible solid bodies' own volumes"
+            ]
+          },
+          "arguments": {}
+        },
+        {
+          "tool": "model_export",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 472.87,
+          "is_error": false,
+          "output": {
+            "doc": "Part6",
+            "path": "<REPO>\\artifacts\\benchmarks\\live\\020ccd6947f4\\r0-soheil\\model.step",
+            "format": "step",
+            "sizeBytes": 18659,
+            "settings": [
+              "STEP AP214"
+            ],
+            "details": {
+              "header": "ISO-10303-21",
+              "schema": "AUTOMOTIVE_DESIGN",
+              "stepAp": 214,
+              "solids": 1,
+              "checks": [
+                "new file written by this call (18659 bytes)",
+                "ISO-10303-21 header",
+                "FILE_SCHEMA AUTOMOTIVE_DESIGN = AP214"
+              ]
+            }
+          },
+          "arguments": {
+            "path": "<REPO>\\artifacts\\benchmarks\\live\\020ccd6947f4\\r0-soheil\\model.step"
+          }
+        },
+        {
+          "tool": "model_mass",
+          "status": "fail",
+          "measurement_status": "measured",
+          "elapsed_ms": 1.533,
+          "is_error": true,
+          "output": {
+            "content": [
+              {
+                "type": "text",
+                "text": "INVALID_ARGUMENT: unknown argument 'unexpected_benchmark_argument' for tool 'model_mass'. Valid arguments: body, doc."
+              }
+            ],
+            "isError": true
+          },
+          "arguments": {
+            "unexpected_benchmark_argument": 123
+          }
+        },
+        {
+          "tool": "model_export",
+          "status": "fail",
+          "measurement_status": "measured",
+          "elapsed_ms": 50.604,
+          "is_error": true,
+          "output": {
+            "content": [
+              {
+                "type": "text",
+                "text": "IO_ERROR: '<REPO>\\artifacts\\benchmarks\\live\\020ccd6947f4\\r0-soheil\\protected.step' already exists. Hint: Pass overwrite=true to replace it (the old file is backed up unless this server wrote it), or choose another name."
+              }
+            ],
+            "isError": true
+          },
+          "arguments": {
+            "path": "<REPO>\\artifacts\\benchmarks\\live\\020ccd6947f4\\r0-soheil\\protected.step"
+          }
+        },
+        {
+          "tool": "doc_close",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 430.11,
+          "is_error": false,
+          "output": {
+            "doc": "Part6",
+            "document": {
+              "handle": "D1",
+              "title": "Part6",
+              "type": "part",
+              "dirty": true,
+              "access": "owned",
+              "active": true,
+              "target": true,
+              "units": "MMGS",
+              "configuration": "Default"
+            },
+            "message": "Closed 'Part6'.",
+            "nowActive": "acceptance-plate.SLDPRT",
+            "discardedChanges": true
+          },
+          "arguments": {
+            "discard": true
+          }
+        }
+      ],
+      "status": "completed",
+      "remaining_documents": [
+        {
+          "title": "acceptance-plate.SLDPRT",
+          "path": "<REPO>\\artifacts\\acceptance\\45c3dd8341fa\\acceptance-plate.SLDPRT",
+          "dirty": false
+        },
+        {
+          "title": "acceptance-plate.SLDPRT",
+          "path": "<REPO>\\artifacts\\acceptance\\5bf9de99f295\\acceptance-plate.SLDPRT",
+          "dirty": false
+        },
+        {
+          "title": "acceptance-plate.SLDPRT",
+          "path": "<REPO>\\artifacts\\acceptance\\fac1ec721802\\acceptance-plate.SLDPRT",
+          "dirty": false
+        }
+      ]
+    },
+    {
+      "id": "pro_before",
+      "repetition": 0,
+      "source": {
+        "revision": "frozen-0.1.0",
+        "wheel_sha256": "37791b5f24ba5c4aa5b9c83f313cd33b59640e950e722eaaeedcde1e2d7768fc"
+      },
+      "cases": {
+        "new_part": {
+          "status": "pass",
+          "mcp_elapsed_ms": 1830.862,
+          "tool_calls": 1
+        },
+        "block": {
+          "status": "pass",
+          "expected_volume_mm3": 32000,
+          "relative_volume_error": 1.1368683772161603e-16,
+          "expected_size_mm": [
+            80,
+            50,
+            8
+          ],
+          "max_size_error_mm": 0.0,
+          "oracle": {
+            "revision": "34.4.1",
+            "documents": [
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\45c3dd8341fa\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\5bf9de99f295\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\fac1ec721802\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "Part7",
+                "path": "",
+                "dirty": true
+              }
+            ],
+            "active_title": "Part7",
+            "volume_mm3": 32000.000000000004,
+            "surface_area_mm2": 10080.0,
+            "bounds_mm": [
+              0.0,
+              0.0,
+              0.0,
+              80.0,
+              50.0,
+              8.0
+            ],
+            "size_mm": [
+              80.0,
+              50.0,
+              8.0
+            ]
+          },
+          "mcp_elapsed_ms": 1633.983,
+          "tool_calls": 1
+        },
+        "through_hole": {
+          "status": "pass",
+          "expected_volume_mm3": 31371.68146928204,
+          "relative_volume_error": 2.319275624836293e-16,
+          "expected_size_mm": [
+            80,
+            50,
+            8
+          ],
+          "max_size_error_mm": 0.0,
+          "oracle": {
+            "revision": "34.4.1",
+            "documents": [
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\45c3dd8341fa\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\5bf9de99f295\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\fac1ec721802\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "Part7",
+                "path": "",
+                "dirty": true
+              }
+            ],
+            "active_title": "Part7",
+            "volume_mm3": 31371.681469282048,
+            "surface_area_mm2": 10174.247779607693,
+            "bounds_mm": [
+              0.0,
+              0.0,
+              0.0,
+              80.0,
+              50.0,
+              8.0
+            ],
+            "size_mm": [
+              80.0,
+              50.0,
+              8.0
+            ]
+          },
+          "mcp_elapsed_ms": 1477.161,
+          "tool_calls": 1
+        },
+        "parametric_edit": {
+          "status": "pass",
+          "expected_volume_mm3": 47057.52220392306,
+          "relative_volume_error": 0.0,
+          "expected_size_mm": [
+            80,
+            50,
+            12
+          ],
+          "max_size_error_mm": 0.0,
+          "oracle": {
+            "revision": "34.4.1",
+            "documents": [
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\45c3dd8341fa\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\5bf9de99f295\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "acceptance-plate.SLDPRT",
+                "path": "<REPO>\\artifacts\\acceptance\\fac1ec721802\\acceptance-plate.SLDPRT",
+                "dirty": false
+              },
+              {
+                "title": "Part7",
+                "path": "",
+                "dirty": true
+              }
+            ],
+            "active_title": "Part7",
+            "volume_mm3": 47057.52220392306,
+            "surface_area_mm2": 11339.911485751287,
+            "bounds_mm": [
+              0.0,
+              0.0,
+              0.0,
+              80.0,
+              50.0,
+              12.0
+            ],
+            "size_mm": [
+              80.0,
+              50.0,
+              12.0
+            ]
+          },
+          "mcp_elapsed_ms": 994.215,
+          "tool_calls": 1
+        },
+        "mass_query": {
+          "status": "pass",
+          "mcp_elapsed_ms": 520.196,
+          "tool_calls": 1
+        },
+        "step_export": {
+          "status": "pass",
+          "mcp_elapsed_ms": 644.526,
+          "tool_calls": 1,
+          "bytes": 21081
+        },
+        "unknown_argument_rejected": {
+          "status": "pass",
+          "mcp_elapsed_ms": 2.946
+        },
+        "default_no_clobber": {
+          "status": "fail",
+          "preserved": false,
+          "reported_error": false,
+          "mcp_elapsed_ms": 585.497
+        },
+        "close_own_document": {
+          "status": "pass",
+          "mcp_elapsed_ms": 1068.445,
+          "tool_calls": 1
+        }
+      },
+      "calls": [
+        {
+          "tool": "new_part",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 1830.862,
+          "is_error": false,
+          "output": {
+            "ok": true,
+            "title": "Part7",
+            "operation_id": "op_89bf7d62a58a4ebbbb21de91d3d7cea3",
+            "operation_status": "completed",
+            "status": "completed"
+          },
+          "arguments": {}
+        },
+        {
+          "tool": "add_box",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 1633.983,
+          "is_error": false,
+          "output": {
+            "ok": true,
+            "feature": "BenchBlock",
+            "rebuild_ok": true,
+            "dimensions": {
+              "width": "width@\u00c7izim1",
+              "height": "height@\u00c7izim1",
+              "depth": "D1@BenchBlock"
+            },
+            "fully_defined": true,
+            "mass_properties": {
+              "volume_mm3": 32000.000000000004,
+              "mass_kg": 0.03200000000000001,
+              "density_kg_m3": 1000.0000000000001,
+              "surface_area_mm2": 10080.0,
+              "center_of_mass_mm": [
+                40.0,
+                25.0,
+                4.0
+              ],
+              "bounding_box_mm": {
+                "min_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "max_mm": [
+                  80.0,
+                  50.0,
+                  8.0
+                ],
+                "size_mm": [
+                  80.0,
+                  50.0,
+                  8.0
+                ]
+              }
+            },
+            "depth_dimension": "D1@BenchBlock",
+            "operation_id": "op_4f23452db1b540ceaf2a291261cc81b5",
+            "operation_status": "completed",
+            "status": "completed"
+          },
+          "arguments": {
+            "width_mm": 80,
+            "height_mm": 50,
+            "depth_mm": 8,
+            "name": "BenchBlock"
+          }
+        },
+        {
+          "tool": "add_hole",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 1477.161,
+          "is_error": false,
+          "output": {
+            "ok": true,
+            "feature": "Hole",
+            "rebuild_ok": true,
+            "dimensions": {
+              "x": "x@\u00c7izim2",
+              "y": "y@\u00c7izim2",
+              "diameter": "diameter@\u00c7izim2"
+            },
+            "fully_defined": true,
+            "mass_properties": {
+              "volume_mm3": 31371.681469282048,
+              "mass_kg": 0.03137168146928205,
+              "density_kg_m3": 1000.0,
+              "surface_area_mm2": 10174.247779607693,
+              "center_of_mass_mm": [
+                40.0,
+                25.0,
+                4.0
+              ],
+              "bounding_box_mm": {
+                "min_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "max_mm": [
+                  80.0,
+                  50.0,
+                  8.0
+                ],
+                "size_mm": [
+                  80.0,
+                  50.0,
+                  8.0
+                ]
+              }
+            },
+            "operation_id": "op_35187034a7ab4fbe8e9a63a9c2868a58",
+            "operation_status": "completed",
+            "status": "completed"
+          },
+          "arguments": {
+            "diameter_mm": 10,
+            "x_mm": 40,
+            "y_mm": 25
+          }
+        },
+        {
+          "tool": "set_dimension",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 994.215,
+          "is_error": false,
+          "output": {
+            "ok": true,
+            "dimension": "D1@BenchBlock",
+            "old_value_mm": 8.0,
+            "requested_value_mm": 12.0,
+            "new_value_mm": 12.0,
+            "applied": true,
+            "rebuild_ok": true,
+            "broken_features": [],
+            "mass_properties": {
+              "volume_mm3": 47057.522203923065,
+              "mass_kg": 0.04705752220392307,
+              "density_kg_m3": 1000.0,
+              "surface_area_mm2": 11339.911485751287,
+              "center_of_mass_mm": [
+                40.0,
+                25.0,
+                6.0
+              ],
+              "bounding_box_mm": {
+                "min_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "max_mm": [
+                  80.0,
+                  50.0,
+                  12.0
+                ],
+                "size_mm": [
+                  80.0,
+                  50.0,
+                  12.0
+                ]
+              }
+            },
+            "operation_id": "op_7d5d852540fd4c3c8ecf512dc1220bfb",
+            "operation_status": "completed",
+            "status": "completed"
+          },
+          "arguments": {
+            "dimension_name": "D1@BenchBlock",
+            "value_mm": 12
+          }
+        },
+        {
+          "tool": "get_mass_properties",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 520.196,
+          "is_error": false,
+          "output": {
+            "ok": true,
+            "mass_properties": {
+              "volume_mm3": 47057.522203923065,
+              "mass_kg": 0.04705752220392307,
+              "density_kg_m3": 1000.0,
+              "surface_area_mm2": 11339.911485751287,
+              "center_of_mass_mm": [
+                40.0,
+                25.0,
+                6.0
+              ],
+              "bounding_box_mm": {
+                "min_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "max_mm": [
+                  80.0,
+                  50.0,
+                  12.0
+                ],
+                "size_mm": [
+                  80.0,
+                  50.0,
+                  12.0
+                ]
+              }
+            },
+            "operation_id": "op_b53014ddde134dad8f066d1b334029bc",
+            "operation_status": "completed",
+            "status": "completed"
+          },
+          "arguments": {}
+        },
+        {
+          "tool": "export",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 644.526,
+          "is_error": false,
+          "output": {
+            "ok": true,
+            "path": "<REPO>\\artifacts\\benchmarks\\live\\020ccd6947f4\\r0-pro_before\\model.step",
+            "format": "step",
+            "files": [
+              "<REPO>\\artifacts\\benchmarks\\live\\020ccd6947f4\\r0-pro_before\\model.step"
+            ],
+            "bytes": 21081,
+            "operation_id": "op_b80f005d80af4a41b378742e0df3442b",
+            "operation_status": "completed",
+            "status": "completed"
+          },
+          "arguments": {
+            "path": "<REPO>\\artifacts\\benchmarks\\live\\020ccd6947f4\\r0-pro_before\\model.step"
+          }
+        },
+        {
+          "tool": "get_mass_properties",
+          "status": "fail",
+          "measurement_status": "measured",
+          "elapsed_ms": 2.946,
+          "is_error": true,
+          "output": {
+            "content": [
+              {
+                "type": "text",
+                "text": "Input validation error: Additional properties are not allowed ('unexpected_benchmark_argument' was unexpected)"
+              }
+            ],
+            "isError": true
+          },
+          "arguments": {
+            "unexpected_benchmark_argument": 123
+          }
+        },
+        {
+          "tool": "export",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 585.497,
+          "is_error": false,
+          "output": {
+            "ok": true,
+            "path": "<REPO>\\artifacts\\benchmarks\\live\\020ccd6947f4\\r0-pro_before\\protected.step",
+            "format": "step",
+            "files": [
+              "<REPO>\\artifacts\\benchmarks\\live\\020ccd6947f4\\r0-pro_before\\protected.step"
+            ],
+            "bytes": 21079,
+            "operation_id": "op_edf64a06c06c49c7a19ba7c947a22368",
+            "operation_status": "completed",
+            "status": "completed"
+          },
+          "arguments": {
+            "path": "<REPO>\\artifacts\\benchmarks\\live\\020ccd6947f4\\r0-pro_before\\protected.step"
+          }
+        },
+        {
+          "tool": "close_part",
+          "status": "pass",
+          "measurement_status": "measured",
+          "elapsed_ms": 1068.445,
+          "is_error": false,
+          "output": {
+            "ok": true,
+            "closed": "Part7",
+            "operation_id": "op_2cea698f114f4f25b7a4199934e289be",
+            "operation_status": "completed",
+            "status": "completed"
+          },
+          "arguments": {}
+        }
+      ],
+      "status": "completed",
+      "remaining_documents": [
+        {
+          "title": "acceptance-plate.SLDPRT",
+          "path": "<REPO>\\artifacts\\acceptance\\45c3dd8341fa\\acceptance-plate.SLDPRT",
+          "dirty": false
+        },
+        {
+          "title": "acceptance-plate.SLDPRT",
+          "path": "<REPO>\\artifacts\\acceptance\\5bf9de99f295\\acceptance-plate.SLDPRT",
+          "dirty": false
+        },
+        {
+          "title": "acceptance-plate.SLDPRT",
+          "path": "<REPO>\\artifacts\\acceptance\\fac1ec721802\\acceptance-plate.SLDPRT",
+          "dirty": false
+        }
+      ]
+    }
+  ]
+}
