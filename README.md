@@ -4,7 +4,7 @@
 
 **An independent CAD automation engine. Verified geometry. Native product renders.**
 
-[![Version](https://img.shields.io/badge/version-v0.7.0-14b8a6)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/release-v0.7.0-14b8a6)](https://github.com/U-C4N/Solidworks-MCP-PRO/releases/tag/v0.7.0)
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](pyproject.toml)
 [![Platform](https://img.shields.io/badge/native_CAD-Windows-0078D4)](#requirements)
 [![Engine](https://img.shields.io/badge/CAD_tools-88_independent-22c55e)](docs/native-engine.md)
@@ -47,11 +47,11 @@ A local **Model Context Protocol (MCP) server** that connects an AI assistant to
 
 ### Real output, from a real acceptance run
 
-![Native SOLIDWORKS Visualize product shots in three aspect ratios](docs/assets/product-shot-pack.png)
+![Native SOLIDWORKS Visualize product shots in three aspect ratios](docs/assets/product-shot-pack-v0.7.0.png)
 
 <p align="center"><sub>A newly generated test plate, rendered locally through the explicit project-camera route. These are native render outputs, not AI-generated product images.</sub></p>
 
-The acceptance fixture also verified a **40 mm component clearance**, three independently generated thickness variants, and restoration of the original camera and active document. [Read the evidence and scope](docs/validation-v0.6.0.md).
+The acceptance fixture also verified a **40 mm component clearance**, three independently generated thickness variants, and restoration of the original camera and active document. [Read the evidence and scope](docs/validation-v0.7.0.md).
 
 ## Quick start
 
@@ -199,7 +199,7 @@ Concise responses retain counts, failures, cleanup and report links. Full eviden
 
 ## Verification
 
-Portable automated tests, Windows COM contracts and real CAD acceptance are reported separately. The independent engine is tested with the external CAD MCP package uninstalled. The GitHub matrix covers Windows/Linux with Python 3.11/3.12; Windows COM contracts are skipped on Linux.
+**1,684 local Windows tests passed**, alongside Ruff and the 123-tool stdio smoke check. Automated tests, Windows COM contracts and real CAD acceptance are reported separately. The independent engine is tested with the external CAD MCP package uninstalled. **All 88 distinct CAD tools have passing native fixtures**, combining the full catalogue run and a disclosed focused UI-restoration retest. [Exact coverage and evidence](docs/validation-v0.7.0.md). The GitHub matrix covers Windows/Linux with Python 3.11/3.12; Windows COM contracts are skipped on Linux.
 
 Real acceptance on **SOLIDWORKS 2026 SP4.1** checked analytic plate volume, an intentionally failing requirement, three isolated variants, assembly bounds/clearance/mass, add-in renders, project-camera shot packs, and verified cleanup. This is evidence for the documented fixture and installation, not universal CAD or renderer compatibility.
 
@@ -217,7 +217,7 @@ Native opt-in acceptance uses newly generated scratch documents and requires an 
 .\.venv\Scripts\python.exe scripts\validate_engineering_live.py --live --render --render-route project --output artifacts\engineering-check-new
 ```
 
-[Verification report](docs/validation-v0.6.0.md) · [Portable native evidence](docs/evidence/v0.6.0-native.json) · [GitHub Actions](https://github.com/U-C4N/Solidworks-MCP-PRO/actions)
+[Verification report](docs/validation-v0.7.0.md) · [Portable native evidence](docs/evidence/v0.7.0-native.json) · [GitHub Actions](https://github.com/U-C4N/Solidworks-MCP-PRO/actions)
 
 ## Requirements
 
@@ -246,7 +246,7 @@ Outputs default to `Documents/Solidworks-MCP-PRO`. Override with `SW_MCP_PRO_WOR
 flowchart LR
     A[MCP client] --> B[Schema and workflow validation]
     B --> C[Operation registry and CAD lease]
-    C --> D[Single COM STA worker]
+    C --> D[Independent engine / single COM STA]
     D --> E[SOLIDWORKS]
     D --> F[Visualize]
     E --> G[Measurements and native files]
@@ -258,7 +258,7 @@ flowchart LR
 | Get connected | Workflows and evidence | Rendering and internals |
 |---|---|---|
 | [Client setup](docs/clients.md) | [Engineering workflows](docs/engineering-workflows.md) | [Visualize integration](docs/visualize.md) |
-| [Configuration examples](configs/) | [v0.6.0 verification](docs/validation-v0.6.0.md) | [Animation groundwork](docs/animation.md) |
+| [Configuration examples](configs/) | [v0.7.0 verification](docs/validation-v0.7.0.md) | [Animation groundwork](docs/animation.md) |
 | [Releases and packages](https://github.com/U-C4N/Solidworks-MCP-PRO/releases) | [Earlier workflow contracts](docs/fast-workflows.md) | [Historical performance evidence](docs/performance-benchmark.md) |
 
 ## License

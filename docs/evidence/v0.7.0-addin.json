@@ -1,0 +1,271 @@
+{
+  "kind": "native_render_acceptance",
+  "route": "addin",
+  "ok": true,
+  "status": "passed",
+  "render_verified": true,
+  "addin_render_verified": true,
+  "project_render_verified": false,
+  "macro_render_verified": true,
+  "alpha_tested": false,
+  "visual_review_required": true,
+  "settings": {
+    "width": 640,
+    "height": 360,
+    "passes": 16,
+    "denoiser": true
+  },
+  "started_at": "2026-11-04T10:53:27.412758+00:00",
+  "stages": [
+    {
+      "stage": "fixture",
+      "status": "completed",
+      "result": {
+        "ok": true,
+        "path": "<checkout>\\artifacts\\independent-core\\addin-16\\RenderProbe.sldprt",
+        "title": "RenderProbe.SLDPRT",
+        "volume_mm3": 8000.000000000001,
+        "expected_volume_mm3": 8000,
+        "initial_document_count": 0,
+        "saved": true
+      },
+      "duration_ms": 2522.53
+    },
+    {
+      "stage": "visualize_status",
+      "status": "completed",
+      "result": {
+        "ok": true,
+        "available": true,
+        "renderer": "SOLIDWORKS Visualize",
+        "solidworks_revision": "34.4.1",
+        "render_api": "IVisualizeAddinManager.Render",
+        "project_grouping_supported": true,
+        "license_verified": false,
+        "note": "Add-in is reachable; a successful render is required to verify renderer/license readiness.",
+        "load_code": null,
+        "already_loaded": true
+      },
+      "duration_ms": 197.607
+    },
+    {
+      "stage": "frame",
+      "status": "completed",
+      "result": {
+        "document_path": "<checkout>\\artifacts\\independent-core\\addin-16\\RenderProbe.sldprt",
+        "action": "apply",
+        "scope": "active_model_view",
+        "saved": false,
+        "before": {
+          "orientation": [
+            0.8844181216774213,
+            -0.24036589468392133,
+            0.400036026779314,
+            1.3877787807814457e-17,
+            0.8571673007021341,
+            0.5150380749100181,
+            -0.4666953889300622,
+            -0.4555090068042732,
+            0.7580942940502868,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "translation": [
+            -0.054595392611123436,
+            -0.02137057697132762,
+            -0.09139418185271059
+          ],
+          "scale": 5.2311714605085005,
+          "perspective": false,
+          "object_sizes_away": null,
+          "named_camera_active": false
+        },
+        "requested": {
+          "view": "isometric",
+          "from_direction": null,
+          "up_direction": null,
+          "fit": true,
+          "zoom_factor": 1.0,
+          "perspective": false,
+          "object_sizes_away": null
+        },
+        "mutation_attempted": true,
+        "ok": true,
+        "after": {
+          "orientation": [
+            0.7071067811865464,
+            -0.4082040559113551,
+            0.5773815451999837,
+            2.7755575615628914e-17,
+            0.8165408118857499,
+            0.5772877120855426,
+            -0.7071067811865488,
+            -0.4082040559113538,
+            0.5773815451999819,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "translation": [
+            -0.10497604406441892,
+            -0.008431665801037349,
+            -0.433517332700368
+          ],
+          "scale": 4.535628101004321,
+          "perspective": false,
+          "object_sizes_away": null,
+          "named_camera_active": false
+        },
+        "scale_before_zoom": 4.535628101004321,
+        "verified": {
+          "scale": true,
+          "perspective": true,
+          "custom_orientation": false
+        },
+        "verification": "Active model-view state read back. Standard view IDs use the native API; rendered framing still requires image inspection. No named camera was created and the document was not saved."
+      },
+      "duration_ms": 605.524
+    },
+    {
+      "stage": "render",
+      "status": "completed",
+      "result": {
+        "ok": true,
+        "renderer": "SOLIDWORKS Visualize",
+        "api": "IVisualizeAddinManager.Render",
+        "output_dir": "<checkout>\\artifacts\\independent-core\\addin-16\\render",
+        "images": [
+          {
+            "path": "<checkout>\\artifacts\\independent-core\\addin-16\\render\\probe\\probe.png",
+            "bytes": 73779,
+            "sha256": "b2f71436fd011237df39488e4f0b1c831d82f12d80a810e7e36c5bc5ad8b5128",
+            "width": 640,
+            "height": 360,
+            "mime_type": "image/png"
+          }
+        ],
+        "passes": 16,
+        "denoiser": true,
+        "execution": "solidworks_in_process_macro",
+        "macro_evidence": {
+          "ok": true,
+          "accepted": true,
+          "execution": "solidworks_macro",
+          "action": "render",
+          "macro_path": "<checkout>\\artifacts\\independent-core\\addin-16\\render\\pro_visualize_8698fbc2344a4afbad89fac42e95cc85.swb",
+          "marker_path": "<checkout>\\artifacts\\independent-core\\addin-16\\render\\pro_visualize_8698fbc2344a4afbad89fac42e95cc85.result",
+          "run_macro_error": 0,
+          "verification": "RunMacro2 succeeded and the unique fixed-macro completion marker matched; output verification is separate.",
+          "client_apartment": {
+            "type": "MAINSTA",
+            "qualifier": 0
+          }
+        },
+        "renderer_process_guards": {
+          "before_render": {
+            "ok": true,
+            "status": "renderer_idle",
+            "elapsed_ms": 547.0,
+            "poll_count": 6,
+            "observed_pids": [],
+            "remaining_processes": [],
+            "stable_absence_ms": 531.0,
+            "native_render_started": false,
+            "processes_terminated": false
+          },
+          "after_render": {
+            "ok": true,
+            "status": "renderer_idle",
+            "elapsed_ms": 3828.0,
+            "poll_count": 34,
+            "observed_pids": [
+              6244
+            ],
+            "remaining_processes": [],
+            "stable_absence_ms": 516.0,
+            "native_render_started": false,
+            "processes_terminated": false
+          }
+        },
+        "verification": "Decoded image format and dimensions, file size and SHA-256; scene fidelity needs visual review.",
+        "timings_ms": {
+          "renderer_idle_wait": 547.0,
+          "setup": 558.713,
+          "native_render": 7488.949,
+          "verify_output": 20.75,
+          "renderer_cleanup_wait": 3828.0,
+          "restore_options": 1.468,
+          "bridge_total": 11886.513
+        },
+        "timing_note": "native_render is wall time for native render dispatch, including fixed-macro overhead when used and any native import/setup; it is not measured GPU kernel time."
+      },
+      "duration_ms": 11900.23
+    },
+    {
+      "stage": "cleanup",
+      "status": "completed",
+      "result": {
+        "ok": true,
+        "verified": true,
+        "attempted": true,
+        "closed": [
+          "RenderProbe.SLDPRT"
+        ],
+        "remaining_document_count": 0,
+        "unowned_documents_closed": false,
+        "saved_on_close": false
+      },
+      "duration_ms": 205.446
+    }
+  ],
+  "evidence_path": "<checkout>\\artifacts\\independent-core\\addin-16\\evidence.json",
+  "limits": [
+    "PNG integrity, dimensions and hash are checked; visual fidelity is not approved.",
+    "Project rendering does not establish add-in rendering or new CAD-to-SVPJ export.",
+    "A single scratch solid is not a general model or GPU performance benchmark."
+  ],
+  "fixture": {
+    "ok": true,
+    "path": "<checkout>\\artifacts\\independent-core\\addin-16\\RenderProbe.sldprt",
+    "title": "RenderProbe.SLDPRT",
+    "volume_mm3": 8000.000000000001,
+    "expected_volume_mm3": 8000,
+    "initial_document_count": 0,
+    "saved": true
+  },
+  "execution": "solidworks_in_process_macro",
+  "images": [
+    {
+      "path": "<checkout>\\artifacts\\independent-core\\addin-16\\render\\probe\\probe.png",
+      "format": "PNG",
+      "width": 640,
+      "height": 360,
+      "mode": "RGBA",
+      "bytes": 73779,
+      "sha256": "b2f71436fd011237df39488e4f0b1c831d82f12d80a810e7e36c5bc5ad8b5128",
+      "alpha_tested": false
+    }
+  ],
+  "cleanup": {
+    "ok": true,
+    "verified": true,
+    "attempted": true,
+    "closed": [
+      "RenderProbe.SLDPRT"
+    ],
+    "remaining_document_count": 0,
+    "unowned_documents_closed": false,
+    "saved_on_close": false
+  },
+  "duration_ms": 15865.631,
+  "completed_at": "2026-11-04T10:53:43.278531+00:00"
+}

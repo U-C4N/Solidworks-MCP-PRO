@@ -13,6 +13,9 @@
   workflows on the independent runtime. Remove the external CAD engine dependency.
 - Add separate native acceptance recipes for all 88 tools, with analytic geometry
   expectations, prerequisite failures and owned-document cleanup evidence.
+- Verify all 88 distinct tools across a full catalogue run and focused native
+  retesting. Publish 1,684 automated tests plus independent engineering, add-in
+  rendering and project-shot-pack evidence with source hashes and exact scope.
 
 ## 0.6.0 — 2026-11-04
 
