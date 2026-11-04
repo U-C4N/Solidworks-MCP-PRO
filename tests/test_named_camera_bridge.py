@@ -269,7 +269,7 @@ def test_unsupported_linked_owned_camera_not_changed(environment):
 
 
 def test_explicit_double_math_point_for_native_dispatch(monkeypatch):
-    import pythoncom
+    pythoncom = pytest.importorskip("pythoncom", reason="Windows COM marshalling contract")
     import win32com.client
     seen = []
     utility = SimpleNamespace(_oleobj_=object(), CreatePoint=lambda data: seen.append(data) or Point([0, 0, 0]))
@@ -282,7 +282,7 @@ def test_explicit_double_math_point_for_native_dispatch(monkeypatch):
 
 
 def test_camera_to_feature_uses_real_query_interface(monkeypatch):
-    import pythoncom
+    pythoncom = pytest.importorskip("pythoncom", reason="Windows COM interface contract")
     from solidworks_mcp import binding
     calls = []
     feature_cls = SimpleNamespace(CLSID="feature-iid")
@@ -295,7 +295,7 @@ def test_camera_to_feature_uses_real_query_interface(monkeypatch):
 
 
 def test_native_deactivation_uses_typed_null_dispatch():
-    import pythoncom
+    pythoncom = pytest.importorskip("pythoncom", reason="Windows COM dispatch contract")
     import win32com.client
     view = SimpleNamespace(_oleobj_=object())
     bridge._deactivate(view)
