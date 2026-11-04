@@ -231,12 +231,57 @@ class NativeSession:
                             # Visible=False alone cannot hide a user-controlled
                             # application; this native property retains control.
                             app.UserControlBackground = True
+                            deadline = time.monotonic() + .25
+                            while bool(app.Visible) != bool(app_visible):
+                                remaining_time = deadline - time.monotonic()
+                                if remaining_time <= 0:
+                                    break
+                                time.sleep(min(.02, remaining_time))
                         else:
                             app.Visible = app_visible
+                    # Reassigning an already-selected background-control mode
+                    # can leave the independent visibility flag unchanged.
+                    if bool(app.Visible) != bool(app_visible):
+                        app.Visible = app_visible
+                    if not app_visible and user_control is True and bool(app.Visible):
+                        # The retained local app proxy keeps the application
+                        # alive while this synchronous three-setter sequence
+                        # briefly satisfies Visible=False's control contract.
+                        # Do not close documents or wait while control is off.
+                        try:
+                            app.UserControlBackground = False
+                            if bool(app.UserControl):
+                                raise RuntimeError("native background control could not be temporarily released")
+                            app.Visible = False
+                        finally:
+                            app.UserControlBackground = True
+                except Exception as exc:
+                    restoration_errors.append(str(exc))
+                # Always inspect the final control state, including when a
+                # visibility setter or the control-restoration setter raised.
+                try:
                     if bool(app.Visible) != bool(app_visible):
                         raise RuntimeError(f"native application visibility expected {bool(app_visible)!r}, actual {bool(app.Visible)!r}")
-                    if user_control is not None and bool(app.UserControl) != bool(user_control):
-                        raise RuntimeError("native application user-control readback mismatch")
+                except Exception as exc:
+                    restoration_errors.append(str(exc))
+                if user_control is not None:
+                    try:
+                        if bool(app.UserControl) != bool(user_control):
+                            raise RuntimeError(f"native application user-control expected {bool(user_control)!r}, actual {bool(app.UserControl)!r}")
+                    except Exception as exc:
+                        restoration_errors.append(str(exc))
+            # Later application/frame setters can affect document windows too.
+            # Validate the complete final state, not only intermediate writes.
+            for doc, visible in visibility:
+                try:
+                    if bool(doc.Visible) != visible:
+                        raise RuntimeError("native final document visibility readback mismatch")
+                except Exception as exc:
+                    restoration_errors.append(str(exc))
+            if frame is not None:
+                try:
+                    if bool(frame.KeepInvisible) != frame_invisible:
+                        raise RuntimeError("native final frame visibility readback mismatch")
                 except Exception as exc:
                     restoration_errors.append(str(exc))
             if restoration_errors:

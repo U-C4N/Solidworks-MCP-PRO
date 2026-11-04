@@ -4,7 +4,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from solidworks_mcp_pro.native import binding, documents as d
+from solidworks_mcp_pro.native import binding, documents as d, session as native_session
 from solidworks_mcp_pro.native.errors import CadError
 from solidworks_mcp_pro.native.session import NativeSession
 
@@ -165,6 +165,7 @@ class CoupledApplication(Application):
         self._visible, self._user_control = False, True
         self.visible_writes, self.background_writes, self.foreground_transitions = [], [], []
         self.background_hiding_allowed = True
+        self.visible_hiding_allowed = True
         self.frame = CoupledFrame(self)
         super().__init__()
         self.visible_writes.clear()
@@ -181,7 +182,7 @@ class CoupledApplication(Application):
     def Visible(self, value):
         self.visible_writes.append(bool(value))
         # The native Visible=False setter cannot hide a user-controlled app.
-        if value or not self._user_control:
+        if value or not self._user_control and self.visible_hiding_allowed:
             self._visible = bool(value)
 
     @property
@@ -223,6 +224,93 @@ class CoupledDocument(Document):
             self.app.document_became_visible(self)
 
 
+class DelayedBackgroundApplication(CoupledApplication):
+    def __init__(self, clock):
+        self.clock, self.background_due = clock, None
+        super().__init__()
+
+    @property
+    def Visible(self):
+        if self.background_due is not None and self.clock.now >= self.background_due:
+            self._visible = False
+        return self._visible
+
+    @Visible.setter
+    def Visible(self, value):
+        CoupledApplication.Visible.fset(self, value)
+
+    @property
+    def UserControlBackground(self):
+        return self._user_control
+
+    @UserControlBackground.setter
+    def UserControlBackground(self, value):
+        self.background_writes.append(bool(value))
+        self._user_control = bool(value)
+        if value:
+            self.background_due = self.clock.now + .06
+
+
+class BackgroundModeWithoutHidingApplication(CoupledApplication):
+    def __init__(self):
+        self.background_selected = False
+        super().__init__()
+
+    @property
+    def Visible(self):
+        return self._visible
+
+    @Visible.setter
+    def Visible(self, value):
+        self.visible_writes.append(bool(value))
+        if value or not self._user_control or self.background_selected:
+            self._visible = bool(value)
+
+    @property
+    def UserControlBackground(self):
+        return self._user_control
+
+    @UserControlBackground.setter
+    def UserControlBackground(self, value):
+        self.background_writes.append(bool(value))
+        self._user_control = bool(value)
+        self.background_selected = bool(value)
+
+
+class StrictControlVisibilityApplication(CoupledApplication):
+    """A selected control mode is not enough: only released control permits hiding."""
+    def __init__(self):
+        self.control_events = []
+        self.reject_visibility_while_uncontrolled = False
+        self.reject_control_restoration = False
+        super().__init__()
+        self.background_hiding_allowed = False
+        self.control_events.clear()
+
+    @property
+    def Visible(self):
+        return self._visible
+
+    @Visible.setter
+    def Visible(self, value):
+        self.control_events.append(('visible', bool(value), self._user_control))
+        if not value and not self._user_control and self.reject_visibility_while_uncontrolled:
+            raise RuntimeError('native visibility setter failed')
+        CoupledApplication.Visible.fset(self, value)
+
+    @property
+    def UserControlBackground(self):
+        return self._user_control
+
+    @UserControlBackground.setter
+    def UserControlBackground(self, value):
+        self.control_events.append(('background', bool(value), self._user_control))
+        if value and not self._user_control and self.reject_control_restoration:
+            self.background_writes.append(True)
+            raise RuntimeError('native control restoration failed')
+        CoupledApplication.UserControlBackground.fset(self, value)
+
+
 @pytest.fixture
 def cad(tmp_path, monkeypatch):
     monkeypatch.setattr(binding, 'wrap', lambda value, interface: value)
@@ -256,6 +344,28 @@ def coupled_cad(cad):
     session._model = target
     session.remember(target, editable=True, opened=True)
     return session, app, target, foreign
+
+
+@pytest.fixture
+def ui_clock(monkeypatch):
+    clock = SimpleNamespace(now=0., sleeps=[])
+    def sleep(duration):
+        clock.sleeps.append(duration)
+        clock.now += duration
+    monkeypatch.setattr(native_session, 'time', SimpleNamespace(monotonic=lambda: clock.now, sleep=sleep))
+    return clock
+
+
+def background_session(app):
+    target = CoupledDocument(app, 'Target')
+    foreign = CoupledDocument(app, 'HiddenForeign')
+    app.documents = [target, foreign]
+    app.ActiveDoc = target
+    app.Frame = None
+    session = NativeSession(app)
+    session._model = target
+    session.remember(target, editable=True, opened=True)
+    return session, target, foreign
 
 
 def install_template(app, tmp_path, kind):
@@ -792,12 +902,113 @@ def test_failed_close_keeps_rights_and_coupled_background_state(coupled_cad):
     assert app.frame.KeepInvisible is False and foreign.Visible is False
 
 
-def test_failed_background_restoration_is_reported_as_indeterminate(coupled_cad):
+def test_failed_background_restoration_is_reported_as_indeterminate(coupled_cad, ui_clock):
     session, app, target, foreign = coupled_cad
     app.Frame = None
     app.background_hiding_allowed = False
+    app.visible_hiding_allowed = False
     with pytest.raises(CadError) as caught:
         d.close_part(session)
     assert caught.value.code == 'DOCUMENT_VISIBILITY_RESTORATION_FAILED'
     assert caught.value.details['outcome_may_be_indeterminate'] is True
     assert app.Visible is True and app.UserControl is True
+    assert app.visible_writes == [False, False]
+    assert app.background_writes == [True, False, True]
+    assert ui_clock.now == pytest.approx(.25)
+
+
+def test_background_restoration_waits_for_bounded_native_ui_settlement(cad, ui_clock):
+    app = DelayedBackgroundApplication(ui_clock)
+    session, target, foreign = background_session(app)
+    d.close_part(session)
+    assert target.closed and not foreign.closed
+    assert app.Visible is False and app.UserControl is True
+    assert app.background_writes == [True] and not app.visible_writes
+    assert .06 <= ui_clock.now <= .25
+
+
+def test_selected_background_mode_uses_explicit_visibility_fallback_without_dropping_control(cad, ui_clock):
+    app = BackgroundModeWithoutHidingApplication()
+    session, target, foreign = background_session(app)
+    d.close_part(session)
+    assert target.closed and not foreign.closed
+    assert app.background_writes == [True] and app.visible_writes == [False]
+    assert app.Visible is False and app.UserControl is True
+    assert foreign.Visible is False and ui_clock.now == pytest.approx(.25)
+
+
+def test_strict_native_hiding_releases_then_restores_control_without_waiting_or_closing(cad, ui_clock, monkeypatch):
+    app = StrictControlVisibilityApplication()
+    session, target, foreign = background_session(app)
+    native_close = app.CloseDoc
+    def close(title):
+        assert app.UserControl is True
+        return native_close(title)
+    app.CloseDoc = close
+    native_sleep = native_session.time.sleep
+    def sleep(duration):
+        assert app.UserControl is True, 'No wait is permitted while control is temporarily released.'
+        native_sleep(duration)
+    monkeypatch.setattr(native_session.time, 'sleep', sleep)
+    d.close_part(session)
+    assert target.closed and not foreign.closed
+    assert app.control_events[-3:] == [('background', False, True), ('visible', False, False),
+                                      ('background', True, False)]
+    assert app.Visible is False and app.UserControl is True
+    assert foreign.Visible is False and ui_clock.now == pytest.approx(.25)
+
+
+def test_temporary_release_always_restores_control_if_visibility_setter_raises(cad, ui_clock):
+    app = StrictControlVisibilityApplication()
+    app.reject_visibility_while_uncontrolled = True
+    session, target, foreign = background_session(app)
+    with pytest.raises(CadError) as caught:
+        d.close_part(session)
+    assert caught.value.code == 'DOCUMENT_VISIBILITY_RESTORATION_FAILED'
+    assert 'native visibility setter failed' in caught.value.message
+    assert app.background_writes == [True, False, True]
+    assert app.UserControl is True and not foreign.closed
+    assert caught.value.details['outcome_may_be_indeterminate'] is True
+
+
+def test_failed_control_restoration_is_verified_even_after_setter_exception(cad, ui_clock):
+    app = StrictControlVisibilityApplication()
+    app.reject_control_restoration = True
+    session, target, foreign = background_session(app)
+    with pytest.raises(CadError) as caught:
+        d.close_part(session)
+    assert caught.value.code == 'DOCUMENT_VISIBILITY_RESTORATION_FAILED'
+    assert 'native control restoration failed' in caught.value.message
+    assert 'user-control expected True, actual False' in caught.value.message
+    assert app.Visible is False and app.UserControl is False
+    assert not foreign.closed and caught.value.details['outcome_may_be_indeterminate'] is True
+
+
+def test_final_document_visibility_is_checked_after_background_restoration(coupled_cad, monkeypatch):
+    session, app, target, foreign = coupled_cad
+    app.Frame = None
+    original = CoupledApplication.UserControlBackground.fset
+    def reveal_foreign(self, value):
+        original(self, value)
+        foreign._document_visible = True
+    monkeypatch.setattr(CoupledApplication, 'UserControlBackground',
+                        property(lambda self: self._user_control, reveal_foreign))
+    with pytest.raises(CadError) as caught:
+        d.close_part(session)
+    assert caught.value.code == 'DOCUMENT_VISIBILITY_RESTORATION_FAILED'
+    assert 'final document visibility' in caught.value.message
+
+
+def test_final_frame_flag_is_checked_after_background_restoration(coupled_cad, monkeypatch):
+    session, app, target, foreign = coupled_cad
+    app.frame.show_when_released = True
+    original = CoupledApplication.UserControlBackground.fset
+    def restore_and_alter(self, value):
+        original(self, value)
+        self.frame._keep_invisible = True
+    monkeypatch.setattr(CoupledApplication, 'UserControlBackground',
+                        property(lambda self: self._user_control, restore_and_alter))
+    with pytest.raises(CadError) as caught:
+        d.close_part(session)
+    assert caught.value.code == 'DOCUMENT_VISIBILITY_RESTORATION_FAILED'
+    assert 'final frame visibility' in caught.value.message
