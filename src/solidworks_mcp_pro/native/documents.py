@@ -251,29 +251,48 @@ def export(session, path, file_format=None, quality="fine", deviation_mm=None, a
     if angle_deg is not None and (type(angle_deg) not in (int, float) or not math.isfinite(angle_deg) or not 0 < angle_deg < 180):
         raise CadError("INVALID_ARGUMENT", "Custom tessellation angle must be between 0 and 180 degrees.")
     app, saved = session._ensure(), []
+    preferences_started = False
     previous_files = set(target.parent.glob("*.stl")) if per_component else set()
     original_path = str(model.GetPathName())
     def preference(kind, name, value):
-        key = binding.constant(name)
-        getter, setter = getattr(app, "GetUserPreference" + kind), getattr(app, "SetUserPreference" + kind)
-        before = getter(key)
-        saved.append((getter, setter, key, before, name))
-        setter(key, value)
+        getter, setter, key, _, _ = next(record for record in saved if record[4] == name)
+        if getter(key) != value:
+            setter(key, value)
         if getter(key) != value:
             raise CadError("EXPORT_PREFERENCE_REJECTED", f"Native export preference {name} was not retained.")
     result, failure = None, None
     try:
         if target.suffix.lower() in {".stl", ".3mf"}:
+            # Preset quality and tolerance setters can change one another.
+            # Capture the complete state before the first native write, even
+            # for tolerances not explicitly supplied by this export request.
+            settings = [("Toggle", "swSTLBinaryFormat"), ("Toggle", "swSTLDontTranslateToPositive"),
+                ("IntegerValue", "swExportStlUnits"), ("Toggle", "swSTLComponentsIntoOneFile"),
+                ("Toggle", "swSTLCheckForInterference"), ("Toggle", "swSTLPreview"),
+                ("Toggle", "swSTLShowInfoOnSave"), ("DoubleValue", "swSTLDeviation"),
+                ("DoubleValue", "swSTLAngleTolerance"), ("IntegerValue", "swSTLQuality")]
+            snapshot = []
+            for kind, name in settings:
+                key = binding.constant(name)
+                getter = getattr(app, "GetUserPreference" + kind)
+                setter = getattr(app, "SetUserPreference" + kind)
+                snapshot.append((getter, setter, key, getter(key), name))
+            saved = snapshot
+            preferences_started = True
             preference("Toggle", "swSTLBinaryFormat", True)
             preference("Toggle", "swSTLDontTranslateToPositive", True)
             preference("IntegerValue", "swExportStlUnits", binding.constant("swMM"))
             custom = deviation_mm is not None or angle_deg is not None
-            preference("IntegerValue", "swSTLQuality", 2 if custom else int(quality == "fine"))
+            preference("IntegerValue", "swSTLQuality", binding.constant(
+                "swSTLQuality_Custom" if custom else "swSTLQuality_Fine" if quality == "fine" else "swSTLQuality_Coarse"))
             preference("Toggle", "swSTLComponentsIntoOneFile", not per_component)
-            if deviation_mm is not None:
-                preference("DoubleValue", "swSTLDeviation", deviation_mm / 1000)
-            if angle_deg is not None:
-                preference("DoubleValue", "swSTLAngleTolerance", math.radians(angle_deg))
+            if custom:
+                previous = {record[4]: record[3] for record in saved}
+                preference("DoubleValue", "swSTLDeviation", deviation_mm / 1000 if deviation_mm is not None
+                           else previous["swSTLDeviation"])
+                preference("DoubleValue", "swSTLAngleTolerance", math.radians(angle_deg) if angle_deg is not None
+                           else previous["swSTLAngleTolerance"])
+                preference("IntegerValue", "swSTLQuality", binding.constant("swSTLQuality_Custom"))
         result = _save_native(model, target, require_identity=False)
         files = sorted(set(target.parent.glob("*.stl")) - previous_files) if per_component else [target]
         if not files:
@@ -288,9 +307,17 @@ def export(session, path, file_format=None, quality="fine", deviation_mm=None, a
         failure = exc
     finally:
         restoration = []
-        for getter, setter, key, before, name in reversed(saved):
+        # The snapshot order restores tolerances before quality. Verify only
+        # after all coupled writes, since a later native setter can invalidate
+        # an earlier setting that initially read back correctly.
+        for getter, setter, key, before, name in saved if preferences_started else ():
             try:
-                setter(key, before)
+                if getter(key) != before:
+                    setter(key, before)
+            except Exception as exc:
+                restoration.append(f"{name}: {exc}")
+        for getter, setter, key, before, name in saved if preferences_started else ():
+            try:
                 if getter(key) != before:
                     raise RuntimeError(f"{name}: expected {before!r}, native readback {getter(key)!r}")
             except Exception as exc:

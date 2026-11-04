@@ -105,6 +105,12 @@ async def run(output, *, group="all", only=None):
                    "Mocks, registration coverage and real native acceptance are separate evidence.",
                    "The runner closes only documents created/opened by its own session."]}
     sources = {str(Path(importlib.import_module(fn.__module__).__file__).resolve()) for fn in implementations.values()}
+    # Binding, worker and transaction policy are part of the tested engine too.
+    native_directory = Path(importlib.import_module("solidworks_mcp_pro.native").__file__).resolve().parent
+    sources.update(str(path) for path in native_directory.glob("*.py"))
+    sources.add(str(native_directory / "contracts.json"))
+    sources.update(str(path.resolve()) for path in Path(__file__).resolve().parent.glob("native_cases_*.py"))
+    sources.add(str(Path(__file__).resolve()))
     report["implementation_hashes"] = {str(Path(p).relative_to(Path(__file__).resolve().parents[1])):
         hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in sorted(sources)}
     backend = NativeBackend()

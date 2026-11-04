@@ -281,12 +281,12 @@ class Session:
     def _ensure(self):
         return self.app
 
-    def close_document(self, model):
+    def close_document(self, model, *, allow_referenced_hidden=False):
         from solidworks_mcp_pro.native.session import NativeSession
 
         guard = NativeSession(self.app)
         guard._documents_rights = self._documents_rights
-        result = guard.close_document(model)
+        result = guard.close_document(model, allow_referenced_hidden=allow_referenced_hidden)
         self._documents_rights = guard._documents_rights
         return result
 
@@ -407,7 +407,7 @@ def test_insert_places_source_origin_and_does_not_close_existing_part(session, t
     assert result["component"]["fixed"] is False
 
 
-def _temporary_source_fixture(session, tmp_path, *, native_error=0, keep_visible=False):
+def _temporary_source_fixture(session, tmp_path, *, native_error=0, keep_visible=False, keep_hidden=False):
     path = tmp_path / "temporary.sldprt"
     path.write_bytes(b"native")
     source = PartModel(path)
@@ -419,6 +419,14 @@ def _temporary_source_fixture(session, tmp_path, *, native_error=0, keep_visible
     session._model = session.model
     session._documents_rights = [{"model": session.model, "editable": True, "opened": True}]
     session.app.GetDocuments = lambda: list(documents)
+    original_add = session.model.AddComponent5
+
+    def add(path, *args):
+        value = original_add(path, *args)
+        value.child = source
+        return value
+
+    session.model.AddComponent5 = add
 
     def open_doc(*args):
         documents.append(source)
@@ -440,9 +448,15 @@ def _temporary_source_fixture(session, tmp_path, *, native_error=0, keep_visible
         )
         closed.append(title)
         # Model the native side effect that also retires other hidden models.
-        documents[:] = [doc for doc in documents if doc.Visible and (doc is not source or keep_visible)]
+        documents[:] = [
+            doc
+            for doc in documents
+            if (doc is source and (keep_visible or keep_hidden)) or (doc is not source and doc.Visible)
+        ]
+        if keep_hidden:
+            source.Visible = False
         session.app.Visible = True
-        if not keep_visible:
+        if not keep_visible and not keep_hidden:
             source.GetTitle = stale
             source.GetPathName = stale
 
@@ -477,6 +491,41 @@ def test_temporary_source_native_load_error_still_closes_only_its_window(session
     assert not foreign.Visible and not session.app.Visible
 
 
+def test_temporary_source_window_can_close_while_its_referenced_model_data_remains_hidden(session, tmp_path):
+    path, source, closed, foreign = _temporary_source_fixture(session, tmp_path, keep_hidden=True)
+    result = api.insert_component(session, str(path), 25, 0, 0, fixed=False)
+    cleanup = result["source_window"]["cleanup"]
+    assert result["source_window"]["closed_by_operation"]
+    assert cleanup["model_data_retained"] and cleanup["ui_closed"] and cleanup["native_window_hidden"]
+    assert cleanup["other_documents_preserved"] == 2 and cleanup["visibility_restored"]
+    assert source in session.app.GetDocuments() and not source.Visible
+    assert foreign in session.app.GetDocuments() and not foreign.Visible
+    assert closed == [path.name] and session.app.ActiveDoc is session.model
+    assert not session.app.Visible and not any(
+        record["model"] is source for record in session._documents_rights
+    )
+
+
+def test_hidden_source_without_a_surviving_native_assembly_reference_is_not_closed(session, tmp_path):
+    path, source, closed, foreign = _temporary_source_fixture(session, tmp_path, keep_hidden=True)
+    original_close = session.app.CloseDoc
+
+    def close_and_lose_reference(title):
+        original_close(title)
+        session.model.components = [
+            value for value in session.model.components if value.GetPathName() != str(path)
+        ]
+
+    session.app.CloseDoc = close_and_lose_reference
+    with pytest.raises(CadError) as error:
+        api.insert_component(session, str(path), 25, 0, 0)
+    assert error.value.code == "COMPONENT_SOURCE_CLEANUP_FAILED"
+    assert "DOCUMENT_CLOSE_UNVERIFIED" in str(error.value)
+    assert not error.value.details["source_window"]["closed_by_operation"]
+    assert source in session.app.GetDocuments() and foreign in session.app.GetDocuments()
+    assert not foreign.Visible and not session.app.Visible
+
+
 def test_temporary_source_visible_after_close_is_not_reported_clean(session, tmp_path):
     path, source, closed, foreign = _temporary_source_fixture(session, tmp_path, keep_visible=True)
     with pytest.raises(CadError) as error:
@@ -489,13 +538,16 @@ def test_temporary_source_visible_after_close_is_not_reported_clean(session, tmp
     assert not session.app.Visible
 
 
-def test_temporary_source_close_cannot_claim_success_when_another_document_disappears(session, tmp_path):
-    path, source, closed, foreign = _temporary_source_fixture(session, tmp_path)
+@pytest.mark.parametrize("keep_hidden", [False, True])
+def test_temporary_source_close_cannot_claim_success_when_another_document_disappears(
+    session, tmp_path, keep_hidden
+):
+    path, source, closed, foreign = _temporary_source_fixture(session, tmp_path, keep_hidden=keep_hidden)
     original_close = session.app.CloseDoc
 
     def faulty_native_close(title):
         original_close(title)
-        session.app.GetDocuments = lambda: [session.model]
+        session.app.GetDocuments = lambda: [session.model, source] if keep_hidden else [session.model]
 
     session.app.CloseDoc = faulty_native_close
     with pytest.raises(CadError) as error:

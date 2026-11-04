@@ -19,13 +19,15 @@ def _part():
     return [_box()]
 
 
-def _assembly(second_x=60, *, second=True):
+def _assembly(second_x=60, *, second=True, closed_source=False):
     steps = [
         _box(),
         {"tool": "save_part", "args": {"path": "$output/source.sldprt"}},
         {"tool": "new_assembly", "args": {}},
         {"tool": "insert_component", "args": {"path": "$output/source.sldprt", "fixed": True}, "bind": "a"},
     ]
+    if closed_source:
+        steps.insert(2, {"tool": "close_part", "args": {}})
     if second:
         steps.append(
             {
@@ -69,7 +71,7 @@ CASES = [
     _case(
         "insert_component",
         {"path": "$output/source.sldprt", "x_mm": 60, "fixed": False},
-        _assembly(second=False),
+        _assembly(second=False, closed_source=True),
         16000,
     ),
     _case("list_components", {}, _assembly(), 16000),

@@ -306,7 +306,9 @@ def insert_component(session, path, x_mm=0.0, y_mm=0.0, z_mm=0.0, fixed=None):
             cleanup_errors = []
             if opened_source is not None:
                 try:
-                    source_window["cleanup"] = session.close_document(opened_source)
+                    source_window["cleanup"] = session.close_document(
+                        opened_source, allow_referenced_hidden=True
+                    )
                     source_window["closed_by_operation"] = True
                 except Exception as exc:
                     cleanup_errors.append(str(exc))

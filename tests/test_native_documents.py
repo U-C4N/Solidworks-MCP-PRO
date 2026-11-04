@@ -9,6 +9,10 @@ from solidworks_mcp_pro.native.errors import CadError
 from solidworks_mcp_pro.native.session import NativeSession
 
 
+NATIVE_ENUMS = {'swSTLQuality_Coarse': 1, 'swSTLQuality_Fine': 2,
+                'swSTLQuality_Custom': 3, 'swMM': 0}
+
+
 class Document:
     def __init__(self, app, title, kind=1, path=''):
         self.app, self.title, self.kind, self.path = app, title, kind, str(path)
@@ -68,7 +72,7 @@ class Application:
         self.ActiveDoc = None
         self.Visible = False
         self.documents, self.events, self.templates = [], [], {}
-        self.preferences = {}
+        self.preferences = {'swSTLQuality': 1, 'swSTLDeviation': .001, 'swSTLAngleTolerance': .5}
         self.preference_writes = []
         self.activate_result = None
         self.open_result = None
@@ -133,10 +137,94 @@ class Application:
     SetUserPreferenceDoubleValue = _set_preference
 
 
+class CoupledFrame:
+    def __init__(self, app):
+        self.app = app
+        self._keep_invisible = False
+        self.writes = []
+        self.show_when_released = False
+
+    @property
+    def KeepInvisible(self):
+        return self._keep_invisible
+
+    @KeepInvisible.setter
+    def KeepInvisible(self, value):
+        self.writes.append(bool(value))
+        self._keep_invisible = bool(value)
+        if not value and self.show_when_released:
+            self.app.foreground_transitions.append('released frame')
+            self.app._visible = True
+
+
+class CoupledApplication(Application):
+    """Enforce the native difference between visibility and user control."""
+    def __init__(self):
+        self._visible, self._user_control = False, True
+        self.visible_writes, self.background_writes, self.foreground_transitions = [], [], []
+        self.background_hiding_allowed = True
+        self.frame = CoupledFrame(self)
+        super().__init__()
+        self.visible_writes.clear()
+        self.close_hidden_documents = True
+
+    def Frame(self):
+        return self.frame
+
+    @property
+    def Visible(self):
+        return self._visible
+
+    @Visible.setter
+    def Visible(self, value):
+        self.visible_writes.append(bool(value))
+        # The native Visible=False setter cannot hide a user-controlled app.
+        if value or not self._user_control:
+            self._visible = bool(value)
+
+    @property
+    def UserControl(self):
+        return self._user_control
+
+    @UserControl.setter
+    def UserControl(self, value):
+        self._user_control = bool(value)
+        if value:
+            self._visible = True
+
+    @property
+    def UserControlBackground(self):
+        return self._user_control
+
+    @UserControlBackground.setter
+    def UserControlBackground(self, value):
+        self.background_writes.append(bool(value))
+        self._user_control = bool(value)
+        if value and self.background_hiding_allowed:
+            self._visible = False
+
+    def document_became_visible(self, document):
+        if not self.frame.KeepInvisible:
+            self.foreground_transitions.append(document.title)
+            self._visible = True
+
+
+class CoupledDocument(Document):
+    @property
+    def Visible(self):
+        return self._document_visible
+
+    @Visible.setter
+    def Visible(self, value):
+        self._document_visible = bool(value)
+        if value:
+            self.app.document_became_visible(self)
+
+
 @pytest.fixture
 def cad(tmp_path, monkeypatch):
     monkeypatch.setattr(binding, 'wrap', lambda value, interface: value)
-    monkeypatch.setattr(binding, 'constant', lambda name: name)
+    monkeypatch.setattr(binding, 'constant', lambda name: NATIVE_ENUMS.get(name, name))
     app = Application()
     source = tmp_path / 'source.sldprt'
     source.write_bytes(b'saved part fixture')
@@ -154,6 +242,20 @@ def cad(tmp_path, monkeypatch):
     return session, app, model
 
 
+@pytest.fixture
+def coupled_cad(cad):
+    # Reuse only the SDK-isolation fixture; this is a fresh real NativeSession.
+    app = CoupledApplication()
+    target = CoupledDocument(app, 'Target')
+    foreign = CoupledDocument(app, 'HiddenForeign')
+    app.documents = [target, foreign]
+    app.ActiveDoc = target
+    session = NativeSession(app)
+    session._model = target
+    session.remember(target, editable=True, opened=True)
+    return session, app, target, foreign
+
+
 def install_template(app, tmp_path, kind):
     key, suffix = {1: ('swDefaultTemplatePart', '.prtdot'),
                    2: ('swDefaultTemplateAssembly', '.asmdot'),
@@ -161,6 +263,40 @@ def install_template(app, tmp_path, kind):
     path = tmp_path / ('default'+suffix)
     path.write_bytes(b'native template fixture')
     app.templates[key] = str(path)
+
+
+def couple_stl_preferences(app, *, quality=3, units=2):
+    """Native presets replace both tolerances; manual tolerances select Custom."""
+    presets = {1: (.004, .6), 2: (.00012, .08)}
+    deviation, angle = presets.get(quality, (.000371, .173))
+    app.preferences.update(swSTLBinaryFormat=False, swSTLDontTranslateToPositive=False,
+        swExportStlUnits=units, swSTLComponentsIntoOneFile=False, swSTLCheckForInterference=True,
+        swSTLPreview=True, swSTLShowInfoOnSave=False, swSTLDeviation=deviation,
+        swSTLAngleTolerance=angle, swSTLQuality=quality)
+    events = []
+    read, write = app._get_preference, app._set_preference
+    def getter(key):
+        events.append(('read', key))
+        return read(key)
+    def setter(key, value):
+        events.append(('write', key, value))
+        result = write(key, value)
+        if key == 'swExportStlUnits':
+            # Unit changes can also select another native quality preset.
+            app.preferences.update(swSTLQuality=1, swSTLDeviation=presets[1][0],
+                                   swSTLAngleTolerance=presets[1][1])
+        elif key == 'swSTLQuality' and value in presets:
+            app.preferences['swSTLDeviation'], app.preferences['swSTLAngleTolerance'] = presets[value]
+        elif key in {'swSTLDeviation', 'swSTLAngleTolerance'}:
+            app.preferences['swSTLQuality'] = 3
+        return result
+    app.GetUserPreferenceToggle = getter
+    app.GetUserPreferenceIntegerValue = getter
+    app.GetUserPreferenceDoubleValue = getter
+    app.SetUserPreferenceToggle = setter
+    app.SetUserPreferenceIntegerValue = setter
+    app.SetUserPreferenceDoubleValue = setter
+    return events, presets
 
 
 @pytest.mark.parametrize('path', ['', None, '\x00', '\\\\server\\part.sldprt'])
@@ -306,14 +442,14 @@ def test_unsaved_close_with_save_needs_an_explicit_path(cad):
 
 def test_export_restores_global_tessellation_settings_when_save_fails(cad, tmp_path):
     session, app, model = cad
-    app.preferences.update(swSTLBinaryFormat=False, swSTLQuality=0, swSTLDeviation=.2)
+    app.preferences.update(swSTLBinaryFormat=False, swSTLQuality=1, swSTLDeviation=.2)
     before = dict(app.preferences)
     model.save_result = 1
     with pytest.raises(CadError) as caught:
         d.export(session, str(tmp_path / 'mesh.stl'), deviation_mm=.02, angle_deg=15)
     assert caught.value.code == 'NATIVE_SAVE_FAILED'
     assert all(app.preferences[key] == value for key, value in before.items())
-    assert app.preferences['swSTLAngleTolerance'] == 0
+    assert app.preferences['swSTLAngleTolerance'] == .5
     assert model.path.endswith('source.sldprt')
 
 
@@ -352,8 +488,90 @@ def test_custom_angle_alone_activates_native_custom_tessellation(cad, tmp_path):
     session, app, model = cad
     result = d.export(session, str(tmp_path / 'mesh.stl'), angle_deg=15)
     assert result['source_path_unchanged'] is True
-    assert ('swSTLQuality', 2) in app.preference_writes
-    assert app.preferences['swSTLQuality'] == 0
+    assert ('swSTLQuality', 3) in app.preference_writes
+    assert app.preferences['swSTLQuality'] == 1
+
+
+def test_stl_snapshots_all_original_preferences_before_any_coupled_write(cad, tmp_path):
+    session, app, model = cad
+    events, presets = couple_stl_preferences(app)
+    original = dict(app.preferences)
+    save = model.SaveAs3
+    def inspect_export(path, *args):
+        assert app.preferences['swSTLQuality'] == 2
+        assert (app.preferences['swSTLDeviation'], app.preferences['swSTLAngleTolerance']) == presets[2]
+        return save(path, *args)
+    model.SaveAs3 = inspect_export
+    d.export(session, str(tmp_path / 'fine.stl'))
+    first_write = next(index for index, event in enumerate(events) if event[0] == 'write')
+    assert {event[1] for event in events[:first_write]} == set(original)
+    assert app.preferences == original
+
+
+def test_stl_custom_export_restores_original_tolerances_then_preset_quality(cad, tmp_path):
+    session, app, model = cad
+    events, presets = couple_stl_preferences(app, quality=2)
+    original = dict(app.preferences)
+    d.export(session, str(tmp_path / 'custom.stl'), deviation_mm=.02, angle_deg=15)
+    assert app.preferences == original
+    writes = [event for event in events if event[0] == 'write']
+    assert writes[-1] == ('write', 'swSTLQuality', 2)
+
+
+def test_stl_export_restores_coupled_custom_state_even_when_native_save_fails(cad, tmp_path):
+    session, app, model = cad
+    couple_stl_preferences(app)
+    original = dict(app.preferences)
+    model.save_result = 2
+    with pytest.raises(CadError) as caught:
+        d.export(session, str(tmp_path / 'failed.stl'), quality='coarse')
+    assert caught.value.code == 'NATIVE_SAVE_FAILED'
+    assert app.preferences == original
+
+
+def test_custom_angle_preserves_unspecified_deviation_despite_quality_side_effects(cad, tmp_path):
+    session, app, model = cad
+    couple_stl_preferences(app, quality=2)
+    original = dict(app.preferences)
+    save = model.SaveAs3
+    def inspect_export(path, *args):
+        assert app.preferences['swSTLQuality'] == 3
+        assert app.preferences['swSTLDeviation'] == original['swSTLDeviation']
+        assert app.preferences['swSTLAngleTolerance'] == pytest.approx(.2617993877991494)
+        return save(path, *args)
+    model.SaveAs3 = inspect_export
+    d.export(session, str(tmp_path / 'angle.stl'), angle_deg=15)
+    assert app.preferences == original
+
+
+def test_stl_snapshot_failure_causes_no_preference_write_or_native_export(cad, tmp_path):
+    session, app, model = cad
+    read = app.GetUserPreferenceDoubleValue
+    def fail(key):
+        if key == 'swSTLAngleTolerance':
+            raise RuntimeError('native tolerance unavailable')
+        return read(key)
+    app.GetUserPreferenceDoubleValue = fail
+    with pytest.raises(RuntimeError, match='native tolerance unavailable'):
+        d.export(session, str(tmp_path / 'mesh.stl'))
+    assert not app.preference_writes and not model.save_calls
+
+
+def test_stl_final_verification_catches_a_later_setter_corrupting_prior_tolerance(cad, tmp_path):
+    session, app, model = cad
+    couple_stl_preferences(app, quality=2)
+    setter = app.SetUserPreferenceIntegerValue
+    def corrupt(key, value):
+        result = setter(key, value)
+        if key == 'swSTLQuality' and value == 2:
+            app.preferences['swSTLAngleTolerance'] = .99
+        return result
+    app.SetUserPreferenceIntegerValue = corrupt
+    with pytest.raises(CadError) as caught:
+        d.export(session, str(tmp_path / 'mesh.stl'), deviation_mm=.02, angle_deg=15)
+    assert caught.value.code == 'EXPORT_SETTINGS_RESTORE_FAILED'
+    assert 'swSTLAngleTolerance' in caught.value.message
+    assert caught.value.details['outcome_may_be_indeterminate'] is True
 
 
 def test_native_export_cannot_report_success_if_it_changed_source_identity(cad, tmp_path):
@@ -468,3 +686,78 @@ def test_close_preserves_visibility_when_native_close_raises(cad):
         d.close_part(session)
     assert foreign.Visible is False and app.Visible is False
     assert not target.closed and not foreign.closed
+    assert session.rights(target)['editable'] and session.rights(target)['opened']
+    assert session._model is target
+
+
+def test_hidden_user_controlled_close_uses_background_control_if_frame_is_unavailable(coupled_cad):
+    session, app, target, foreign = coupled_cad
+    # Demonstrate the native setter constraint so an uncoupled fake cannot make
+    # a redundant Visible=False call look like a correct restoration.
+    app._visible = True
+    app.Visible = False
+    assert app.Visible is True
+    app.UserControlBackground = True
+    assert app.UserControl is True and app.Visible is False
+    app.visible_writes.clear()
+    app.background_writes.clear()
+    app.Frame = None
+    d.close_part(session)
+    assert target.closed and not foreign.closed and foreign.Visible is False
+    assert app.Visible is False and app.UserControl is True
+    assert app.background_writes == [True] and not app.visible_writes
+
+
+def test_frame_protection_prevents_temporary_foreground_transition(coupled_cad):
+    session, app, target, foreign = coupled_cad
+    d.close_part(session)
+    assert target.closed and not foreign.closed and foreign.Visible is False
+    assert app.frame.writes == [True, False]
+    assert app.frame.KeepInvisible is False
+    assert app.foreground_transitions == []
+    assert not app.background_writes and not app.visible_writes
+    assert app.Visible is False and app.UserControl is True
+
+
+def test_releasing_frame_restores_hidden_mode_through_background_control(coupled_cad):
+    session, app, target, foreign = coupled_cad
+    app.frame.show_when_released = True
+    d.close_part(session)
+    assert app.foreground_transitions == ['released frame']
+    assert app.background_writes == [True]
+    assert app.Visible is False and app.UserControl is True
+    assert app.frame.KeepInvisible is False and foreign.Visible is False
+
+
+def test_existing_invisible_frame_flag_is_preserved_without_redundant_setters(coupled_cad):
+    session, app, target, foreign = coupled_cad
+    app.frame._keep_invisible = True
+    d.close_part(session)
+    assert app.frame.KeepInvisible is True and not app.frame.writes
+    assert not app.foreground_transitions and not app.background_writes
+
+
+def test_failed_close_keeps_rights_and_coupled_background_state(coupled_cad):
+    session, app, target, foreign = coupled_cad
+    def refuse(title):
+        assert app.frame.KeepInvisible and foreign.Visible
+        raise RuntimeError('native refused the close')
+    app.CloseDoc = refuse
+    with pytest.raises(RuntimeError, match='native refused'):
+        d.close_part(session)
+    assert not target.closed and not foreign.closed
+    assert session._model is target
+    assert session.rights(target)['editable'] and session.rights(target)['opened']
+    assert app.Visible is False and app.UserControl is True
+    assert app.frame.KeepInvisible is False and foreign.Visible is False
+
+
+def test_failed_background_restoration_is_reported_as_indeterminate(coupled_cad):
+    session, app, target, foreign = coupled_cad
+    app.Frame = None
+    app.background_hiding_allowed = False
+    with pytest.raises(CadError) as caught:
+        d.close_part(session)
+    assert caught.value.code == 'DOCUMENT_VISIBILITY_RESTORATION_FAILED'
+    assert caught.value.details['outcome_may_be_indeterminate'] is True
+    assert app.Visible is True and app.UserControl is True

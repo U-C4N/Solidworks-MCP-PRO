@@ -143,7 +143,7 @@ class NativeSession:
         self._documents_rights = [record for record in self._documents_rights
                                  if not same_object(record["model"], model)]
 
-    def close_document(self, model):
+    def close_document(self, model, *, allow_referenced_hidden=False):
         """Close one document without SOLIDWORKS retiring other hidden models."""
         self._check_thread()
         app = self._ensure()
@@ -151,10 +151,18 @@ class NativeSession:
         others = [doc for doc in self._open_documents() if not same_object(doc, model)]
         visibility = [(doc, bool(doc.Visible)) for doc in others]
         app_visible = getattr(app, "Visible", None)
+        user_control = getattr(app, "UserControl", None)
+        frame = binding.wrap(app.Frame(), "IFrame") if app_visible is False and callable(getattr(app, "Frame", None)) else None
+        frame_invisible = bool(frame.KeepInvisible) if frame is not None else None
         original_rights = dict(self.rights(model))
         was_target = same_object(model, self._model)
         changed, failure, restoration_errors, forgotten = [], None, [], False
+        retained = False
         try:
+            if frame is not None and not frame_invisible:
+                frame.KeepInvisible = True
+                if not bool(frame.KeepInvisible):
+                    raise CadError("FRAME_VISIBILITY_UNVERIFIED", "Cannot keep the original hidden application frame protected.")
             # CloseDoc also closes *all* non-active hidden documents. Protect
             # their UI lifetime first, regardless of this session's edit rights.
             for doc, visible in visibility:
@@ -167,8 +175,25 @@ class NativeSession:
             forgotten = True
             app.CloseDoc(title)
             remaining = self._open_documents()
-            if any(str(doc.GetTitle()) == title and str(doc.GetPathName()) == path for doc in remaining):
-                raise CadError("DOCUMENT_CLOSE_UNVERIFIED", "The requested document remains open.")
+            matches = [doc for doc in remaining if str(doc.GetTitle()) == title and str(doc.GetPathName()) == path]
+            if matches:
+                # Closing an assembly's source window leaves referenced model
+                # data loaded. Accept this only with an actual component-path
+                # reference and hidden native window, never a generic bypass.
+                referenced = False
+                if allow_referenced_hidden and path and len(matches) == 1 and not bool(matches[0].Visible):
+                    for doc in others:
+                        if int(doc.GetType()) == 2:
+                            components = binding.wrap(doc, "IAssemblyDoc").GetComponents(False) or ()
+                            if not isinstance(components, (list, tuple)) or len(components) > 10000:
+                                raise CadError("COMPONENT_INVENTORY_INVALID", "Cannot verify retained source references.")
+                            referenced = any(os.path.normcase(str(binding.wrap(c, "IComponent2").GetPathName()))
+                                             == os.path.normcase(path) for c in components)
+                            if referenced:
+                                break
+                if not referenced:
+                    raise CadError("DOCUMENT_CLOSE_UNVERIFIED", "The requested document remains open.")
+                retained = True
             if any(not any(same_object(doc, current) for current in remaining) for doc in others):
                 raise CadError("FOREIGN_DOCUMENT_CLOSED", "Another native document disappeared during CloseDoc.",
                                outcome_may_be_indeterminate=True)
@@ -191,11 +216,27 @@ class NativeSession:
                         raise RuntimeError("native visibility readback mismatch")
                 except Exception as exc:
                     restoration_errors.append(str(exc))
+            if frame is not None:
+                try:
+                    if bool(frame.KeepInvisible) != frame_invisible:
+                        frame.KeepInvisible = frame_invisible
+                    if bool(frame.KeepInvisible) != frame_invisible:
+                        raise RuntimeError("native frame visibility readback mismatch")
+                except Exception as exc:
+                    restoration_errors.append(str(exc))
             if app_visible is not None:
                 try:
-                    app.Visible = app_visible
+                    if bool(app.Visible) != bool(app_visible):
+                        if not app_visible and user_control is True:
+                            # Visible=False alone cannot hide a user-controlled
+                            # application; this native property retains control.
+                            app.UserControlBackground = True
+                        else:
+                            app.Visible = app_visible
                     if bool(app.Visible) != bool(app_visible):
                         raise RuntimeError(f"native application visibility expected {bool(app_visible)!r}, actual {bool(app.Visible)!r}")
+                    if user_control is not None and bool(app.UserControl) != bool(user_control):
+                        raise RuntimeError("native application user-control readback mismatch")
                 except Exception as exc:
                     restoration_errors.append(str(exc))
             if restoration_errors:
@@ -203,7 +244,9 @@ class NativeSession:
                                failure=str(failure) if failure else None, outcome_may_be_indeterminate=True)
         if failure:
             raise failure
-        return {"closed": title, "other_documents_preserved": len(others), "visibility_restored": True}
+        return {"closed": title, "ui_closed": True, "model_data_retained": retained,
+                "native_window_hidden": True if retained else None,
+                "other_documents_preserved": len(others), "visibility_restored": True}
 
     def _require_model(self):
         app = self._ensure()
